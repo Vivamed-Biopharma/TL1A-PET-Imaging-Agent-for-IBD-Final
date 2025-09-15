@@ -208,11 +208,6 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - Weeks 2–4: NOTA conjugation (DAR 1–2), IRF/HMW QC; Ga‑68 labeling optimization.
 - Weeks 4–8: DSS colitis biodistribution/microPET, block cohort; analysis and report.
 
-## References (representative)
-- TL1A/DR3 biology and IBD prevalence: [PMC](https://www.ncbi.nlm.nih.gov/pmc/) • [ScienceDirect](https://www.sciencedirect.com/) • [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
-- TL1A deals: [Merck](https://www.merck.com/) • [Roche](https://www.roche.com/) • [Roivant Investor](https://investor.roivant.com/)
-- Ga‑68/NOTA labeling & radiopharmacy: [SpringerOpen](https://www.springeropen.com/) • [PMC](https://www.ncbi.nlm.nih.gov/pmc/)
-- Therapy‑linked PET precedent (PSMA): [UroToday](https://www.urotoday.com/) • [BJU International](https://bjui-journals.onlinelibrary.wiley.com/)
 
 ## Detailed interpretation (by domain)
 ### Developability
@@ -252,8 +247,5 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - Go if: (i) KD ≤ 10 nM and DR3 block ≥ 50%; (ii) DAR 1–2 with IRF ≥ 70% and HMW ≤ 3%; (iii) DSS colon TBR ≥ 1.5 with ≥ 50% blocked ΔTBR.
 - No‑Go if: any two criteria fail or if safety/CMC cannot meet microdose biologic release.
 
-## Future enhancements (option set)
-- Add paratope mapping on TL1A ECD (public PDB/model) for figure overlays; rank clones by proximity to DR3‑adjacent surfaces.
-- Run SALib global sensitivity on detectability with broader priors; document which parameters dominate TBR variance and link to clinical levers (affinity, mass, timing).
-- Incorporate structure‑aware aggregation patches (3D) once PDBs are generated; add TAP/A3D outputs to the manufacturability section.
+
 
