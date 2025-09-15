@@ -213,3 +213,47 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - TL1A deals: [Merck](https://www.merck.com/) • [Roche](https://www.roche.com/) • [Roivant Investor](https://investor.roivant.com/)
 - Ga‑68/NOTA labeling & radiopharmacy: [SpringerOpen](https://www.springeropen.com/) • [PMC](https://www.ncbi.nlm.nih.gov/pmc/)
 - Therapy‑linked PET precedent (PSMA): [UroToday](https://www.urotoday.com/) • [BJU International](https://bjui-journals.onlinelibrary.wiley.com/)
+
+## Detailed interpretation (by domain)
+### Developability
+- The VH/VL hydrophobic bands and pI distributions are centered in typical Fab ranges, which supports robust expression and conjugation conditions without atypical surfactant or high‑salt reliance.
+- Liability counts (NG/DG/Met/Trp) are modest; sequence‑level risks (e.g., unintended glyco motifs, unusual basic runs) are absent. This reduces the chance of post‑conjugation instability and off‑target oxidation artifacts.
+
+### Conjugation & DAR
+- The sequence‑level DAR model indicates optimal Eq=4 with P(1–2) ≈ 0.64 and P(≥4) ≈ 0.05, implying a narrow, imaging‑friendly distribution that preserves immunoreactivity.
+- Structure‑aware refinement (once PDBs are available) is expected to keep K_accessible within ±1–2 sites of the sequence‑level estimate. Any clone with an asterisk in the quick risk table should be prioritized for IRF confirmation and, if necessary, tuned with slightly lower equivalents.
+
+### Detectability & TE
+- The calibrated grid avoids inflated binding potentials and keeps TBR in a clinically plausible band. A meaningful fraction of parameter space yields TBR ≥ 1.5. TE feasibility is supported by a negative ΔTBR at 80% occupancy; study design will set a blocked cohort dose to drive occupancy into the measurable band.
+
+### Soluble sink
+- The f_free analysis indicates limited risk at typical soluble TL1A levels; scenarios with high sTL1A can be mitigated by higher specific activity and strict control of injected mass to protect immunoreactivity.
+
+### Cross‑reactivity & safety
+- Zero 6‑mer overlap with canonical TNFSF members reduces the likelihood of off‑pathway binding to TNF/LT/TRAIL/LIGHT/TWEAK. The local 12–15mer hotspot scan provides an orthogonal, conservative check—any Amber (≥40% identity) window is slated for ELISA screening.
+
+### Immunogenicity
+- Disclosure‑level burdens are in the expected band for humanized Fabs. Given microdose use, the risk profile is acceptable preclinically. For IND dossiers, planned MHC‑II predictor panels will be run and appended as a supplemental analysis.
+
+## Study design outline (operational)
+- Imaging windows: 1 h and 2 h post‑injection; optional 3 h exploratory if site logistics permit.
+- Dosing: tracer mass below IRF inflection; specific activity tuned to maintain IRF ≥ 70% post‑labeling.
+- Blocking cohort: administer a non‑radioactive dose of a TL1A binder to achieve ≥ 80% occupancy; image at matched timepoints for ΔTBR.
+- Regions of interest: segmental colon analyses (ascending/transverse/descending/sigmoid/rectum) plus small bowel if disease warrants; reference blood pool and/or muscle.
+
+## Sponsor‑readiness checklist
+- [ ] KD and DR3 competition (≥50%) for ≥2 clones (BLI/SPR)
+- [ ] Conjugation at Eq=4 with DAR 1–2 and IRF ≥ 70%
+- [ ] Ga‑68 labeling RCP ≥ 95%; filter integrity + endotoxin
+- [ ] Biodistribution/microPET in DSS: TBR ≥ 1.5 and ≥ 50% blocked drop
+- [ ] Optional: PDBs + SASA for refined K_accessible; MHC‑II screens
+
+## Go/No‑Go criteria (decision‑oriented)
+- Go if: (i) KD ≤ 10 nM and DR3 block ≥ 50%; (ii) DAR 1–2 with IRF ≥ 70% and HMW ≤ 3%; (iii) DSS colon TBR ≥ 1.5 with ≥ 50% blocked ΔTBR.
+- No‑Go if: any two criteria fail or if safety/CMC cannot meet microdose biologic release.
+
+## Future enhancements (option set)
+- Add paratope mapping on TL1A ECD (public PDB/model) for figure overlays; rank clones by proximity to DR3‑adjacent surfaces.
+- Run SALib global sensitivity on detectability with broader priors; document which parameters dominate TBR variance and link to clinical levers (affinity, mass, timing).
+- Incorporate structure‑aware aggregation patches (3D) once PDBs are generated; add TAP/A3D outputs to the manufacturability section.
+
