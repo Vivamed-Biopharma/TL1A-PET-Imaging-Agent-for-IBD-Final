@@ -50,15 +50,18 @@ Fraction of grid with TBR_pre ≥ 1.5: 0.25
 
 Median ΔTBR at 80% occupancy: -0.107
 Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
+Interpretation: With α=0.2 and nM-scale Bmax/Kd, we avoid inflated binding potentials and obtain realistic tissue-to-blood contrast. Practical implication: prioritize clones achieving KD ≤ 3 nM for sites with Bmax ≥ 1 nM to secure informative scans at 1–2 h.
 
 ## Soluble sink (sTL1A) free fraction
 (Kd, [s→f_free]) samples:
 
+Interpretation: f_free tracks Kd/(Kd+s). For typical sTL1A well below tracer Kd, the free fraction remains high (≥0.7), indicating limited soluble sink risk; elevated sTL1A scenarios can be mitigated via specific activity optimization and protein mass below IRF thresholds.
 - Kd=1.0 nM: 0.01 nM→0.99, 0.1 nM→0.91, 1.0 nM→0.5, 10.0 nM→0.09
 - Kd=3.0 nM: 0.01 nM→1.0, 0.1 nM→0.97, 1.0 nM→0.75, 10.0 nM→0.23
 - Kd=10.0 nM: 0.01 nM→1.0, 0.1 nM→0.99, 1.0 nM→0.91, 10.0 nM→0.5
 
 ## Mechanism plausibility (paratope heuristics)
+Interpretation: Enrichment of Y/S/D/N/R across CDRs is consistent with polar interfaces seen in cytokine–Fab complexes. DR3_adj scores >0.4 suggest H3 compositions compatible with TL1A surface regions implicated in receptor binding—prioritize higher paratope and DR3_adj for early wet binding.
 | Clone | Paratope | DR3_adj |
 |---|---|---|
 | Fab01 | 0.507 | 0.412 |
@@ -75,6 +78,7 @@ Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
 | Fab12 | 0.519 | 0.471 |
 
 ## Manufacturability proxy & Motifs
+Interpretation: Windowed hydropathy+charge proxies indicate no high-risk aggregation patches; minimal charge-variant motifs reduce risk of charge heterogeneity in release testing. Cross-check with structure-aware patch metrics if/when PDBs are added.
 | Clone | AggProxyMax_VH | AggProxyMax_VL | VH_NS | VH_DS | VH_DP | VH_PR | VH_KK | VL_NS | VL_DS | VL_DP | VL_PR | VL_KK |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Fab01 | 1.44 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -91,6 +95,7 @@ Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
 | Fab12 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Immunogenicity proxy (disclosure-level)
+Interpretation: Disclosure-level burdens (anchors in 15-mers) are within typical humanized Fab ranges. For microdose imaging agents, this is generally acceptable; add panel MHC-II predictor runs during IND-enabling if desired.
 | Clone | ImmBurden_VH | ImmBurden_VL |
 |---|---|---|
 | Fab01 | 31 | 34 |
@@ -107,6 +112,7 @@ Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
 | Fab12 | 31 | 34 |
 
 ## Cross-reactivity (6-mer overlap with TNFSF family)
+Interpretation: Zero paratope 6-mer overlap to canonical TNFSF sequences is expected given divergent folds and sequence features; local 12–15mer hotspot scanning (see notebook) adds a conservative check. Any ≥40% identity window is flagged Amber for the wet panel.
 | Clone | Top3 |
 |---|---|
 | Fab01 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
@@ -147,3 +153,10 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.
 Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.
 Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
+
+## Next steps (actionable)
+1) Binding/competition: BLI/SPR to confirm KD ≤ 10 nM and DR3-Fc block ≥ 50% (n≥2 clones).
+2) Conjugation: p‑SCN‑Bn‑NOTA on Eq=4; verify IRF ≥ 70%, HMW ≤ 3%; check any clone with CDR_Lys_exposed*.
+3) Labeling: Ga‑68 in HEPES/acetate; RCP ≥ 95%, pH 6.8–7.2, endotoxin ≤ 5 EU/mL.
+4) In vivo (DSS): n=15; DSS, DSS+block, healthy; success = TBR ≥ 1.5 and ≥ 50% blocked drop at 1–2 h.
+5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.

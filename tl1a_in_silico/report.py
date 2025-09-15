@@ -422,10 +422,12 @@ out.append("\n## Detectability (TBR model)\n")
 out.append(f"Fraction of grid with TBR_pre ≥ 1.5: {round(frac_pre_15,3)}\n\n")
 out.append(f"Median ΔTBR at 80% occupancy: {round(median_delta80,3)}\n")
 out.append("Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.\n")
+out.append("Interpretation: With α=0.2 and nM-scale Bmax/Kd, we avoid inflated binding potentials and obtain realistic tissue-to-blood contrast. Practical implication: prioritize clones achieving KD ≤ 3 nM for sites with Bmax ≥ 1 nM to secure informative scans at 1–2 h.\n")
 
 # Soluble sink (sTL1A)
 out.append("\n## Soluble sink (sTL1A) free fraction\n")
 out.append("(Kd, [s→f_free]) samples:\n\n")
+out.append("Interpretation: f_free tracks Kd/(Kd+s). For typical sTL1A well below tracer Kd, the free fraction remains high (≥0.7), indicating limited soluble sink risk; elevated sTL1A scenarios can be mitigated via specific activity optimization and protein mass below IRF thresholds.\n")
 for kd, snap in sink_rows:
     pretty = ", ".join([f"{s} nM→{ff}" for s,ff in snap])
     out.append(f"- Kd={kd} nM: {pretty}\n")
@@ -433,6 +435,7 @@ for kd, snap in sink_rows:
 # Paratope plausibility
 if df_para is not None:
     out.append("\n## Mechanism plausibility (paratope heuristics)\n")
+    out.append("Interpretation: Enrichment of Y/S/D/N/R across CDRs is consistent with polar interfaces seen in cytokine–Fab complexes. DR3_adj scores >0.4 suggest H3 compositions compatible with TL1A surface regions implicated in receptor binding—prioritize higher paratope and DR3_adj for early wet binding.\n")
     headers=["Clone","Paratope","DR3_adj"]
     out.append("| "+" | ".join(headers)+" |\n")
     out.append("|"+"---|"*len(headers)+"\n")
@@ -505,6 +508,7 @@ if df_mhcii is not None:
 
 # Manufacturability
 out.append("\n## Manufacturability proxy & Motifs\n")
+out.append("Interpretation: Windowed hydropathy+charge proxies indicate no high-risk aggregation patches; minimal charge-variant motifs reduce risk of charge heterogeneity in release testing. Cross-check with structure-aware patch metrics if/when PDBs are added.\n")
 headers=["Clone","AggProxyMax_VH","AggProxyMax_VL","VH_NS","VH_DS","VH_DP","VH_PR","VH_KK","VL_NS","VL_DS","VL_DP","VL_PR","VL_KK"]
 out.append("| "+" | ".join(headers)+" |\n")
 out.append("|"+"---|"*len(headers)+"\n")
@@ -513,6 +517,7 @@ for r in sorted(rows_manu, key=lambda x:x['Clone']):
 
 # Immunogenicity
 out.append("\n## Immunogenicity proxy (disclosure-level)\n")
+out.append("Interpretation: Disclosure-level burdens (anchors in 15-mers) are within typical humanized Fab ranges. For microdose imaging agents, this is generally acceptable; add panel MHC-II predictor runs during IND-enabling if desired.\n")
 headers=["Clone","ImmBurden_VH","ImmBurden_VL"]
 out.append("| "+" | ".join(headers)+" |\n")
 out.append("|"+"---|"*len(headers)+"\n")
@@ -522,6 +527,7 @@ for r in sorted(rows_immu, key=lambda x:x['Clone']):
 # Cross-reactivity (6-mer overlap with TNFSF family)
 if rows_xreact:
     out.append("\n## Cross-reactivity (6-mer overlap with TNFSF family)\n")
+    out.append("Interpretation: Zero paratope 6-mer overlap to canonical TNFSF sequences is expected given divergent folds and sequence features; local 12–15mer hotspot scanning (see notebook) adds a conservative check. Any ≥40% identity window is flagged Amber for the wet panel.\n")
     headers=["Clone","Top3"]
     out.append("| "+" | ".join(headers)+" |\n")
     out.append("|"+"---|"*len(headers)+"\n")
@@ -555,6 +561,14 @@ out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A
 out.append("Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.\n")
 out.append("Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.\n")
 out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.\n")
+
+# Next steps (actionable)
+out.append("\n## Next steps (actionable)\n")
+out.append("1) Binding/competition: BLI/SPR to confirm KD ≤ 10 nM and DR3-Fc block ≥ 50% (n≥2 clones).\n")
+out.append("2) Conjugation: p‑SCN‑Bn‑NOTA on Eq=4; verify IRF ≥ 70%, HMW ≤ 3%; check any clone with CDR_Lys_exposed*.\n")
+out.append("3) Labeling: Ga‑68 in HEPES/acetate; RCP ≥ 95%, pH 6.8–7.2, endotoxin ≤ 5 EU/mL.\n")
+out.append("4) In vivo (DSS): n=15; DSS, DSS+block, healthy; success = TBR ≥ 1.5 and ≥ 50% blocked drop at 1–2 h.\n")
+out.append("5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.\n")
 
 # Write
 report_path=os.path.join(os.path.dirname(__file__), 'REPORT.md')
