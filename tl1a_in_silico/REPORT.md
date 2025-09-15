@@ -88,6 +88,13 @@ Interpretation: Enrichment of Y/S/D/N/R across CDRs is consistent with polar int
 | Fab11 | 0.549 | 0.412 |
 | Fab12 | 0.519 | 0.471 |
 
+## Immunogenicity (expanded proxy)
+| Clone | ImmBurden_VH | ImmBurden_VL | Cys_VH | Cys_VL |
+|---|---|---|---|---|
+| Fab01 | 31 | 34 | 2 | 2 |
+| Fab04 | 31 | 34 | 2 | 2 |
+| Fab06 | 30 | 34 | 2 | 2 |
+
 ## Manufacturability proxy & Motifs
 Interpretation: Windowed hydropathy+charge proxies indicate no high-risk aggregation patches; minimal charge-variant motifs reduce risk of charge heterogeneity in release testing. Cross-check with structure-aware patch metrics if/when PDBs are added.
 | Clone | AggProxyMax_VH | AggProxyMax_VL | VH_NS | VH_DS | VH_DP | VH_PR | VH_KK | VL_NS | VL_DS | VL_DP | VL_PR | VL_KK |
@@ -177,75 +184,3 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
 - Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
 - IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.
-
-## Clinical use cases & endpoints
-- Baseline enrichment: identify TL1A‑driven disease prior to therapy. Primary endpoint: colonic segment TBR ≥ 1.5 (colon vs blood/muscle) at 1–2 h.
-- Early target‑engagement (TE): demonstrate blocked ΔTBR after first therapeutic dose. Primary endpoint: ≥ 50% drop in TBR in inflamed segments.
-- Longitudinal response linkage (optional): correlation of baseline TBR with clinical response/remission at Week 12 (registry‑style data collection).
-
-## Regulatory & CMC plan (microdose PET biologic)
-- Chemistry: Fab + p‑SCN‑Bn‑NOTA + Ga‑68; 10–15 min room‑temp labeling in HEPES/acetate.
-- Release specs: RCP ≥ 95%; IRF ≥ 70%; HMW ≤ 3%; pH 6.8–7.2; endotoxin ≤ 5 EU/mL; sterility as per compendial.
-- Documentation: batch records, CoA, stability (hold‑time), filter integrity, residual solvents/buffers.
-- Safety: microdose mass; human experience precedent for NOTA/Ga‑68 labeling on fragments.
-
-## Risk register & mitigations
-- Binding loss after conjugation (IRF < 70%): lower equivalents (Eq=4), limit reaction time, scavenge unreacted chelator, site risk review if CDR Lys exposed.
-- High HMW (>3%): shorten reaction, mild quench, add stabilizers (ascorbate/EtOH) during radiolabeling.
-- Weak TE signal (ΔTBR < 0.3): select higher affinity clones (KD ≤ 3 nM), ensure adequate specific activity, confirm block dose and timing.
-- Soluble sink: monitor sTL1A levels; adjust injected mass to maintain f_free ≥ 0.7.
-
-## Competitive landscape & precedents
-- TL1A therapeutics: major deals (Merck/Prometheus; Roche/Telavant) validate biological relevance.
-- Companion PET precedents: PSMA PET adoption arc demonstrates how therapy‑linked imaging scales after guidelines endorse decision value.
-
-## Economic rationale (sponsor/payer logic)
-- Trial enablement: reduce non‑responder exposure by pre‑selecting TL1A‑driven patients; confirm TE within days vs months.
-- Post‑launch companion: scan‑guided therapy selection and early switch decisions lower drug wastage and improve outcomes.
-
-## Execution timeline (indicative)
-- Weeks 0–2: clone expression (≥1 mg/clone), BLI/SPR, DR3 competition; down‑select 2 leads.
-- Weeks 2–4: NOTA conjugation (DAR 1–2), IRF/HMW QC; Ga‑68 labeling optimization.
-- Weeks 4–8: DSS colitis biodistribution/microPET, block cohort; analysis and report.
-
-
-## Detailed interpretation (by domain)
-### Developability
-- The VH/VL hydrophobic bands and pI distributions are centered in typical Fab ranges, which supports robust expression and conjugation conditions without atypical surfactant or high‑salt reliance.
-- Liability counts (NG/DG/Met/Trp) are modest; sequence‑level risks (e.g., unintended glyco motifs, unusual basic runs) are absent. This reduces the chance of post‑conjugation instability and off‑target oxidation artifacts.
-
-### Conjugation & DAR
-- The sequence‑level DAR model indicates optimal Eq=4 with P(1–2) ≈ 0.64 and P(≥4) ≈ 0.05, implying a narrow, imaging‑friendly distribution that preserves immunoreactivity.
-- Structure‑aware refinement (once PDBs are available) is expected to keep K_accessible within ±1–2 sites of the sequence‑level estimate. Any clone with an asterisk in the quick risk table should be prioritized for IRF confirmation and, if necessary, tuned with slightly lower equivalents.
-
-### Detectability & TE
-- The calibrated grid avoids inflated binding potentials and keeps TBR in a clinically plausible band. A meaningful fraction of parameter space yields TBR ≥ 1.5. TE feasibility is supported by a negative ΔTBR at 80% occupancy; study design will set a blocked cohort dose to drive occupancy into the measurable band.
-
-### Soluble sink
-- The f_free analysis indicates limited risk at typical soluble TL1A levels; scenarios with high sTL1A can be mitigated by higher specific activity and strict control of injected mass to protect immunoreactivity.
-
-### Cross‑reactivity & safety
-- Zero 6‑mer overlap with canonical TNFSF members reduces the likelihood of off‑pathway binding to TNF/LT/TRAIL/LIGHT/TWEAK. The local 12–15mer hotspot scan provides an orthogonal, conservative check—any Amber (≥40% identity) window is slated for ELISA screening.
-
-### Immunogenicity
-- Disclosure‑level burdens are in the expected band for humanized Fabs. Given microdose use, the risk profile is acceptable preclinically. For IND dossiers, planned MHC‑II predictor panels will be run and appended as a supplemental analysis.
-
-## Study design outline (operational)
-- Imaging windows: 1 h and 2 h post‑injection; optional 3 h exploratory if site logistics permit.
-- Dosing: tracer mass below IRF inflection; specific activity tuned to maintain IRF ≥ 70% post‑labeling.
-- Blocking cohort: administer a non‑radioactive dose of a TL1A binder to achieve ≥ 80% occupancy; image at matched timepoints for ΔTBR.
-- Regions of interest: segmental colon analyses (ascending/transverse/descending/sigmoid/rectum) plus small bowel if disease warrants; reference blood pool and/or muscle.
-
-## Sponsor‑readiness checklist
-- [ ] KD and DR3 competition (≥50%) for ≥2 clones (BLI/SPR)
-- [ ] Conjugation at Eq=4 with DAR 1–2 and IRF ≥ 70%
-- [ ] Ga‑68 labeling RCP ≥ 95%; filter integrity + endotoxin
-- [ ] Biodistribution/microPET in DSS: TBR ≥ 1.5 and ≥ 50% blocked drop
-- [ ] Optional: PDBs + SASA for refined K_accessible; MHC‑II screens
-
-## Go/No‑Go criteria (decision‑oriented)
-- Go if: (i) KD ≤ 10 nM and DR3 block ≥ 50%; (ii) DAR 1–2 with IRF ≥ 70% and HMW ≤ 3%; (iii) DSS colon TBR ≥ 1.5 with ≥ 50% blocked ΔTBR.
-- No‑Go if: any two criteria fail or if safety/CMC cannot meet microdose biologic release.
-
-
-
