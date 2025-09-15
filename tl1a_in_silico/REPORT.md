@@ -177,3 +177,39 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
 - Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
 - IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.
+
+## Clinical use cases & endpoints
+- Baseline enrichment: identify TL1A‑driven disease prior to therapy. Primary endpoint: colonic segment TBR ≥ 1.5 (colon vs blood/muscle) at 1–2 h.
+- Early target‑engagement (TE): demonstrate blocked ΔTBR after first therapeutic dose. Primary endpoint: ≥ 50% drop in TBR in inflamed segments.
+- Longitudinal response linkage (optional): correlation of baseline TBR with clinical response/remission at Week 12 (registry‑style data collection).
+
+## Regulatory & CMC plan (microdose PET biologic)
+- Chemistry: Fab + p‑SCN‑Bn‑NOTA + Ga‑68; 10–15 min room‑temp labeling in HEPES/acetate.
+- Release specs: RCP ≥ 95%; IRF ≥ 70%; HMW ≤ 3%; pH 6.8–7.2; endotoxin ≤ 5 EU/mL; sterility as per compendial.
+- Documentation: batch records, CoA, stability (hold‑time), filter integrity, residual solvents/buffers.
+- Safety: microdose mass; human experience precedent for NOTA/Ga‑68 labeling on fragments.
+
+## Risk register & mitigations
+- Binding loss after conjugation (IRF < 70%): lower equivalents (Eq=4), limit reaction time, scavenge unreacted chelator, site risk review if CDR Lys exposed.
+- High HMW (>3%): shorten reaction, mild quench, add stabilizers (ascorbate/EtOH) during radiolabeling.
+- Weak TE signal (ΔTBR < 0.3): select higher affinity clones (KD ≤ 3 nM), ensure adequate specific activity, confirm block dose and timing.
+- Soluble sink: monitor sTL1A levels; adjust injected mass to maintain f_free ≥ 0.7.
+
+## Competitive landscape & precedents
+- TL1A therapeutics: major deals (Merck/Prometheus; Roche/Telavant) validate biological relevance.
+- Companion PET precedents: PSMA PET adoption arc demonstrates how therapy‑linked imaging scales after guidelines endorse decision value.
+
+## Economic rationale (sponsor/payer logic)
+- Trial enablement: reduce non‑responder exposure by pre‑selecting TL1A‑driven patients; confirm TE within days vs months.
+- Post‑launch companion: scan‑guided therapy selection and early switch decisions lower drug wastage and improve outcomes.
+
+## Execution timeline (indicative)
+- Weeks 0–2: clone expression (≥1 mg/clone), BLI/SPR, DR3 competition; down‑select 2 leads.
+- Weeks 2–4: NOTA conjugation (DAR 1–2), IRF/HMW QC; Ga‑68 labeling optimization.
+- Weeks 4–8: DSS colitis biodistribution/microPET, block cohort; analysis and report.
+
+## References (representative)
+- TL1A/DR3 biology and IBD prevalence: [PMC](https://www.ncbi.nlm.nih.gov/pmc/) • [ScienceDirect](https://www.sciencedirect.com/) • [PubMed](https://pubmed.ncbi.nlm.nih.gov/)
+- TL1A deals: [Merck](https://www.merck.com/) • [Roche](https://www.roche.com/) • [Roivant Investor](https://investor.roivant.com/)
+- Ga‑68/NOTA labeling & radiopharmacy: [SpringerOpen](https://www.springeropen.com/) • [PMC](https://www.ncbi.nlm.nih.gov/pmc/)
+- Therapy‑linked PET precedent (PSMA): [UroToday](https://www.urotoday.com/) • [BJU International](https://bjui-journals.onlinelibrary.wiley.com/)
