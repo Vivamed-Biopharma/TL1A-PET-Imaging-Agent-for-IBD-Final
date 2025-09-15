@@ -477,6 +477,15 @@ if df_dar_ref is not None:
     out.append("|"+"---|"*len(headers)+"\n")
     for _,r in df_dar_ref.sort_values('Clone').iterrows():
         out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+    # Quick risk table if available
+    df_quick = _maybe_read_csv(os.path.join(base_dir, 'dar_conjugation_quick.csv'))
+    if df_quick is not None:
+        out.append("\nCDR Lys exposure (coarse)\n\n")
+        headers=["Clone","K_FR","K_CDR","K_accessible","Eq_best_refined","P_DAR_1_2_refined","P_DAR_ge4_refined","E_DAR_refined","CDR_Lys_exposed"]
+        out.append("| "+" | ".join(headers)+" |\n")
+        out.append("|"+"---|"*len(headers)+"\n")
+        for _,r in df_quick.sort_values('Clone').iterrows():
+            out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
 
 if df_agg3d is not None:
     out.append("\n## Aggregation/Stability proxy (3D/sequence)\n")

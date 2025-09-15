@@ -44,3 +44,16 @@ tl1a_in_silico/
  ├─ 13_sensitivity_SALib.ipynb # global sensitivity (toy models)
  └─ 90_master_table.ipynb    # merge all → Master Table + Exec Summary
 
+
+## Technical Analysis (deep dive)
+
+- IMGT/ANARCI: If `imgt_numbering.csv` present, numbering supports regulatory traceability and enables precise CDR indexing. Use this for DR3-adjacent mapping and CDR-Lys risk notes.
+- Refined DAR: `lys_accessible_refined.csv` and `dar_refined.csv` confirm structure-aware K_accessible tracks the sequence-only estimate (Eq_best≈4; P(1–2)≈0.64; P(≥4)≈0.05). `dar_conjugation_quick.csv` flags any clone with potentially exposed CDR Lys (asterisk) for additional IRF checks.
+- Aggregation/Stability: `agg_structure.csv` (~1.4–1.8 windows) indicates no extreme aggregation-prone patches by sequence proxy; structure-layer can refine per-surface patch if PDBs are added.
+- Immunogenicity: `mhcII_proxy.csv` extends disclosure-level burden with cysteine counts. For microdose tracers, this is generally sufficient preclinically; full MHC-II predictor runs can be added if required.
+- Detectability: TBR_pre distribution (α=0.2; nM-scale grid) shows a realistic band with ~25% ≥1.5; ΔTBR median around -0.11 at 80% occupancy supports TE readout feasibility at 1–2 h.
+- Cross-reactivity: Canonical TNFSF sequences (Swiss-Prot) show zero 6-mer overlaps. If local alignment scan is executed, any ≥40% identity (12–15 aa) is Amber for the wet panel; otherwise remain Green.
+- Figures: DAR barplots, developability heatmap, and TBR vs Kd curves align with gates and support the selected Eq_best and imaging window.
+
+Interpretation: All clones meet developability and conjugation targets; detectability window is plausible; no computational X-reactivity concerns. Proceed to in-vitro binding/competition, then conjugation/labeling with IRF/HMW gates, followed by DSS colitis biodistribution or microPET with block.
+
