@@ -1,4 +1,15 @@
 # TL1A In-Silico Report
+
+> Program: TL1A PET imaging tracer — Fab anti‑TL1A conjugated to NOTA and labeled with Ga‑68 for 1–2 h PET/CT in IBD.
+
+## Context & Rationale
+TL1A (TNFSF15)–DR3 signaling amplifies mucosal inflammation and is a leading IBD target with substantial pharma validation. A microdose Fab tracer (NOTA/Ga‑68) enables (i) baseline enrichment of TL1A‑driven disease and (ii) early target‑engagement readouts (blocked ΔTBR) within hours. This in‑silico package derisks sequences for developability, conjugation, detectability, and cross‑reactivity; it outputs sponsor‑ready tables and gates to accelerate wet execution.
+
+## Chemistry & CMC posture
+Commodity p‑SCN‑Bn‑NOTA with lysine conjugation (Eq≈4) and generator Ga‑68 labeling (RCP ≥95%) form an established, globally deployable path. Low protein mass and microdose radiopharmaceutical specs (IRF ≥70%, HMW ≤3%) keep CMC lean.
+
+## Business positioning
+The tracer is a trial‑enabler (patient selection, dose confirmation) and potential commercial companion for TL1A therapeutics; timelines and costs are modest relative to therapeutic programs.
 QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 
 ## Statistical summaries
@@ -160,3 +171,9 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 3) Labeling: Ga‑68 in HEPES/acetate; RCP ≥ 95%, pH 6.8–7.2, endotoxin ≤ 5 EU/mL.
 4) In vivo (DSS): n=15; DSS, DSS+block, healthy; success = TBR ≥ 1.5 and ≥ 50% blocked drop at 1–2 h.
 5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.
+
+## Program snapshot (for reviewers)
+- Asset: De‑novo anti‑TL1A Fab panel (12 clones), NOTA/Ga‑68 PET tracer.
+- Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
+- Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
+- IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.

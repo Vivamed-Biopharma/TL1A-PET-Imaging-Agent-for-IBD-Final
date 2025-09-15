@@ -386,6 +386,22 @@ with open(os.path.join(base_dir, 'dar.csv'), 'w', newline='') as f:
 # Render markdown
 out=[]
 out.append("# TL1A In-Silico Report\n")
+out.append("\n> Program: TL1A PET imaging tracer — Fab anti‑TL1A conjugated to NOTA and labeled with Ga‑68 for 1–2 h PET/CT in IBD.\n")
+out.append(
+    "\n## Context & Rationale\n"
+    "TL1A (TNFSF15)–DR3 signaling amplifies mucosal inflammation and is a leading IBD target with substantial pharma validation. "
+    "A microdose Fab tracer (NOTA/Ga‑68) enables (i) baseline enrichment of TL1A‑driven disease and (ii) early target‑engagement readouts (blocked ΔTBR) within hours. "
+    "This in‑silico package derisks sequences for developability, conjugation, detectability, and cross‑reactivity; it outputs sponsor‑ready tables and gates to accelerate wet execution.\n"
+)
+out.append(
+    "\n## Chemistry & CMC posture\n"
+    "Commodity p‑SCN‑Bn‑NOTA with lysine conjugation (Eq≈4) and generator Ga‑68 labeling (RCP ≥95%) form an established, globally deployable path. "
+    "Low protein mass and microdose radiopharmaceutical specs (IRF ≥70%, HMW ≤3%) keep CMC lean.\n"
+)
+out.append(
+    "\n## Business positioning\n"
+    "The tracer is a trial‑enabler (patient selection, dose confirmation) and potential commercial companion for TL1A therapeutics; timelines and costs are modest relative to therapeutic programs.\n"
+)
 if qc_fail:
     out.append("QC: FAIL\n")
     for item in qc_fail:
@@ -569,6 +585,11 @@ out.append("2) Conjugation: p‑SCN‑Bn‑NOTA on Eq=4; verify IRF ≥ 70%, HMW
 out.append("3) Labeling: Ga‑68 in HEPES/acetate; RCP ≥ 95%, pH 6.8–7.2, endotoxin ≤ 5 EU/mL.\n")
 out.append("4) In vivo (DSS): n=15; DSS, DSS+block, healthy; success = TBR ≥ 1.5 and ≥ 50% blocked drop at 1–2 h.\n")
 out.append("5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.\n")
+out.append("\n## Program snapshot (for reviewers)\n")
+out.append("- Asset: De‑novo anti‑TL1A Fab panel (12 clones), NOTA/Ga‑68 PET tracer.\n")
+out.append("- Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).\n")
+out.append("- Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.\n")
+out.append("- IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.\n")
 
 # Write
 report_path=os.path.join(os.path.dirname(__file__), 'REPORT.md')
