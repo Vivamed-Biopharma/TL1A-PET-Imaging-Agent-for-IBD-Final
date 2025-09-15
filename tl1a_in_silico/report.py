@@ -439,6 +439,61 @@ if df_para is not None:
     for _,r in df_para.iterrows():
         out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
 
+# Optional imports of new CSV outputs (IMGT, refined DAR, aggregation, immunogenicity)
+def _maybe_read_csv(path):
+    try:
+        return pd.read_csv(path)
+    except Exception:
+        return None
+
+df_imgt = _maybe_read_csv(os.path.join(base_dir, 'imgt_numbering.csv'))
+df_dar_ref = _maybe_read_csv(os.path.join(base_dir, 'dar_refined.csv'))
+df_kacc = _maybe_read_csv(os.path.join(base_dir, 'lys_accessible_refined.csv'))
+df_agg3d = _maybe_read_csv(os.path.join(base_dir, 'agg_structure.csv'))
+df_mhcii = _maybe_read_csv(os.path.join(base_dir, 'mhcII_proxy.csv'))
+
+if df_imgt is not None:
+    out.append("\n## IMGT/ANARCI numbering (summary)\n")
+    out.append("Showing first few rows; see imgt_numbering.csv for full detail.\n\n")
+    head = df_imgt.head(6)
+    headers=list(head.columns)
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in head.iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
+if df_kacc is not None:
+    out.append("\n## Structure-aware lysine accessibility\n")
+    headers=["Clone","K_FR","K_CDR","K_accessible","SASA_hits"]
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in df_kacc.sort_values('Clone').iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
+if df_dar_ref is not None:
+    out.append("\n## Refined DAR (structure-aware K_accessible)\n")
+    headers=["Clone","Eq_best_refined","P_DAR_1_2_refined","P_DAR_ge4_refined","E_DAR_refined"]
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in df_dar_ref.sort_values('Clone').iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
+if df_agg3d is not None:
+    out.append("\n## Aggregation/Stability proxy (3D/sequence)\n")
+    headers=list(df_agg3d.columns)
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in df_agg3d.sort_values(headers[0]).iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
+if df_mhcii is not None:
+    out.append("\n## Immunogenicity (expanded proxy)\n")
+    headers=list(df_mhcii.columns)
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in df_mhcii.sort_values('Clone').iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
 # Manufacturability
 out.append("\n## Manufacturability proxy & Motifs\n")
 headers=["Clone","AggProxyMax_VH","AggProxyMax_VL","VH_NS","VH_DS","VH_DP","VH_PR","VH_KK","VL_NS","VL_DS","VL_DP","VL_PR","VL_KK"]
