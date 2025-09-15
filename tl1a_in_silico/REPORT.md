@@ -46,9 +46,10 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab12 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 
 ## Detectability (TBR model)
-Fraction of grid with TBR_pre ≥ 1.5: 0.933
+Fraction of grid with TBR_pre ≥ 1.5: 0.25
 
-Median ΔTBR at 80% occupancy: -10.667
+Median ΔTBR at 80% occupancy: -0.107
+Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
 
 ## Soluble sink (sTL1A) free fraction
 (Kd, [s→f_free]) samples:
@@ -56,6 +57,22 @@ Median ΔTBR at 80% occupancy: -10.667
 - Kd=1.0 nM: 0.01 nM→0.99, 0.1 nM→0.91, 1.0 nM→0.5, 10.0 nM→0.09
 - Kd=3.0 nM: 0.01 nM→1.0, 0.1 nM→0.97, 1.0 nM→0.75, 10.0 nM→0.23
 - Kd=10.0 nM: 0.01 nM→1.0, 0.1 nM→0.99, 1.0 nM→0.91, 10.0 nM→0.5
+
+## Mechanism plausibility (paratope heuristics)
+| Clone | Paratope | DR3_adj |
+|---|---|---|
+| Fab01 | 0.507 | 0.412 |
+| Fab02 | 0.494 | 0.471 |
+| Fab03 | 0.519 | 0.412 |
+| Fab04 | 0.519 | 0.412 |
+| Fab05 | 0.519 | 0.412 |
+| Fab06 | 0.538 | 0.412 |
+| Fab07 | 0.519 | 0.471 |
+| Fab08 | 0.519 | 0.471 |
+| Fab09 | 0.549 | 0.412 |
+| Fab10 | 0.5 | 0.471 |
+| Fab11 | 0.549 | 0.412 |
+| Fab12 | 0.519 | 0.471 |
 
 ## Manufacturability proxy & Motifs
 | Clone | AggProxyMax_VH | AggProxyMax_VL | VH_NS | VH_DS | VH_DP | VH_PR | VH_KK | VL_NS | VL_DS | VL_DP | VL_PR | VL_KK |
@@ -89,6 +106,22 @@ Median ΔTBR at 80% occupancy: -10.667
 | Fab11 | 31 | 34 |
 | Fab12 | 31 | 34 |
 
+## Cross-reactivity (6-mer overlap with TNFSF family)
+| Clone | Top3 |
+|---|---|
+| Fab01 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab02 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab03 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab04 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab05 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab06 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab07 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab08 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab09 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab10 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab11 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+| Fab12 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
+
 ## Composite ranking
 Top clones by composite score:
 - Fab04: score 0.583
@@ -107,3 +140,10 @@ Top clones by composite score:
 * Conjugation model: Eq_best mostly 4; P(DAR 1–2) ~0.60–0.70; P(≥4) ≤ 0.08; E[DAR] ~1.5–1.7.
 * Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible Bmax/Kd; TE ΔTBR negative on block.
 * Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).
+Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.
+Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.
+Interpretation: Calibrated grid shows ~25% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
+Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
+Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.
+Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.
+Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.

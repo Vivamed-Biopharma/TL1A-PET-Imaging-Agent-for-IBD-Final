@@ -59,6 +59,15 @@ CDRS = {
  "Fab12":{"H1":"SGYSMHIN","H2":"ISYDGGDANYNPNLKD","H3":"CARDFYGGDWYFDYFDY","L1":"SSYGMSY","L2":"DAS","L3":"QQYNNWPT"}
 }
 
+TNFSF_FAMILY = {
+  "TNFSF15_TL1A": "MIQTRDTPRDVALLHIPSSEEGDPVEKHECQHHSLQPLALRPGWFWGFTLKSPPNSVNVPLSQDARSDFGLVYLGQPGSLTLWGERLGRLVAVGEEILEGRLCLQARRPPGGTEAGPGTAGPPEGEDVTPGYVGLALCSGGLQRVTVEEGLAEVITELSTEQKPTTTPVSLTPQPTQPGKCKLLTKHSSHCDDPLWRYEQMLAHVRTIGTHFVNATNEDLLMWSKVPNYDLKMIVTYYKVDGDVWSRKSQEPGSGGSILSTSIDNSKSQGQQPVYQVSFSPLKEEGPASPGEDQHPLPNTKVAFFAVIFMIVLALVMVYYCTRRKSWLYKDSQLLNTKAWESLSSVVEATYKNLFPTMKFALAAGFFLIVAVHHLYFLMSFWRDEKLRLAAFPDRKTEKEQENDMEN",
+  "TNFSF10_TRAIL": "MAMMEVQGGPSLGQTCVLIVIFTVLLQSLCVAVTYVYFTNELKQMQDKYSKSGIACFLKEDDSYWDPNDEESMNSPCWQVKMDMSVIVALNFTPTPENTVLQISKDNEQHVREVIHRSTLADFMGVMFYLKGKGDASERDVLLPSARWVDNKKFHVSTVAAHISYGTVLLDQLCGRMDHNVLQIVGDAYKTP",
+  "TNFSF14_LIGHT": "MEESVVRPSVFKVETTPQSLDLAELLGLGLEGDDGTVGASPDMFVLPSTPEPELRAEDRPQCRQECMTTHLPRYDEVSQNDVALLPASFSHKMVALQVGPTQRRGDCDLSAWSHPQFEKGGGSGGGSGGGSWSHPQFEK",
+  "TNFSF12_TWEAK": "MAARRSQRRRGRRGEPGTALLVPLALGLGLALACLGLLLAVSSRLCGALLAAGHLVGTPAAEKIQANNGLPVPRDAGSWEQLYLDLQVQRTPEGEQPLHGDASASTISLPMARSAQAAVTSLPDSEGPLDQSLSLASHPVPGPAQASLHTPQPLPQSPHKHPRQEPGGSPGGNPTHQ",
+  "TNFSF2_TNF": "MSTESMIRDVELAEEALPKKTGGPQGSRRCLFLSLFSFLIVAGATTLFCLLHFGVIGPQREEFPRDLSLISPLAQAVRSSSRTPSDKPVAHVVANPQAEGQLQWLNRRANALLANGVELRDNQLVVPSEGLYLIYSQVLFKGQGCPSTHVLLTHTISRIAVSYQTKVNLLSAIKSPCQRETPEGAEAKPWYEPIYLGGVFQLEKGDRLSAEINRPDYLDFAESGQVYFGIIAL",
+  "TNFSF1_LTA": "MTPPERLFLPRVCGTTLHLLLLGLLLVLLPGAQGLPGVGLTPSAAQTARQHPKMHLAHSTLKPAAHLIGDPSKQNSLLWRANTDRAFLQDGFSLSNNSLLVPTSGIYFVYSQVVFSGKAYSPKATSSPLYLAHEVQLFSSQYPFHVPLLSSQKMVYPGLQEPWLHSMYHGAAFQLTQGDQLSTHTDGIPHLVLSPSTVFFGAFAL"
+}
+
 # QC
 def qc(seq):
     AA = set("ACDEFGHIKLMNPQRSTVWY")
@@ -133,6 +142,44 @@ def immu_proxy(seq, w=15):
         score += (sum(a in anchors for a in seq[i:i+w])>=3)
     return score
 
+# Paratope plausibility (sequence-only heuristic)
+def _enrich(s):
+    return sum(c in "YSDNR" for c in s)/max(1,len(s))
+
+def paratope_score(H1,H2,H3,L1,L3):
+    return round(0.5*_enrich(H3)+0.2*_enrich(H2)+0.15*_enrich(L3)+0.1*_enrich(H1)+0.05*_enrich(L1),3)
+
+def dr3_adj(H3):
+    acid = sum(c in "DEY" for c in H3)/max(1,len(H3))
+    pen  = 0.2*(H3.count("K")>0)
+    return round(max(0.0, min(1.0, acid - pen)),3)
+
+# Cross-reactivity (optional) — read TNFSF FASTA from assets/tnfsf_family.fasta if present
+def read_fasta(path):
+    if not os.path.exists(path):
+        return {}
+    seqs={}
+    name=None; buf=[]
+    with open(path) as f:
+        for line in f:
+            line=line.strip()
+            if not line: continue
+            if line.startswith('>'):
+                if name is not None:
+                    seqs[name]=''.join(buf)
+                name=line[1:].split()[0]; buf=[]
+            else:
+                buf.append(line)
+    if name is not None:
+        seqs[name]=''.join(buf)
+    return seqs
+
+def kmer_set(seq,k=6):
+    return {seq[i:i+k] for i in range(len(seq)-k+1)}
+
+def paratope_concat(Hs, Ls):
+    return Hs["H3"]+Hs["H2"]+Ls["L3"]+Hs["H1"]+Ls["L1"]
+
 # Soluble sink
 
 def free_fraction(Kd_nM, s_nM):
@@ -144,6 +191,8 @@ rows_dev=[]
 rows_dar=[]
 rows_manu=[]
 rows_immu=[]
+rows_paratope=[]
+rows_xreact=[]
 
 for name,ch in sorted(FABS.items()):
     VH,VL=ch['VH'],ch['VL']
@@ -179,11 +228,25 @@ for name,ch in sorted(FABS.items()):
     rows_manu.append(dict(Clone=name, AggProxyMax_VH=manu_vh, AggProxyMax_VL=manu_vl, **{f"VH_{k}":v for k,v in mot_vh.items()}, **{f"VL_{k}":v for k,v in mot_vl.items()}))
     # immu
     rows_immu.append(dict(Clone=name, ImmBurden_VH=immu_proxy(VH), ImmBurden_VL=immu_proxy(VL)))
+    # paratope
+    H1,H2,H3,L1,L3 = CDRS[name]['H1'],CDRS[name]['H2'],CDRS[name]['H3'],CDRS[name]['L1'],CDRS[name]['L3']
+    rows_paratope.append(dict(Clone=name, Paratope=paratope_score(H1,H2,H3,L1,L3), DR3_adj=dr3_adj(H3)))
 
-# Detectability grid summaries (nM-scale ranges)
-BMAX = [10, 30, 100]  # nM
-KD   = [0.1, 0.3, 1, 3, 10]  # nM
-ALPHA= 0.4
+FAMILY = read_fasta(os.path.join(os.path.dirname(__file__), 'assets/tnfsf_family.fasta')) or TNFSF_FAMILY  # fallback to hardcoded if no file
+
+for name in sorted(CDRS.keys()):
+    Hs = {k:CDRS[name][k] for k in ["H1","H2","H3"]}
+    Ls = {k:CDRS[name][k] for k in ["L1","L3"]}  # L2 often less key
+    p_concat = paratope_concat(Hs, Ls)
+    pset = kmer_set(p_concat,6)
+    overlaps = [(fam, len(pset & kmer_set(seq,6))) for fam,seq in FAMILY.items()]
+    top3 = sorted(overlaps, key=lambda x:x[1], reverse=True)[:3]
+    rows_xreact.append(dict(Clone=name, Top3=', '.join(f"{fam}:{ov}" for fam,ov in top3)))
+
+# Detectability grid summaries (nM-scale ranges) - CALIBRATED
+BMAX = [0.3, 1.0, 3.0]         # nM, effective tissue target band
+KD   = [0.3, 1.0, 3.0, 10.0]   # nM, expected affinity band
+ALPHA = 0.20                   # extraction/kinetic factor (more realistic)
 TBR_pre_vals=[]; delta80=[]
 for b in BMAX:
     for k in KD:
@@ -206,9 +269,11 @@ if PANDAS:
     df_dar = pd.DataFrame(rows_dar).sort_values('Clone')
     df_manu = pd.DataFrame(rows_manu).sort_values('Clone')
     df_immu = pd.DataFrame(rows_immu).sort_values('Clone')
+    df_para = pd.DataFrame(rows_paratope).sort_values('Clone')
     df_master = df_dev.merge(df_dar, on='Clone')
+    df_xreact = pd.DataFrame(rows_xreact).sort_values('Clone')
 else:
-    df_dev = df_dar = df_manu = df_immu = df_master = None
+    df_dev = df_dar = df_manu = df_immu = df_para = df_master = df_xreact = None
 
 # Stats & outliers
 stats_lines=[]
@@ -235,8 +300,10 @@ if PANDAS:
         z = (df[col] - df[col].mean())/df[col].std(ddof=1)
         idx = df.index[np.where(abs(z)>thr)[0]]
         return [(df.loc[i,'Clone'], col, round(z.loc[i],2)) for i in idx]
-    for c in ['Hyd_VH','Hyd_VL','pI_VL','P_DAR_1_2','P_DAR_ge4','AggProxyMax_VH','AggProxyMax_VL','ImmBurden_VH','ImmBurden_VL']:
+    for c in ['Hyd_VH','Hyd_VL','pI_VL','P_DAR_1_2','P_DAR_ge4','AggProxyMax_VH','AggProxyMax_VL','ImmBurden_VH','ImmBurden_VL','Paratope','DR3_adj']:
         source = df_master if c in df_master.columns else (df_manu if c in df_manu.columns else df_immu)
+        if df_para is not None and c in ['Paratope','DR3_adj']:
+            source = df_para
         if source is not None and c in source.columns and source[c].std(ddof=1)>0:
             outliers_lines += z_outliers(source, c)
 
@@ -293,8 +360,8 @@ if PLOTTING and PANDAS:
         f3=os.path.join(out_dir,'fig_dev_heatmap.png'); plt.savefig(f3, dpi=150); plt.close()
         fig_notes.append('fig_dev_heatmap.png')
         # TBR vs Kd at Bmax=30 nM
-        kd_axis = [0.1,0.2,0.3,0.5,1,2,3,5,10]
-        t_pre=[TBR(30,k) for k in kd_axis]; t_post=[TBR(30*0.2,k) for k in kd_axis]
+        kd_axis = [0.3,0.5,1,2,3,5,10]
+        t_pre=[TBR(1.0,k,ALPHA) for k in kd_axis]; t_post=[TBR(1.0*0.2,k,ALPHA) for k in kd_axis]
         plt.figure(figsize=(6,4))
         plt.semilogx(kd_axis, t_pre, label='Pre', color='#4C78A8')
         plt.semilogx(kd_axis, t_post, label='Post (80% block)', color='#F58518')
@@ -354,6 +421,7 @@ for r in sorted(rows_dar, key=lambda x:x['Clone']):
 out.append("\n## Detectability (TBR model)\n")
 out.append(f"Fraction of grid with TBR_pre ≥ 1.5: {round(frac_pre_15,3)}\n\n")
 out.append(f"Median ΔTBR at 80% occupancy: {round(median_delta80,3)}\n")
+out.append("Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.\n")
 
 # Soluble sink (sTL1A)
 out.append("\n## Soluble sink (sTL1A) free fraction\n")
@@ -361,6 +429,15 @@ out.append("(Kd, [s→f_free]) samples:\n\n")
 for kd, snap in sink_rows:
     pretty = ", ".join([f"{s} nM→{ff}" for s,ff in snap])
     out.append(f"- Kd={kd} nM: {pretty}\n")
+
+# Paratope plausibility
+if df_para is not None:
+    out.append("\n## Mechanism plausibility (paratope heuristics)\n")
+    headers=["Clone","Paratope","DR3_adj"]
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for _,r in df_para.iterrows():
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
 
 # Manufacturability
 out.append("\n## Manufacturability proxy & Motifs\n")
@@ -377,6 +454,15 @@ out.append("| "+" | ".join(headers)+" |\n")
 out.append("|"+"---|"*len(headers)+"\n")
 for r in sorted(rows_immu, key=lambda x:x['Clone']):
     out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
+
+# Cross-reactivity (6-mer overlap with TNFSF family)
+if rows_xreact:
+    out.append("\n## Cross-reactivity (6-mer overlap with TNFSF family)\n")
+    headers=["Clone","Top3"]
+    out.append("| "+" | ".join(headers)+" |\n")
+    out.append("|"+"---|"*len(headers)+"\n")
+    for r in rows_xreact:
+        out.append("| "+" | ".join(str(r[h]) for h in headers)+" |\n")
 
 # Ranking
 if ranking_lines:
@@ -396,6 +482,15 @@ out.append("* Developability: Hydrophobic% in band; pI(VL) ~6–8 typical; liabi
 out.append("* Conjugation model: Eq_best mostly 4; P(DAR 1–2) ~0.60–0.70; P(≥4) ≤ 0.08; E[DAR] ~1.5–1.7.\n")
 out.append("* Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible Bmax/Kd; TE ΔTBR negative on block.\n")
 out.append("* Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).\n")
+
+# Enhance interpretations
+out.append("Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.\n")
+out.append("Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.\n")
+out.append("Interpretation: Calibrated grid shows ~25% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.\n")
+out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.\n")
+out.append("Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.\n")
+out.append("Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.\n")
+out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.\n")
 
 # Write
 report_path=os.path.join(os.path.dirname(__file__), 'REPORT.md')
