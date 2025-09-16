@@ -230,13 +230,12 @@ Top clones by composite score:
 ## EXEC SUMMARY (paste to Syngene)
 * 12/12 sequences QC PASS; no NXS/T motifs; FASTA provided.
 * Developability: Hydrophobic% in band; pI(VL) ~6–8 typical; liabilities modest.
-* Conjugation model: Eq_best mostly 4; P(DAR 1–2) ~0.60–0.70; P(≥4) ≤ 0.08; E[DAR] ~1.5–1.7.
+* Conjugation model: Eq_best 4; P(DAR 1–2) ≈ 0.58 (0.56–0.60); P(≥4) ≈ 0.11 (0.096–0.128); E[DAR] ≈ 2.0.
 * Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible Bmax/Kd; TE ΔTBR negative on block.
 * Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).
 Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.
-Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.
-Interpretation: Calibrated grid shows ~25% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
-Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
+Interpretation: Updated structure-aware model at Eq=4 shows clone variation; average P(DAR1–2) ≈ 0.58, P(≥4) ≈ 0.11, E[DAR] ≈ 2.0. Gate: prioritize higher P(DAR1–2) with lower P(≥4).
+Interpretation: Calibrated grid shows ~20% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
 Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.
 Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.
 Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
