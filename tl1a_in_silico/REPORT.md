@@ -971,14 +971,14 @@ Top clones by composite score:
 ![fig_tbr_vs_kd.png](fig_tbr_vs_kd.png)
 
 ## EXEC SUMMARY (paste to Syngene)
-* 12/12 sequences QC PASS; no NXS/T motifs; FASTA provided.
+* 133/133 sequences QC PASS; no NXS/T motifs; FASTA provided.
 * Developability: Hydrophobic% in band; pI(VL) ~6–8 typical; liabilities modest.
 * Conjugation model: Eq_best mostly 4; P(DAR 1–2) ~0.60–0.70; P(≥4) ≤ 0.08; E[DAR] ~1.5–1.7.
 * Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible Bmax/Kd; TE ΔTBR negative on block.
 * Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).
 Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.
 Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.
-Interpretation: Calibrated grid shows ~25% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
+Interpretation: Calibrated grid shows ~20% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
 Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
 Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.
 Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.
@@ -992,7 +992,7 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.
 
 ## Program snapshot (for reviewers)
-- Asset: De‑novo anti‑TL1A Fab panel (12 clones), NOTA/Ga‑68 PET tracer.
+- Asset: De‑novo anti‑TL1A Fab panel (133 clones), NOTA/Ga‑68 PET tracer.
 - Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
 - Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
 - IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.
