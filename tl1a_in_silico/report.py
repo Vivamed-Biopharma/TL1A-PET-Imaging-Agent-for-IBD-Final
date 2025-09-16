@@ -489,7 +489,14 @@ with open(os.path.join(base_dir, 'dar.csv'), 'w', newline='') as f:
     w = csv.DictWriter(f, fieldnames=["Clone","K_total","K_cdr","K_fr","K_accessible","Eq_best","P_DAR_1_2","P_DAR_ge4","E_DAR"])
     w.writeheader()
     for r in sorted(rows_dar, key=lambda x:x['Clone']): w.writerow(r)
-    
+
+# New: export manufacturability, paratope, immunogenicity, and master
+if PANDAS:
+    df_manu.to_csv(os.path.join(base_dir,'manufacturability.csv'), index=False)
+    df_para.to_csv(os.path.join(base_dir,'paratope.csv'), index=False)
+    df_immu.to_csv(os.path.join(base_dir,'immunogenicity.csv'), index=False)
+    df_master.to_csv(os.path.join(base_dir,'master_table.csv'), index=False)
+
 # Composite ranking export (if computed)
 if PANDAS and 'ranking' in locals() and ranking is not None:
     ranking_path = os.path.join(base_dir, 'composite_ranking.csv')
