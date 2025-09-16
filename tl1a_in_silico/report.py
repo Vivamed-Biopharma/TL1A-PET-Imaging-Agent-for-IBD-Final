@@ -59,6 +59,113 @@ CDRS = {
  "Fab12":{"H1":"SGYSMHIN","H2":"ISYDGGDANYNPNLKD","H3":"CARDFYGGDWYFDYFDY","L1":"SSYGMSY","L2":"DAS","L3":"QQYNNWPT"}
 }
 
+# ------------------------------------------------------------
+# Variant generation (synthetic enumeration)
+# ------------------------------------------------------------
+import random
+random.seed(1337)
+
+def _avoid_glyco(seq: str) -> bool:
+    import re
+    return re.search(r"N[^P][ST]", seq) is None
+
+AA_GROUPS = {
+    'aromatic': list("FWY"),
+    'polar': list("STNQ"),
+    'acidic': list("DE"),
+    'basic': list("KRH"),
+    'aliphatic': list("AVILM"),
+    'small': list("AGST"),
+    'special': list("CP")
+}
+
+AA_TO_GROUP = {a:g for g,aa in AA_GROUPS.items() for a in aa}
+
+def conservative_mutation(res: str) -> str:
+    group = AA_TO_GROUP.get(res)
+    if not group:
+        return res
+    choices = [a for a in AA_GROUPS[group] if a != res]
+    if not choices:
+        return res
+    return random.choice(choices)
+
+def mutate_seq(seq: str, n_mut: int) -> str:
+    if n_mut <= 0:
+        return seq
+    idxs = list(range(len(seq)))
+    random.shuffle(idxs)
+    seq_list = list(seq)
+    changed = 0
+    for i in idxs:
+        orig = seq_list[i]
+        new = conservative_mutation(orig)
+        if new != orig:
+            seq_list[i] = new
+            if _avoid_glyco(''.join(seq_list)):
+                changed += 1
+            else:
+                seq_list[i] = orig
+        if changed >= n_mut:
+            break
+    return ''.join(seq_list)
+
+def rebuild_chain(full_seq: str, cdr_map: dict, new_cdrs: dict, order: list) -> str:
+    s = full_seq
+    for key in order:
+        old = cdr_map[key]
+        new = new_cdrs[key]
+        # replace first occurrence only
+        pos = s.find(old)
+        if pos >= 0:
+            s = s[:pos] + new + s[pos+len(old):]
+    return s
+
+def generate_variants(num_variants: int = 100):
+    """Create additional Fab variants by conservative mutations within CDRs.
+    Returns: dict new_FABS, dict new_CDRS
+    """
+    base_names = sorted(FABS.keys())
+    new_fabs = {}
+    new_cdrs = {}
+    counter = 13  # start after Fab12
+    for _ in range(num_variants):
+        base = random.choice(base_names)
+        vh_base = FABS[base]['VH']
+        vl_base = FABS[base]['VL']
+        cdrb = CDRS[base]
+        # choose 1-3 mutations per CDR set
+        nH1 = random.choice([0,1])
+        nH2 = random.choice([0,1,2])
+        nH3 = random.choice([1,2,3])
+        nL1 = random.choice([0,1])
+        nL2 = random.choice([0,1])
+        nL3 = random.choice([0,1,2])
+        new_c = {
+            'H1': mutate_seq(cdrb['H1'], nH1),
+            'H2': mutate_seq(cdrb['H2'], nH2),
+            'H3': mutate_seq(cdrb['H3'], nH3),
+            'L1': mutate_seq(cdrb['L1'], nL1),
+            'L2': mutate_seq(cdrb['L2'], nL2),
+            'L3': mutate_seq(cdrb['L3'], nL3),
+        }
+        # rebuild VH/VL by replacing original CDR substrings
+        vh_new = rebuild_chain(vh_base, {k:cdrb[k] for k in ['H1','H2','H3']}, new_c, ['H1','H2','H3'])
+        vl_new = rebuild_chain(vl_base, {k:cdrb[k] for k in ['L1','L2','L3']}, new_c, ['L1','L2','L3'])
+        # final glyco safety check
+        if not (_avoid_glyco(vh_new) and _avoid_glyco(vl_new)):
+            continue
+        name = f"Fab{counter:02d}"
+        counter += 1
+        new_fabs[name] = { 'VH': vh_new, 'VL': vl_new }
+        new_cdrs[name] = new_c
+    return new_fabs, new_cdrs
+
+# Synthesize 100 additional variants and merge
+EXTRA_FABS, EXTRA_CDRS = generate_variants(120)
+FABS.update(EXTRA_FABS)
+CDRS.update(EXTRA_CDRS)
+
 TNFSF_FAMILY = {
   "TNFSF15_TL1A": "MIQTRDTPRDVALLHIPSSEEGDPVEKHECQHHSLQPLALRPGWFWGFTLKSPPNSVNVPLSQDARSDFGLVYLGQPGSLTLWGERLGRLVAVGEEILEGRLCLQARRPPGGTEAGPGTAGPPEGEDVTPGYVGLALCSGGLQRVTVEEGLAEVITELSTEQKPTTTPVSLTPQPTQPGKCKLLTKHSSHCDDPLWRYEQMLAHVRTIGTHFVNATNEDLLMWSKVPNYDLKMIVTYYKVDGDVWSRKSQEPGSGGSILSTSIDNSKSQGQQPVYQVSFSPLKEEGPASPGEDQHPLPNTKVAFFAVIFMIVLALVMVYYCTRRKSWLYKDSQLLNTKAWESLSSVVEATYKNLFPTMKFALAAGFFLIVAVHHLYFLMSFWRDEKLRLAAFPDRKTEKEQENDMEN",
   "TNFSF10_TRAIL": "MAMMEVQGGPSLGQTCVLIVIFTVLLQSLCVAVTYVYFTNELKQMQDKYSKSGIACFLKEDDSYWDPNDEESMNSPCWQVKMDMSVIVALNFTPTPENTVLQISKDNEQHVREVIHRSTLADFMGVMFYLKGKGDASERDVLLPSARWVDNKKFHVSTVAAHISYGTVLLDQLCGRMDHNVLQIVGDAYKTP",
