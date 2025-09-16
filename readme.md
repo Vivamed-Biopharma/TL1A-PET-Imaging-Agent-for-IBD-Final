@@ -19,13 +19,18 @@
 - **Cross-reactivity**: Canonical TNFSF sequences (Swiss-Prot O95150, P50591, O43557, O43508, P01375, P01374); zero 6-mer overlaps with non-TL1A. **Gate**: Top non-TL1A ≤5. **Status**: Low risk; wet panel retained.
 - **Manufacturability**: AggProxy ≤1.8; minimal charge variants. **Status**: Acceptable.
 - **Immunogenicity**: Disclosure-level burden ~31-39 VH, 34 VL. **Status**: Typical for humanized.
-- **Ranking (expanded)**: Composite top picks now prioritize a mix of original and new variants.
+- **Ranking (expanded)**: Composite top picks prioritize a mix of original and new variants.
   - Co‑leads: **Fab79** (new), **Fab04** (original)
   - Backups: **Fab96** (new), **Fab09** (original)
   - Diversity reserve: **Fab122** (new)
   - Full table: `tl1a_in_silico/composite_ranking.csv`; deep comparison: `lead_deep_compare.csv`
 
-**Next Steps**: KD determination (target ≤10 nM) + DR3 competition (≥ 50%); NOTA conjugation (Eq=4; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%); DSS biodistribution/microPET with block (TBR ≥ 1.5; ΔTBR ≤ −0.5 at 1–2 h).
+**Next Steps**: KD determination (target ≤ 10 nM) + DR3 competition (≥ 50%); NOTA conjugation (Eq=4; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%); DSS biodistribution/microPET with block (TBR ≥ 1.5; ΔTBR ≤ −0.5 at 1–2 h).
+
+What to share and with whom:
+- CRO (expression/affinity): `tl1a_in_silico/assets/fabs.fasta`, `composite_ranking.csv`; focus on Fab79, Fab04, Fab96, Fab09 (+/− Fab122).
+- Conjugation/radiochemistry site: `dar.csv`, `fig_dar_p12.png`, `fig_dar_ge4.png`; specify Eq=4 and IRF/HMW gates.
+- Imaging site/PI: `REPORT.md` (executive sections), `fig_tbr_vs_kd.png`; communicate TBR ≥ 1.5 target and blocked ΔTBR endpoint.
 
 See `tl1a_in_silico/REPORT.md` for full tables, figures, deep lead comparison, and execution plan.
 

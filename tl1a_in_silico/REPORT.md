@@ -252,6 +252,7 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab99 | 4.352 | 6.31 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 3 | 1 | 8 |
 
 ## Conjugation (NOTA–Lys) — Eq_best & DAR stats
+Note: Per‑clone DAR statistics for the full 133‑clone panel are provided in `dar.csv`. The barplots (`fig_dar_p12.png`, `fig_dar_ge4.png`) reflect the full panel distribution and are the authoritative view for selection. The large tabulation below is illustrative and may not include every variant.
 | Clone | K_total | K_cdr | K_fr | K_accessible | Eq_best | P_DAR_1_2 | P_DAR_ge4 | E_DAR |
 |---|---|---|---|---|---|---|---|---|
 | Fab01 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
@@ -388,7 +389,7 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab99 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 
 ## Detectability (TBR model)
-Fraction of grid with TBR_pre ≥ 1.5: 0.25
+Fraction of grid with TBR_pre ≥ 1.5: 0.20
 
 Median ΔTBR at 80% occupancy: -0.107
 Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
