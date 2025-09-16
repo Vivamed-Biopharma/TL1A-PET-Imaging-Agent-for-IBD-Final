@@ -8,7 +8,7 @@
 
 ## Results Summary (from latest REPORT.md)
 
-**Package Status**: ✅ Ready for in-vitro validation
+**Package Status**: ✅ Ready for in‑vitro validation (133‑clone panel)
 
 - **QC**: All 12 clones PASS — no illegal characters, whitespace, or NXS/T motifs.
 - **Developability**: Hydrophobicity in expected bands (VH ~41%, VL ~34%); pI_VL ~7.1±0.9; modest liabilities. **Gate**: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain. **Status**: All clones PASS.
@@ -19,11 +19,15 @@
 - **Cross-reactivity**: Canonical TNFSF sequences (Swiss-Prot O95150, P50591, O43557, O43508, P01375, P01374); zero 6-mer overlaps with non-TL1A. **Gate**: Top non-TL1A ≤5. **Status**: Low risk; wet panel retained.
 - **Manufacturability**: AggProxy ≤1.8; minimal charge variants. **Status**: Acceptable.
 - **Immunogenicity**: Disclosure-level burden ~31-39 VH, 34 VL. **Status**: Typical for humanized.
-- **Ranking**: Top candidates: **Fab04** (0.583), **Fab03/Fab09** (0.546).
+- **Ranking (expanded)**: Composite top picks now prioritize a mix of original and new variants.
+  - Co‑leads: **Fab79** (new), **Fab04** (original)
+  - Backups: **Fab96** (new), **Fab09** (original)
+  - Diversity reserve: **Fab122** (new)
+  - Full table: `tl1a_in_silico/composite_ranking.csv`; deep comparison: `lead_deep_compare.csv`
 
-**Next Steps**: KD determination (target ≤10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1-2; IRF ≥70%; HMW ≤3%); Ga-68 labeling (RCP ≥95%).
+**Next Steps**: KD determination (target ≤10 nM) + DR3 competition (≥ 50%); NOTA conjugation (Eq=4; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%); DSS biodistribution/microPET with block (TBR ≥ 1.5; ΔTBR ≤ −0.5 at 1–2 h).
 
-See `tl1a_in_silico/REPORT.md` for full tables, figures, and statistical summaries.
+See `tl1a_in_silico/REPORT.md` for full tables, figures, deep lead comparison, and execution plan.
 
 Folder layout:
 

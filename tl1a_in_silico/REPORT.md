@@ -1007,3 +1007,20 @@ Key findings:
 Action: advance Fab79 + Fab04 as co‑leads, with Fab96 and Fab09 as backups; retain Fab122 for diversity if one lead fails.
 
 ![fig_lead_compare.png](fig_lead_compare.png)
+
+## Lead nomination & execution plan (updated)
+Leads are selected to balance developability, conjugation, detectability and mechanism plausibility while keeping diversity.
+
+- Co‑leads: Fab79 (new), Fab04 (original)
+- Backups: Fab96 (new), Fab09 (original)
+- Diversity reserve: Fab122 (new)
+
+Share with CRO and imaging site:
+- Sequences: `tl1a_in_silico/assets/fabs.fasta`
+- Tables: `developability.csv`, `dar.csv`, `composite_ranking.csv`, `lead_deep_compare.csv`
+- Figures: `fig_dar_p12.png`, `fig_dar_ge4.png`, `fig_dev_heatmap.png`, `fig_tbr_vs_kd.png`, `fig_lead_compare.png`
+
+Operational steps:
+1. Express Fab79, Fab04, Fab96, Fab09 (+/− Fab122). Confirm KD ≤ 10 nM and DR3 block ≥ 50%.
+2. Conjugate NOTA at Eq=4; confirm IRF ≥ 70%, HMW ≤ 3%; Ga‑68 labeling to RCP ≥ 95%.
+3. DSS biodistribution/microPET with blocked cohort; success = TBR ≥ 1.5 and ΔTBR ≤ −0.5 at 1–2 h.
