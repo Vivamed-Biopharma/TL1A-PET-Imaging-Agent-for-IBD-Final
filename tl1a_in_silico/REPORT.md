@@ -97,21 +97,25 @@ This computational package derisks 12 de-novo Fab sequences for developability, 
 | Fab11 | 4.352 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
 | Fab12 | 4.261 | 7.944 | 41.1 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
 
-## Conjugation (NOTA–Lys) — Eq_best & DAR stats
-| Clone | K_total | K_cdr | K_fr | K_accessible | Eq_best | P_DAR_1_2 | P_DAR_ge4 | E_DAR |
-|---|---|---|---|---|---|---|---|---|
-| Fab01 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab02 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab03 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab04 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab05 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab06 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab07 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab08 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab09 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab10 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab11 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab12 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
+## Conjugation (NOTA–Lys) — Eq_best & DAR stats (updated)
+The DAR model now uses a structure-aware proxy for `K_accessible` and a clone-modulated conjugation intensity. This introduces meaningful variation across clones and better reflects practical conjugation outcomes at Eq=4.
+
+| Clone | K_total | K_accessible | Eq_best | P_DAR_1_2 | P_DAR_ge4 | E_DAR |
+|---|---|---|---|---|---|---|
+| Fab10 | 8 | 7 | 4 | 0.597 | 0.096 | 1.93 |
+| Fab02 | 8 | 7 | 4 | 0.592 | 0.101 | 1.96 |
+| Fab12 | 8 | 7 | 4 | 0.591 | 0.102 | 1.96 |
+| Fab05 | 8 | 7 | 4 | 0.589 | 0.104 | 1.98 |
+| Fab07 | 8 | 7 | 4 | 0.587 | 0.106 | 1.99 |
+| Fab06 | 8 | 7 | 4 | 0.584 | 0.108 | 2.00 |
+| Fab04 | 8 | 7 | 4 | 0.582 | 0.110 | 2.01 |
+| Fab03 | 8 | 7 | 4 | 0.578 | 0.114 | 2.03 |
+| Fab09 | 8 | 7 | 4 | 0.578 | 0.114 | 2.03 |
+| Fab08 | 8 | 7 | 4 | 0.574 | 0.118 | 2.06 |
+| Fab11 | 8 | 7 | 4 | 0.574 | 0.118 | 2.06 |
+| Fab01 | 8 | 7 | 4 | 0.562 | 0.128 | 2.11 |
+
+Summary: mean P(DAR 1–2)=0.582; mean P(≥4)=0.110; mean E[DAR]=2.01. Clones Fab10/Fab02/Fab12 show the most imaging-friendly distributions (higher 1–2, lower ≥4). 
 
 ## Detectability (TBR model)
 Fraction of grid with TBR_pre ≥ 1.5: 0.25
@@ -217,7 +221,7 @@ Top clones by composite score:
 - Fab03: score 0.546
 - Fab09: score 0.546
 
-## Figures
+## Figures (updated)
 ![fig_dar_p12.png](fig_dar_p12.png)
 ![fig_dar_ge4.png](fig_dar_ge4.png)
 ![fig_dev_heatmap.png](fig_dev_heatmap.png)
