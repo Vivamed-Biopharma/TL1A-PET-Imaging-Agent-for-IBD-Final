@@ -69,12 +69,12 @@ This computational package derisks 12 de-novo Fab sequences for developability, 
 - **Framework consistency**: Human consensus sequences with validated CDR insertions
 - **Length validation**: VH ~120aa, VL ~110aa — standard Fab variable domain sizes
 
-## Statistical summaries
+## Statistical summaries (updated)
 - Hyd_VH %: mean 40.9, sd 0.772 (min 39.5, max 41.9)
 - Hyd_VL %: mean 33.592, sd 0.599 (min 32.4, max 34.3)
 - pI_VL: mean 7.126, sd 0.853 (min 6.31, max 7.944)
-- P_DAR_1_2: mean 0.638, sd 0.0
-- P_DAR_ge4: mean 0.051, sd 0.0
+- P_DAR_1_2: mean 0.582, sd 0.009
+- P_DAR_ge4: mean 0.110, sd 0.009
 
 ## Outliers (|z| > 2)
 - Fab02 in AggProxyMax_VH: z=3.17
@@ -118,7 +118,7 @@ The DAR model now uses a structure-aware proxy for `K_accessible` and a clone-mo
 Summary: mean P(DAR 1–2)=0.582; mean P(≥4)=0.110; mean E[DAR]=2.01. Clones Fab10/Fab02/Fab12 show the most imaging-friendly distributions (higher 1–2, lower ≥4). 
 
 ## Detectability (TBR model)
-Fraction of grid with TBR_pre ≥ 1.5: 0.25
+Fraction of grid with TBR_pre ≥ 1.5: 0.20
 
 Median ΔTBR at 80% occupancy: -0.107
 Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
