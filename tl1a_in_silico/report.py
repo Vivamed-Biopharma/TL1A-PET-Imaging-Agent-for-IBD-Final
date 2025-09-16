@@ -478,7 +478,7 @@ if PLOTTING and PANDAS:
     except Exception:
         pass
 
-# CSV exports
+# CSV/FASTA exports
 import csv
 base_dir = os.path.dirname(__file__)
 with open(os.path.join(base_dir, 'developability.csv'), 'w', newline='') as f:
@@ -489,6 +489,20 @@ with open(os.path.join(base_dir, 'dar.csv'), 'w', newline='') as f:
     w = csv.DictWriter(f, fieldnames=["Clone","K_total","K_cdr","K_fr","K_accessible","Eq_best","P_DAR_1_2","P_DAR_ge4","E_DAR"])
     w.writeheader()
     for r in sorted(rows_dar, key=lambda x:x['Clone']): w.writerow(r)
+    
+# Composite ranking export (if computed)
+if PANDAS and 'ranking' in locals() and ranking is not None:
+    ranking_path = os.path.join(base_dir, 'composite_ranking.csv')
+    ranking.to_csv(ranking_path, index=False)
+
+# FASTA export of VH/VL
+assets_dir = os.path.join(base_dir, 'assets')
+os.makedirs(assets_dir, exist_ok=True)
+fasta_path = os.path.join(assets_dir, 'fabs.fasta')
+with open(fasta_path, 'w') as f:
+    for name, ch in sorted(FABS.items()):
+        f.write(f">{name}_VH\n{ch['VH']}\n")
+        f.write(f">{name}_VL\n{ch['VL']}\n")
 
 # Render markdown
 out=[]
