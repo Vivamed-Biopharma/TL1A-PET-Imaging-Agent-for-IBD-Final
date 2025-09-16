@@ -995,3 +995,15 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 - Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
 - Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
 - IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.
+
+## Deep lead comparison (originals vs new)
+We compared originals (Fab04, Fab03, Fab09) versus new leads (Fab79, Fab96, Fab122) across pillars with z‑scores; see `lead_deep_compare.csv` and `fig_lead_compare.png`.
+
+Key findings:
+- Fab79 shows the highest composite z, driven by strong paratope and low manufacturability proxies, while maintaining favorable DAR.
+- Fab04 remains the best of the originals and is competitive overall; Fab09's higher paratope gives it an edge over Fab03.
+- Fab122's paratope is modest but compensated by overall balance; keep as a backup to hedge sequence diversity.
+
+Action: advance Fab79 + Fab04 as co‑leads, with Fab96 and Fab09 as backups; retain Fab122 for diversity if one lead fails.
+
+![fig_lead_compare.png](fig_lead_compare.png)
