@@ -1,0 +1,18 @@
+Remove any remaining issues:
+- Search for and remove: TODO, FIXME, placeholder, mock, fake, dummy
+- Replace stubs with real code
+- Run tests and fix failures
+- Ensure NeuroSnap API calls work properly
+NEUROSNAP API KEY: bd0e1ed66ab2b0e73dfa1d2eba2ddf5d5aaa39d90d7d751547f81d616ddcdc30565d092bc4021535b504e6c30df5eb09a84bffc02ddafc6fb1c7abb53f123c1b
+
+Create a to do list for these 10 items:
+1. Search entire codebase for TODO, FIXME, placeholder patterns
+2. Remove or replace all mock, fake, dummy data with real implementations
+3. Eliminate all NotImplementedError and pass statements
+4. Replace any remaining stubs with functional code
+5. Run complete test suite and fix all failing tests
+6. Verify all NeuroSnap API calls work with real data
+7. Add missing docstrings and type annotations
+8. Perform code quality audit with linting tools
+9. Read ALL figures and diagrams, make sure they are accurate and correct, they all look funky and ugly
+10. Ensure all functions have proper error handling
