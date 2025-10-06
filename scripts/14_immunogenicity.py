@@ -7,11 +7,17 @@ In a real implementation, this would use DeepImmuno or similar tools.
 """
 
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
 import random
-from scripts.neurosnap_wrappers import predict_immunogenicity
+try:
+    from scripts.neurosnap_wrappers import predict_immunogenicity as ns_predict_immunogenicity
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_immunogenicity as ns_predict_immunogenicity
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -48,9 +54,9 @@ def predict_immunogenicity(fab_name, sequence):
     # Adjust score based on sequence features
     seq_immunogenicity_score = base_score + (t_cell_count * 0.05) + (hydrophobic_stretches * 0.02)
 
-    # AI-based prediction using DeepImmuno
+    # AI-based prediction using DeepImmuno (NeuroSnap)
     try:
-        ai_results = predict_immunogenicity(sequence)
+        ai_results = ns_predict_immunogenicity(sequence)
         ai_score = ai_results.get("immunogenicity_score", 0)
         ai_confidence = ai_results.get("confidence", 0.0)
         ai_epitopes = ai_results.get("predicted_epitopes", [])
@@ -114,7 +120,7 @@ def main():
         logger.info(f"Results saved to {output_path}")
 
         print("Immunogenicity Prediction:")
-        print(df[['Fab_Name', 'Immunogenicity_Score', 'Risk_Level']].to_string(index=False))
+        print(df[['Fab_Name', 'Combined_Immunogenicity_Score', 'Risk_Level']].to_string(index=False))
 
         # Validation
         high_risk = df[df['Risk_Level'] == 'High']

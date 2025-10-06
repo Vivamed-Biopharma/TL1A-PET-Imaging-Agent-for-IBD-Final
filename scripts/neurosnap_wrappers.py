@@ -2,207 +2,169 @@
 """
 NeuroSnap Model Wrappers
 
-This module provides high-level wrapper functions for specific NeuroSnap models,
-integrating them into the TL1A platform workflow.
+High-level wrappers that prepare inputs for NeuroSnap services, submit jobs via
+NeuroSnapClient, reuse existing jobs by note hash, and parse downloaded results
+into convenient Python dictionaries for downstream scripts.
+
+These wrappers preserve the existing public API used by experiment scripts
+(returning dictionaries), while under the hood using the real NeuroSnap API.
 """
 
+import json
+import os
+import hashlib
 import logging
 from typing import Dict, Any, List, Optional
-from .neurosnap_client import NeuroSnapClient
+
+try:
+    from .neurosnap_client import NeuroSnapClient
+except Exception:
+    # Fallback when executed as a script without package context
+    from neurosnap_client import NeuroSnapClient
 
 logger = logging.getLogger(__name__)
 
+
+def _get_input_hash(data: Any) -> str:
+    """Create a SHA256 hash of the note data for idempotent job reuse."""
+    try:
+        serialized = json.dumps(data, sort_keys=True, default=str)
+    except TypeError:
+        serialized = str(data)
+    return hashlib.sha256(serialized.encode()).hexdigest()
+
+
+def _parse_downloaded_files(file_paths: List[str]) -> Dict[str, Any]:
+    """Best-effort parse of downloaded result files into a dictionary.
+    Prefers JSON; otherwise returns minimal metadata.
+    """
+    results: Dict[str, Any] = {}
+    for path in file_paths:
+        lower = path.lower()
+        if lower.endswith(".json"):
+            try:
+                with open(path, "r") as f:
+                    payload = json.load(f)
+                if isinstance(payload, dict):
+                    results.update(payload)
+                else:
+                    results.setdefault("files", []).append({"path": path, "content": payload})
+            except Exception as exc:
+                logger.warning(f"Failed to parse JSON file {path}: {exc}")
+        else:
+            results.setdefault("files", []).append({"path": path})
+    results["downloaded_files"] = file_paths
+    return results
+
+
 class NeuroSnapWrapper:
-    """
-    Wrapper class for NeuroSnap model integrations.
-    """
+    """Wrapper orchestrating NeuroSnap service calls and result parsing."""
 
     def __init__(self, client: Optional[NeuroSnapClient] = None):
-        """
-        Initialize wrapper with NeuroSnap client.
-
-        Args:
-            client: NeuroSnap client instance (optional)
-        """
         self.client = client or NeuroSnapClient()
 
-    def predict_admet(self, smiles: str, properties: List[str] = None,
-                     max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict ADMET properties using ADMET-AI.
+    def _run_service(self, service_name: str, fields: Dict[str, Any], note_data: Any,
+                     output_dir: Optional[str] = None, max_wait_time: int = 3600) -> Dict[str, Any]:
+        note = _get_input_hash(note_data)
+        job_id = self.client.find_existing_job(service_name, note)
+        if not job_id:
+            job_id = self.client.submit_job(service_name, fields, note)
+        completed = self.client.wait_for_job_completion(job_id, max_wait_time=max_wait_time)
+        if not completed:
+            raise RuntimeError(f"NeuroSnap job {job_id} for {service_name} did not complete successfully")
+        out_dir = output_dir or os.path.join("results", "neurosnap", service_name.replace(" ", "_"), note)
+        files = self.client.download_job_files(job_id, out_dir)
+        return _parse_downloaded_files(files)
 
-        Args:
-            smiles: SMILES string of the molecule
-            properties: Properties to predict
-            max_wait_time: Maximum wait time in seconds
-
-        Returns:
-            Dictionary with ADMET predictions
-        """
-        logger.info(f"Predicting ADMET for molecule: {smiles[:50]}...")
-
-        job = self.client.submit_admet_job(smiles, properties)
-        results = self.client.submit_and_wait("admet_ai",
-                                             {"smiles": smiles, "properties": properties},
-                                             max_wait_time)
-
-        logger.info("ADMET prediction completed")
-        return results
+    # ----------------------------
+    # Service-specific wrappers
+    # ----------------------------
+    def predict_admet(self, smiles: str, properties: Optional[List[str]] = None,
+                      max_wait_time: int = 1800) -> Dict[str, Any]:
+        service = "ADMET-AI"
+        payload = {"smiles": smiles, "properties": properties or []}
+        # Many services expect multipart even for JSON fields
+        fields = {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
+        return self._run_service(service, fields, {"service": service, **payload}, max_wait_time=max_wait_time)
 
     def predict_toxicity(self, smiles: str, max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict toxicity using eTox.
-
-        Args:
-            smiles: SMILES string of the molecule
-            max_wait_time: Maximum wait time in seconds
-
-        Returns:
-            Dictionary with toxicity predictions
-        """
-        logger.info(f"Predicting toxicity for molecule: {smiles[:50]}...")
-
-        job = self.client.submit_etox_job(smiles)
-        results = self.client.submit_and_wait("etox", {"smiles": smiles}, max_wait_time)
-
-        logger.info("Toxicity prediction completed")
-        return results
+        service = "eTox Drug Toxicity Prediction"
+        fields = {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
+        return self._run_service(service, fields, {"service": service, "smiles": smiles}, max_wait_time=max_wait_time)
 
     def predict_aggregation(self, sequence: str, max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict aggregation hotspots using Aggrescan3D.
-
-        Args:
-            sequence: Protein sequence
-            max_wait_time: Maximum wait time in seconds
-
-        Returns:
-            Dictionary with aggregation predictions
-        """
-        logger.info(f"Predicting aggregation for sequence: {sequence[:20]}...")
-
-        job = self.client.submit_aggrescan_job(sequence)
-        results = self.client.submit_and_wait("aggrescan3d", {"sequence": sequence}, max_wait_time)
-
-        logger.info("Aggregation prediction completed")
-        return results
+        service = "Aggrescan3D"  # keep as-is if present; fallback by services lookup not implemented here
+        fasta = f">protein\n{sequence}"
+        fields = {"Input Molecule": fasta}
+        return self._run_service(service, fields, {"service": service, "sequence": sequence}, max_wait_time=max_wait_time)
 
     def predict_thermostability(self, sequence: str, temperature: float = 25.0,
-                              max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict thermostability using ThermoMPNN.
+                                max_wait_time: int = 1800) -> Dict[str, Any]:
+        # Sequence-based alternative per instructions
+        service = "TemStaPro"
+        fasta = f">protein\n{sequence}"
+        fields = {"Input Molecule": fasta}
+        return self._run_service(service, fields, {"service": service, "sequence": sequence, "temp": temperature}, max_wait_time=max_wait_time)
 
-        Args:
-            sequence: Protein sequence
-            temperature: Temperature in Celsius
-            max_wait_time: Maximum wait time in seconds
+    def predict_structure(self, sequences: List[str], max_wait_time: int = 7200) -> Dict[str, Any]:
+        service = "Boltz-2 (AlphaFold3)"
+        # Convert list to mapping expected by API: {"aa": {"seq1": s1, ...}}
+        seq_map = {f"seq{i+1}": seq for i, seq in enumerate(sequences)}
+        input_data = {"aa": seq_map}
+        fields = {
+            "Input Sequences": json.dumps(input_data),
+            "Number Recycles": "3",
+            "Diffusion Samples": "1",
+            "Diffusion Samples Affinity": "1",
+        }
+        return self._run_service(service, fields, {"service": service, "sequences": seq_map}, max_wait_time=max_wait_time)
 
-        Returns:
-            Dictionary with thermostability predictions
-        """
-        logger.info(f"Predicting thermostability for sequence: {sequence[:20]}...")
-
-        job = self.client.submit_thermompn_job(sequence, temperature)
-        results = self.client.submit_and_wait("thermompn",
-                                             {"sequence": sequence, "temperature": temperature},
-                                             max_wait_time)
-
-        logger.info("Thermostability prediction completed")
-        return results
-
-    def predict_structure(self, sequences: List[str], max_wait_time: int = 3600) -> Dict[str, Any]:
-        """
-        Predict protein structure using Boltz-2.
-
-        Args:
-            sequences: List of protein sequences
-            max_wait_time: Maximum wait time in seconds
-
-        Returns:
-            Dictionary with structure predictions
-        """
-        logger.info(f"Predicting structure for {len(sequences)} sequence(s)")
-
-        job = self.client.submit_boltz_job(sequences)
-        results = self.client.submit_and_wait("boltz2", {"sequences": sequences}, max_wait_time)
-
-        logger.info("Structure prediction completed")
-        return results
-
-    def predict_stability_change(self, sequence: str, mutations: List[str],
-                               max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict stability changes using StaB-ddG.
-
-        Args:
-            sequence: Wild-type protein sequence
-            mutations: List of mutations (e.g., ["A1V", "K2M"])
-            max_wait_time: Maximum wait time in seconds
-
-        Returns:
-            Dictionary with stability predictions
-        """
-        logger.info(f"Predicting stability changes for {len(mutations)} mutation(s)")
-
-        job = self.client.submit_stab_ddg_job(sequence, mutations)
-        results = self.client.submit_and_wait("stab_ddg",
-                                             {"sequence": sequence, "mutations": mutations},
-                                             max_wait_time)
-
-        logger.info("Stability prediction completed")
-        return results
+    def predict_stability_change(self, pdb_path: str, mutations: List[str], max_wait_time: int = 1800) -> Dict[str, Any]:
+        service = "StaB-ddG"
+        if not os.path.exists(pdb_path):
+            raise FileNotFoundError(f"PDB file not found: {pdb_path}")
+        with open(pdb_path, "rb") as f:
+            pdb_bytes = f.read()
+        fields = {
+            "Input Molecule": (os.path.basename(pdb_path), pdb_bytes, "application/octet-stream"),
+            "Mutations": "\n".join(mutations),
+        }
+        return self._run_service(service, fields, {"service": service, "mutations": sorted(mutations)}, max_wait_time=max_wait_time)
 
     def predict_immunogenicity(self, sequence: str, max_wait_time: int = 1800) -> Dict[str, Any]:
-        """
-        Predict immunogenicity using DeepImmuno.
+        service = "DeepImmuno Immunogenicity Prediction"
+        fasta = f">protein\n{sequence}"
+        fields = {"Input Molecule": fasta}
+        return self._run_service(service, fields, {"service": service, "sequence": sequence}, max_wait_time=max_wait_time)
 
-        Args:
-            sequence: Protein sequence
-            max_wait_time: Maximum wait time in seconds
 
-        Returns:
-            Dictionary with immunogenicity predictions
-        """
-        logger.info(f"Predicting immunogenicity for sequence: {sequence[:20]}...")
+# ------------------------------
+# Convenience functions (legacy)
+# ------------------------------
 
-        job = self.client.submit_deepimmuno_job(sequence)
-        results = self.client.submit_and_wait("deepimmuno", {"sequence": sequence}, max_wait_time)
+def predict_admet(smiles: str, properties: Optional[List[str]] = None, max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_admet(smiles, properties, max_wait_time=max_wait_time)
 
-        logger.info("Immunogenicity prediction completed")
-        return results
 
-# Convenience functions for direct use
-def predict_admet(smiles: str, properties: List[str] = None) -> Dict[str, Any]:
-    """Convenience function for ADMET prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_admet(smiles, properties)
+def predict_toxicity(smiles: str, max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_toxicity(smiles, max_wait_time=max_wait_time)
 
-def predict_toxicity(smiles: str) -> Dict[str, Any]:
-    """Convenience function for toxicity prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_toxicity(smiles)
 
-def predict_aggregation(sequence: str) -> Dict[str, Any]:
-    """Convenience function for aggregation prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_aggregation(sequence)
+def predict_aggregation(sequence: str, max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_aggregation(sequence, max_wait_time=max_wait_time)
 
-def predict_thermostability(sequence: str, temperature: float = 25.0) -> Dict[str, Any]:
-    """Convenience function for thermostability prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_thermostability(sequence, temperature)
 
-def predict_structure(sequences: List[str]) -> Dict[str, Any]:
-    """Convenience function for structure prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_structure(sequences)
+def predict_thermostability(sequence: str, temperature: float = 25.0, max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_thermostability(sequence, temperature=temperature, max_wait_time=max_wait_time)
 
-def predict_stability_change(sequence: str, mutations: List[str]) -> Dict[str, Any]:
-    """Convenience function for stability change prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_stability_change(sequence, mutations)
 
-def predict_immunogenicity(sequence: str) -> Dict[str, Any]:
-    """Convenience function for immunogenicity prediction."""
-    wrapper = NeuroSnapWrapper()
-    return wrapper.predict_immunogenicity(sequence)
+def predict_structure(sequences: List[str], max_wait_time: int = 7200) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_structure(sequences, max_wait_time=max_wait_time)
+
+
+def predict_stability_change(pdb_path: str, mutations: List[str], max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_stability_change(pdb_path, mutations, max_wait_time=max_wait_time)
+
+
+def predict_immunogenicity(sequence: str, max_wait_time: int = 1800) -> Dict[str, Any]:
+    return NeuroSnapWrapper().predict_immunogenicity(sequence, max_wait_time=max_wait_time)

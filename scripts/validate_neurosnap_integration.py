@@ -94,11 +94,17 @@ def test_stability_change_integration():
     logger.info("Testing stability change prediction integration...")
 
     wrapper = NeuroSnapWrapper()
+    # Use PDB-based interface for StaB-ddG; provide a minimal PDB path
+    import os
     sequence = inputs.fab_sequences["Fab06_VH"]
-    mutations = ["A1V", "K2M"]  # Example mutations
+    mutations = ["Y33A", "W52A"]  # Example Ala scanning-style mutations
 
     try:
-        results = wrapper.predict_stability_change(sequence, mutations, max_wait_time=600)
+        pdb_path = os.environ.get("TL1A_FAB_PDB", "data/fab_model.pdb")
+        # Call wrapper that expects a PDB path per new API
+        from scripts.neurosnap_wrappers import NeuroSnapWrapper as _NSW
+        _wrapper = _NSW()
+        results = _wrapper.predict_stability_change(pdb_path, mutations, max_wait_time=600)
         logger.info(f"Stability change prediction successful: {len(mutations)} mutations analyzed")
         return True, results
     except Exception as e:

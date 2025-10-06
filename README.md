@@ -1,7 +1,7 @@
 # 🚀 TL1A PET Imaging Agent for IBD - Computational Platform
 
-**Go/No-Go Decision: ✅ GO FORWARD**  
-*Recommendation: Advance Fab06 to preclinical development based on superior developability profile and validated imaging potential.*
+**Go/No-Go Decision: ⏸ Re-evaluate after real API rerun**  
+*Recommendation: Re-run key AI-driven experiments with the updated real NeuroSnap integration and reassess Fab06 vs Fab11 based on verified outputs and logs.*
 
 [![Pipeline Status](https://img.shields.io/badge/Pipeline-Complete-success)](https://github.com)
 [![NeuroSnap Integration](https://img.shields.io/badge/NeuroSnap-Integrated-blue)](https://api.neurosnap.ai)
@@ -13,18 +13,15 @@
 
 This computational platform successfully de-risked the Ga-68–NOTA–Fab TL1A immunoPET program through 15 comprehensive experiments. The platform integrated state-of-the-art AI models (NeuroSnap) with traditional computational chemistry to evaluate linker-chelator chemistry and antibody developability.
 
-### Key Achievements
-- ✅ **Complete Pipeline Execution**: All 15 experiments ran successfully in 45 minutes
-- ✅ **Real AI Integration**: 7 NeuroSnap models provided actual scientific predictions
-- ✅ **Data-Driven Decisions**: Identified Fab06 as lead candidate with 22 output files generated
-- ✅ **Production-Ready Code**: Robust error handling, comprehensive testing, zero placeholders
+### Key Changes
+- ✅ **Real NeuroSnap Client**: Authenticated, multipart job submission, status polling, file download
+- ✅ **Job Reuse**: Deterministic note hashing to reuse completed jobs and save costs
+- ✅ **Wrappers Refactor**: eTox, Aggrescan3D, TemStaPro, Boltz-2, StaB-ddG, DeepImmuno wired to real endpoints
+- ✅ **Experiment Fixes**: 03, 07, 10, 11, 12, 13, 14 updated to parse real outputs
+- ✅ **3D Analysis**: Interface fingerprinting now operates on actual PDBs
 
-### Go/No-Go Rationale
-**GO Decision Supported By:**
-- Successful linker-chelator physicochemical profiling (LogP = -1.1, MW = 521 Da)
-- Validated Fab sequences with Instability Index < 40 and negative GRAVY scores
-- Real AI predictions confirming low immunogenicity and acceptable aggregation risk
-- Established workflow for companion diagnostic development
+### Data Rerun Requirement
+With mocks removed, results depend on live NeuroSnap jobs and queue times. Re-run the pipeline to regenerate all figures/tables before making program decisions.
 
 ---
 
@@ -60,7 +57,7 @@ TL1A (TNFSF15) emerged as a key IBD driver through:
 TL1A-PET-Imaging-Agent-for-IBD/
 ├── 🧬 scripts/inputs.py              # Central molecule/sequence database
 ├── 🔬 scripts/01-15_*.py            # 15 computational experiments
-├── 🤖 scripts/neurosnap_*.py        # AI model integrations
+├── 🤖 scripts/neurosnap_*.py        # AI model integrations (real API)
 ├── ⚙️ scripts/error_handling.py     # Robust error management
 ├── 📊 results/                      # 22 generated output files
 ├── 🧪 tests/                        # Comprehensive test suite
@@ -84,9 +81,10 @@ fab_sequences = {
 ```
 
 #### 2. **NeuroSnap AI Integration** (`scripts/neurosnap_*.py`)
-- **Client Class**: Authenticated API calls with circuit breaker pattern
-- **7 AI Models**: ADMET-AI, eTox, Aggrescan3D, ThermoMPNN, Boltz-2, StaB-ddG, DeepImmuno
-- **Error Handling**: Exponential backoff, retry logic, graceful degradation
+- **Client Class**: Env-based auth (`NEUROSNAP_API_KEY`), multipart submit, status polling
+- **Services**: ADMET-AI, eTox, Aggrescan3D, TemStaPro (sequence Tm), Boltz-2 (AF3), StaB-ddG, DeepImmuno
+- **Job Reuse**: Note hashing to avoid re-computation
+- **Artifacts**: Output files downloaded to `results/neurosnap/...`
 
 #### 3. **Experiment Pipeline** (15 Scripts)
 | Phase | Experiments | Purpose | AI Integration |
@@ -97,7 +95,7 @@ fab_sequences = {
 
 ---
 
-## 📊 Results: Real Data & Visualizations
+## 📊 Results: To Be Regenerated With Real API Outputs
 
 ### Phase A: Prodrug De-risking
 
@@ -118,7 +116,7 @@ fab_sequences = {
 **BioTransformer Results**: Linker shows high metabolic stability with only expected isothiocyanate hydrolysis.
 
 #### Experiment 3: Toxicity Analysis
-**NeuroSnap eTox Integration**: Predicted toxicity score = 0.12 (Low risk), confirmed by structural analysis.
+Outputs now sourced from real eTox. See `results/prodrug/03_liability_hits.csv` after rerun.
 
 ### Phase B: Formulation & Developability
 
@@ -135,7 +133,7 @@ fab_sequences = {
 **Visualization**: GRAVY vs Instability Index scatter plot showing all clones in "developable" quadrant.
 
 #### Experiment 7: Aggregation Risk
-**Aggrescan3D Results**: Fab06 shows 2 hotspots vs Fab11's 3 hotspots, indicating lower aggregation risk.
+Hotspot summary/detailed CSVs generated from real Aggrescan3D outputs.
 
 #### Experiment 9: Structural Flexibility
 ![Flexibility Profile](results/formulation/09_flexibility_Fab_Model.png)
@@ -144,10 +142,10 @@ fab_sequences = {
 ### Phase C: Biobetter Engineering
 
 #### Experiment 11: Complex Modeling
-**Boltz-2 Structure Prediction**: Successfully generated Fab-TL1A complex with confidence score = 0.89.
+PDBs saved to `results/biobetter/11_complex_models/*.pdb` for downstream 3D analyses.
 
 #### Experiment 13: Alanine Scanning
-**StaB-ddG Results**: Identified 5 critical residues in CDR-H3 with ΔΔG > 1.0 kcal/mol.
+Uses `data/fab_model.pdb` (or `TL1A_FAB_PDB`) with StaB-ddG for ΔΔG predictions.
 
 #### Experiment 14: Immunogenicity Assessment
 **DeepImmuno Prediction**: Both Fabs show immunogenicity score < 0.2 (Low risk).
@@ -188,6 +186,7 @@ fab_sequences = {
 - Java 8+ (for BioTransformer)
 - 8GB RAM minimum
 - Internet connection (for NeuroSnap API)
+ - Set environment variable `NEUROSNAP_API_KEY`
 ```
 
 ### Quick Start
@@ -207,7 +206,10 @@ pip install -r requirements.txt
 # - BioTransformer3.0.jar → scripts/
 # - Fab PDB structure → data/fab_model.pdb
 
-# 5. Run complete pipeline
+# 5. Set NeuroSnap API key
+export NEUROSNAP_API_KEY="<YOUR_API_KEY>"
+
+# 6. Run complete pipeline
 python run_all_experiments.py
 
 # 6. View results
@@ -232,7 +234,7 @@ python main.py 1               # Experiment 1 via CLI
 # Unit tests
 python -m pytest tests/ -v
 
-# NeuroSnap validation
+# NeuroSnap validation (makes real API calls)
 python scripts/validate_neurosnap_integration.py
 
 # Performance profiling
@@ -244,9 +246,9 @@ python -c "import cProfile; cProfile.run('import run_all_experiments; run_all_ex
 ## ⚠️ Limitations & Risk Mitigation
 
 ### Technical Limitations
-1. **PDB Dependency**: Experiment 9 requires experimentally determined Fab structure
-2. **AI Model Accuracy**: NeuroSnap predictions have ~85-95% accuracy based on training data
-3. **Sequence Length**: Platform optimized for antibody fragments (< 150 AA)
+1. **API Dependency**: Results require live NeuroSnap services and may queue
+2. **Model Uncertainty**: Predictions are in-silico and require wet-lab validation
+3. **Structure Availability**: Some analyses require PDBs; a minimal `data/fab_model.pdb` is provided
 
 ### Risk Mitigation Strategies
 | Risk | Impact | Mitigation |

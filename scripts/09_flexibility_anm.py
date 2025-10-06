@@ -9,7 +9,10 @@ in Fab structures. Requires a PDB file.
 import prody as pr
 import pandas as pd
 import matplotlib.pyplot as plt
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 import os
 from pathlib import Path

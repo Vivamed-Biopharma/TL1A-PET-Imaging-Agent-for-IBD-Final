@@ -7,11 +7,19 @@ In a real implementation, this would use Boltz-2 or AlphaFold-Multimer for struc
 For this POC, we simulate the modeling process.
 """
 
+import os
+import shutil
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
-from scripts.neurosnap_wrappers import predict_structure
+try:
+    from scripts.neurosnap_wrappers import predict_structure
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_structure
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -40,12 +48,12 @@ def model_fab_complex(fab_name, vh_seq, vl_seq):
 
         # Extract relevant metrics
         confidence_score = results.get("confidence", 0.0)
-        interface_residues = results.get("interface_residues", 20)
-        binding_energy = results.get("binding_energy", -12.0)
+        interface_residues = results.get("interface_residues", None)
+        binding_energy = results.get("binding_energy", None)
 
         # Analyze interface composition
         interface_aa = ['Tyr', 'Trp', 'Arg', 'Asp', 'Glu', 'Ser', 'Thr', 'Asn', 'Gln']
-        interface_composition = results.get("interface_composition", {aa: 1 for aa in interface_aa})
+        interface_composition = results.get("interface_composition", {aa: 0 for aa in interface_aa})
 
         result = {
             "Fab_Name": fab_name,
@@ -53,9 +61,22 @@ def model_fab_complex(fab_name, vh_seq, vl_seq):
             "Predicted_Binding_Energy": binding_energy,
             "Confidence_Score": confidence_score,
             "Interface_Composition": interface_composition,
-            "Total_Interface_AA": sum(interface_composition.values()),
+            "Total_Interface_AA": sum(interface_composition.values()) if interface_composition else 0,
             "Structure_Predicted": True
         }
+
+        # Persist PDBs to a predictable location for downstream analysis (Exp 12)
+        downloaded = results.get("downloaded_files", []) or []
+        pdb_files = [p for p in downloaded if str(p).lower().endswith('.pdb')]
+        if pdb_files:
+            out_dir = Path("results/biobetter/11_complex_models")
+            out_dir.mkdir(parents=True, exist_ok=True)
+            dest = out_dir / f"{fab_name}.pdb"
+            try:
+                shutil.copy2(pdb_files[0], dest)
+                result["PDB_Path"] = str(dest)
+            except Exception as e:
+                logger.warning(f"Failed to copy PDB for {fab_name}: {e}")
 
         return result
 

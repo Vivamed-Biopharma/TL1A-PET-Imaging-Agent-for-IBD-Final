@@ -7,7 +7,10 @@ to guide decision-making for Fab selection and optimization.
 """
 
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
 import os

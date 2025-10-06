@@ -7,10 +7,17 @@ key binding residues. In a real implementation, this would use StaB-ddG.
 """
 
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
-from scripts.neurosnap_wrappers import predict_stability_change
+import os
+try:
+    from scripts.neurosnap_wrappers import predict_stability_change as ns_predict_stability_change
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_stability_change as ns_predict_stability_change
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -55,8 +62,9 @@ def perform_alanine_scanning(fab_name, sequence):
 
     if all_mutations:
         try:
-            # Use StaB-ddG for real predictions
-            stab_results = predict_stability_change(sequence, all_mutations, max_wait_time=1800)
+            # Use StaB-ddG for real predictions; requires a PDB structure
+            pdb_path = os.environ.get("TL1A_FAB_PDB", "data/fab_model.pdb")
+            stab_results = ns_predict_stability_change(pdb_path, all_mutations, max_wait_time=1800)
 
             # Map back to individual mutations
             mutation_ddg = stab_results.get("ddg_values", {})

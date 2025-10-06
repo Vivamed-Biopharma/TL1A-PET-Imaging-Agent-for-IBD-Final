@@ -9,11 +9,17 @@ Properties include molecular weight, logP, hydrogen bond donors/acceptors, rotat
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 import os
 from pathlib import Path
-from scripts.error_handling import handle_errors
+try:
+    from scripts.error_handling import handle_errors
+except ModuleNotFoundError:
+    from error_handling import handle_errors
 from typing import Dict
 
 # Setup logging

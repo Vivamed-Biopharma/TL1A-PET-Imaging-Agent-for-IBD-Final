@@ -8,7 +8,10 @@ including per-residue charge analysis.
 
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
 

@@ -1,0 +1,488 @@
+# SURGICAL FIXES - CRITICAL FILE PRESERVATION
+
+**REPOSITORY IS IN YOUR WORKING DIRECTORY. Explore with file tools first.**
+
+═══════════════════════════════════════════════════════════════════════════════
+🚨 CRITICAL PRESERVATION RULES
+═══════════════════════════════════════════════════════════════════════════════
+
+**BEFORE MAKING ANY CHANGES:**
+1. Run: `find . -type f -name '*.py' | wc -l` → Save this count
+2. Run: `find . -name 'run_exp*.py' -o -name 'experiment*.py' | sort` → Save list
+
+**FILE PRESERVATION:**
+- ❌ NEVER delete working experiment files
+- ✅ ONLY delete specific files mentioned below
+
+**AFTER CHANGES:**
+- Recount files - if decreased by >3, YOU DELETED TOO MUCH
+
+═══════════════════════════════════════════════════════════════════════════════
+🛠️ FIX INSTRUCTIONS FROM GEMINI (FULL VERSION)
+═══════════════════════════════════════════════════════════════════════════════
+
+This repository has been flagged for a critical scientific validity audit. The findings reveal that while the foundational cheminformatics and bioinformatics tasks are performed correctly using standard libraries, the core value proposition—the integration of advanced AI models via a "NeuroSnap" API—is entirely fabricated. The `neurosnap_client.py` is a sophisticated mock that returns hardcoded or random data, rendering over half of the project's conclusions invalid.
+
+The following is a comprehensive, step-by-step fix to transform this repository from a scientific fabrication into a robust, production-ready computational platform with **real, verifiable NeuroSnap API integration**. All mock data, pseudoscience formulas, and fabricated results will be replaced with battle-tested code that performs genuine, state-of-the-art computational drug discovery tasks.
+
+### Step 1: Overhaul the NeuroSnap API Client for Real-World Use
+
+The existing `neurosnap_client.py` is a complete fabrication. It will be replaced with a production-grade client that handles authentication, asynchronous job submission, status polling with exponential backoff, and result downloading. This new client will also incorporate job reuse logic to avoid redundant computations and save costs.
+
+**File to be Replaced:** `scripts/neurosnap_client.py`
+
+```python
+#!/usr/bin/env python3
+"""
+Real NeuroSnap API Client
+
+This module provides a robust, production-ready client for interacting with the 
+NeuroSnap API. It includes job submission, polling, result retrieval, and job reuse logic.
+"""
+
+import requests
+import time
+import json
+import logging
+import os
+from typing import Dict, Any, Optional, List
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+class NeuroSnapClient:
+    """
+    Client for NeuroSnap API with authentication, job management, and job reuse.
+    """
+    BASE_URL = "https://neurosnap.ai/api"
+    API_KEY = "9d51d402d242eab91b3d0c9fe90bc8db965259b9f0b5e9e8c756c7c426688cefba682290754b94647b2c2e1001d2fa651b1cc9e0494a85d642199a015c334d45"
+
+    def __init__(self, timeout: int = 60):
+        self.timeout = timeout
+        self.headers = {"X-API-KEY": self.API_KEY}
+
+    def list_jobs(self) -> List[Dict[str, Any]]:
+        """Lists all jobs for the current user."""
+        try:
+            response = requests.get(f"{self.BASE_URL}/jobs", headers=self.headers)
+            response.raise_for_status()
+            return response.json()
+        except requests.RequestException as e:
+            logger.error(f"Failed to list jobs: {e}")
+            return []
+
+    def find_existing_job(self, service_name: str, note: str) -> Optional[str]:
+        """
+        Finds an existing completed job with a matching service and note.
+        
+        Args:
+            service_name: The NeuroSnap service name.
+            note: A unique identifier for the job input (e.g., molecule hash).
+
+        Returns:
+            The job ID if a completed job is found, otherwise None.
+        """
+        logger.info(f"Searching for existing job for service '{service_name}' with note '{note}'")
+        all_jobs = self.list_jobs()
+        for job in all_jobs:
+            if job.get('Service') == service_name and job.get('Note') == note and job.get('Status') == 'completed':
+                logger.info(f"Found existing completed job {job['ID']}. Reusing results.")
+                return job['ID']
+        logger.info("No existing completed job found. Submitting a new one.")
+        return None
+
+    def submit_job(self, service_name: str, fields: Dict[str, Any], note: str) -> str:
+        """
+        Submits a job to a NeuroSnap service.
+
+        Args:
+            service_name: The name of the service (e.g., "Boltz-2 (AlphaFold3)").
+            fields: A dictionary of parameters for the multipart form.
+            note: A unique identifier for the job input.
+
+        Returns:
+            The submitted job ID.
+        """
+        multipart_data = MultipartEncoder(fields=fields)
+        headers = self.headers.copy()
+        headers["Content-Type"] = multipart_data.content_type
+
+        url = f"{self.BASE_URL}/job/submit/{service_name}?note={note}"
+        logger.info(f"Submitting job to {url}")
+        
+        response = requests.post(url, headers=headers, data=multipart_data, timeout=self.timeout)
+        response.raise_for_status()
+        job_id = response.text.strip().strip('"')
+        logger.info(f"Job submitted successfully. Job ID: {job_id}")
+        return job_id
+
+    def wait_for_job_completion(self, job_id: str, max_wait_time: int = 3600) -> bool:
+        """
+        Waits for a job to complete, polling its status.
+
+        Args:
+            job_id: The ID of the job to monitor.
+            max_wait_time: Maximum time to wait in seconds.
+
+        Returns:
+            True if the job completed successfully, False otherwise.
+        """
+        start_time = time.time()
+        logger.info(f"Waiting for job {job_id} to complete...")
+        while time.time() - start_time < max_wait_time:
+            try:
+                status_response = requests.get(f"{self.BASE_URL}/job/status/{job_id}", headers=self.headers)
+                status_response.raise_for_status()
+                status = status_response.text.strip().strip('"')
+                logger.info(f"Job {job_id} status: {status}")
+
+                if status == "completed":
+                    logger.info(f"Job {job_id} completed successfully.")
+                    return True
+                elif status == "failed":
+                    logger.error(f"Job {job_id} failed.")
+                    return False
+                
+                time.sleep(30)  # Poll every 30 seconds
+            except requests.RequestException as e:
+                logger.warning(f"Could not get job status for {job_id}: {e}. Retrying...")
+                time.sleep(30)
+        
+        logger.error(f"Job {job_id} timed out after {max_wait_time} seconds.")
+        return False
+
+    def download_job_files(self, job_id: str, output_dir: str) -> List[str]:
+        """
+        Downloads all output files for a completed job.
+
+        Args:
+            job_id: The ID of the completed job.
+            output_dir: The directory to save the files.
+
+        Returns:
+            A list of paths to the downloaded files.
+        """
+        os.makedirs(output_dir, exist_ok=True)
+        files_response = requests.get(f"{self.BASE_URL}/job/files/{job_id}/out", headers=self.headers)
+        files_response.raise_for_status()
+        files_json = files_response.json()
+        
+        downloaded_files = []
+        if "out" in files_json and files_json["out"]:
+            for filename, _ in files_json["out"]:
+                logger.info(f"Downloading {filename} for job {job_id}...")
+                download_url = f"{self.BASE_URL}/job/file/{job_id}/out/{filename}"
+                download_response = requests.get(download_url, headers=self.headers, allow_redirects=True)
+                download_response.raise_for_status()
+                
+                output_path = os.path.join(output_dir, filename)
+                with open(output_path, 'wb') as f:
+                    f.write(download_response.content)
+                downloaded_files.append(output_path)
+                logger.info(f"Saved file to {output_path}")
+        else:
+            logger.warning(f"No output files found for job {job_id}")
+            
+        return downloaded_files
+```
+
+### Step 2: Refactor NeuroSnap Wrappers to Use the Real Client
+
+The wrappers will now be responsible for preparing the correct parameters for each NeuroSnap service and calling the real client.
+
+**File to be Replaced:** `scripts/neurosnap_wrappers.py`
+
+```python
+#!/usr/bin/env python3
+"""
+NeuroSnap Model Wrappers
+
+This module provides high-level wrapper functions for specific NeuroSnap models,
+integrating them into the TL1A platform workflow using the real API client.
+"""
+
+import logging
+import json
+import hashlib
+from typing import Dict, Any, List, Optional
+from .neurosnap_client import NeuroSnapClient
+
+logger = logging.getLogger(__name__)
+
+def get_input_hash(data: Any) -> str:
+    """Creates a SHA256 hash of the input data to use as a unique note."""
+    return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
+
+def run_neurosnap_job(service_name: str, fields: Dict[str, Any], note_data: Any, output_dir: str, max_wait_time: int = 3600) -> Optional[List[str]]:
+    """
+    A generic function to run a NeuroSnap job, including job reuse logic.
+    """
+    client = NeuroSnapClient()
+    note = get_input_hash(note_data)
+    
+    job_id = client.find_existing_job(service_name, note)
+    
+    if not job_id:
+        job_id = client.submit_job(service_name, fields, note)
+    
+    if client.wait_for_job_completion(job_id, max_wait_time):
+        return client.download_job_files(job_id, output_dir)
+    
+    return None
+
+def predict_toxicity(smiles: str, output_dir: str) -> Optional[List[str]]:
+    """Predicts toxicity using eTox."""
+    logger.info(f"Requesting toxicity prediction for SMILES: {smiles}")
+    service_name = "eTox"
+    fields = {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
+    note_data = {"service": service_name, "smiles": smiles}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir)
+
+def predict_aggregation(sequence: str, output_dir: str) -> Optional[List[str]]:
+    """Predicts aggregation hotspots using Aggrescan3D."""
+    logger.info(f"Requesting aggregation prediction for sequence: {sequence[:30]}...")
+    service_name = "Aggrescan3D"
+    fields = {"Input Molecule": f">protein\n{sequence}"}
+    note_data = {"service": service_name, "sequence": sequence}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir)
+
+def predict_thermostability(sequence: str, output_dir: str) -> Optional[List[str]]:
+    """Predicts thermostability using ThermoMPNN."""
+    logger.info(f"Requesting thermostability prediction for sequence: {sequence[:30]}...")
+    # This requires a PDB file, which we don't have yet. We will use TemStaPro as a sequence-based alternative.
+    service_name = "TemStaPro"
+    fields = {"Input Molecule": f">protein\n{sequence}"}
+    note_data = {"service": service_name, "sequence": sequence}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir)
+
+def predict_structure(sequences: Dict[str, str], output_dir: str) -> Optional[List[str]]:
+    """Predicts protein complex structure using Boltz-2."""
+    logger.info(f"Requesting structure prediction for sequences: {list(sequences.keys())}")
+    service_name = "Boltz-2 (AlphaFold3)"
+    input_data = {"aa": sequences}
+    fields = {
+        "Input Sequences": json.dumps(input_data),
+        "Number Recycles": "3",
+        "Diffusion Samples": "1",
+        "Diffusion Samples Affinity": "1"
+    }
+    note_data = {"service": service_name, "sequences": sequences}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir, max_wait_time=7200) # 2 hour timeout
+
+def predict_stability_change(pdb_path: str, mutations: List[str], output_dir: str) -> Optional[List[str]]:
+    """Predicts stability changes using StaB-ddG."""
+    logger.info(f"Requesting stability change prediction for {len(mutations)} mutations.")
+    service_name = "StaB-ddG"
+    with open(pdb_path, 'rb') as f:
+        fields = {
+            "Input Molecule": (os.path.basename(pdb_path), f.read(), 'application/octet-stream'),
+            "Mutations": "\n".join(mutations)
+        }
+    note_data = {"service": service_name, "mutations": sorted(mutations)}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir)
+
+def predict_immunogenicity(sequence: str, output_dir: str) -> Optional[List[str]]:
+    """Predicts immunogenicity using DeepImmuno."""
+    logger.info(f"Requesting immunogenicity prediction for sequence: {sequence[:30]}...")
+    service_name = "DeepImmuno"
+    fields = {"Input Molecule": f">protein\n{sequence}"}
+    note_data = {"service": service_name, "sequence": sequence}
+    return run_neurosnap_job(service_name, fields, note_data, output_dir)
+```
+
+### Step 3: Systematically Fix All Experiment Scripts
+
+Each experiment script that relied on fake data will be rewritten to use the new, real wrappers. This involves handling file paths for inputs and outputs, and parsing the real scientific data formats.
+
+**File to be added:** `data/fab_model.pdb`
+*(A representative Fab PDB, e.g., from PDB ID 1IGT, will be added to allow Experiment 9 to run).*
+
+**File to be added:** `scripts/error_handling.py`
+*(A simple error handling module as expected by `scripts/inputs.py`)*
+```python
+# scripts/error_handling.py
+import logging
+from rdkit import Chem
+
+class ValidationError(Exception):
+    pass
+
+def validate_smiles(smiles, name):
+    if not Chem.MolFromSmiles(smiles):
+        raise ValidationError(f"Invalid SMILES for {name}")
+
+def validate_sequence(sequence, name):
+    valid_aa = set('ACDEFGHIKLMNPQRSTVWY')
+    if not set(sequence.upper()).issubset(valid_aa):
+        raise ValidationError(f"Invalid characters in sequence {name}")
+
+def handle_errors(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            logging.error(f"An error occurred in {func.__name__}: {e}")
+            raise
+    return wrapper
+
+def safe_float_convert(value, default=0.0):
+    try:
+        return float(value)
+    except (ValueError, TypeError):
+        return default
+
+def safe_int_convert(value, default=0):
+    try:
+        return int(value)
+    except (ValueError, TypeError):
+        return default
+```
+
+**File to be modified:** `scripts/inputs.py`
+*(The validation logic at the top is flawed because it runs before the variables are defined. It will be removed, as validation should occur within the scripts themselves.)*
+```python
+# scripts/inputs.py
+
+# Central file for all molecules and sequences in the TL1A PET Imaging Agent program
+
+# Small Molecules
+NOTA_CHELATOR_SMILES = "OC(=O)CN1CCN(CCN(CC(=O)O)CC(=O)O)CC1"
+LINKER_CHELATOR_SMILES = "C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O"
+
+# Fab Sequences
+fab_sequences = {
+    "Fab06_VH": "EVQLVESGGGLVQPGGSLRLSCAASGFTSGYSMHINWVRQAPGKGLEWVAVISYDGGDANYNPNLKDKATLTVDTSSSTAYMQLSSLTSEDSAVYYCARGLYGSDWYFDYFDYWGQGTLVTVSS",
+    "Fab06_VL": "DIVMTQSPSSLSASVGDRVTITCRASQSNYGTSYWYQQKPGKAPKLLIYDASRATGVPDRFSGSGSGTDFTLTISSLQPEDFATYYCQQYNNYPTFGGGTKLEIK",
+    "Fab11_VH": "EVQLVESGGGLVQPGGSLRLSCAASGFTSGYSMHINWVRQAPGKGLEWVAVISYDGGDANYNPNLKDKATLTVDTSSSTAYMQLSSLTSEDSAVYYCARGYSSGDWYFDYFDYWGQGTLVTVSS",
+    "Fab11_VL": "DIVMTQSPSSLSASVGDRVTITCRASQSNYGTSYWYQQKPGKAPKLLIYDASRATGVPDRFSGSGSGTDFTLTISSLQPEDFATYYCQQYNNWPTFGGGTKLEIK",
+}
+
+# Biobetter Sequences
+FC_SEQUENCE = "DKTHTCPPCPAPELLGGPSVFLFPPKPKDTLMISRTPEVTCVVVDVSHEDPEVKFNWYVDGVEVHNAKTKPREEQYNSTYRVVSVLTVLHQDWLNGKEYKCKVSNKALPAPIEKTISKAKGQPREPQVYTLPPSREEMTKNQVSLTCLVKGFYPSDIAVEWESNGQPENNYKTTPPVLDSDGSFFLYSKLTVDKSRWQQGNVFSCSVMHEALHNHYTQKSLSLSPGK"
+FCRN_ALPHA_CHAIN_SEQUENCE = "AESHLSLLYHLTAVSSPAPGTPAFWCSVLHEGLHNEKVSLRTLELGKHNFSLEAQIYKEFQGKDIFLPSGCGDSRGLLTQTVSGLQAEGDDISPDPLGTSFEALGNLIVVTHEFYPPLKNVSFRNQQPALSLQGFFPDNGRLYLQGRTWGWLAWLQQGWDSGQIANKIDDNTYSERLGLAKDWDSGTFMCIFLHSGLSFYNLSM"
+FCRN_BETA2M_SEQUENCE = "MSRSVALAVLALLSLSGLEAIQRTPKIQVYSRHPAENGKSNFLNCYVSGFHPSDIEVDLLKNGERIEKVEHSDLSFSKDWSFYLLYYTEFTPTEKDEYACRVNHVTLSQPKIVKWDRDM"
+
+# Target Sequence
+TL1A_SEQUENCE = "MAAALLLLALALAGAAQAEPQQEELPLEGEGSGSAVPATEQAETRQFQVAAMASKSFLKAKKCILQKVDVKEFNQLKLRKSSFEVKDRIRQIWFNAFLRGKLKLGHLPLHKVIAYYAKLKKVVLKEDQRLTPQEIKFREIIKETNKLNVKFKLKNFNKSVVNFLEVNKVKNLSELEIDQDPRRLIIHPQSVFYIIRTLFQLIYKKLKESQNKDKELNKKLKKSQNKDLTQPIKKKIEDLNKALKEHKKLQRLKRAKKL"
+```
+
+**File to be modified:** `scripts/03_toxicity_flags.py`
+*(This script will now make a real API call to eTox and parse the real results.)*
+```python
+# scripts/03_toxicity_flags.py
+# ... (imports and LIABILITY_FILTERS remain the same) ...
+from scripts.neurosnap_wrappers import predict_toxicity
+import json
+
+# ... (scan_liabilities function is replaced) ...
+def scan_liabilities(smiles_dict):
+    results = []
+    for name, smiles in smiles_dict.items():
+        logger.info(f"Analyzing {name}")
+        # ... (structural pattern matching remains the same) ...
+        
+        # AI-based toxicity prediction
+        output_dir = f"results/prodrug/03_{name}_etox"
+        files = predict_toxicity(smiles, output_dir)
+        
+        ai_toxic = None
+        ai_confidence = 0.0
+        if files:
+            try:
+                with open(files[0], 'r') as f:
+                    etox_results = json.load(f)
+                ai_toxic = etox_results.get('prediction') == 'TOXIC'
+                ai_confidence = etox_results.get('probability', 0.0)
+            except Exception as e:
+                logger.error(f"Could not parse eTox results for {name}: {e}")
+        
+        # ... (Combine results and append to results list) ...
+    return pd.DataFrame(results)
+
+# ... (main function is updated to call the new scan_liabilities) ...
+```
+*(This pattern of replacing mock calls with real ones and adding file parsing logic will be applied to `07_agg_hotspots.py`, `10_thermostability.py`, `11_complex_model.py`, `13_ala_scanning.py`, and `14_immunogenicity.py`)*
+
+**File to be modified:** `scripts/12_interface_fingerprint.py`
+*(This script requires a complete rewrite to perform a valid 3D analysis.)*
+```python
+# scripts/12_interface_fingerprint.py
+import pandas as pd
+import prody as pr
+import logging
+from pathlib import Path
+import os
+
+# ... (logging setup) ...
+
+def analyze_interface_fingerprint(fab_name, complex_pdb_path):
+    if not os.path.exists(complex_pdb_path):
+        logger.warning(f"Complex PDB not found for {fab_name} at {complex_pdb_path}. Skipping.")
+        return None
+
+    # Load the complex structure
+    complex_structure = pr.parsePDB(complex_pdb_path)
+    
+    # Assuming Chain A=VH, B=VL, C=TL1A
+    fab_part = complex_structure.select('chain A B')
+    antigen_part = complex_structure.select('chain C')
+
+    if fab_part is None or antigen_part is None:
+        logger.error("Could not select Fab and Antigen chains.")
+        return None
+
+    # Find interface residues (within 5 Angstroms)
+    interface = pr.findNeighbors(fab_part, 5.0, antigen_part)
+    
+    if not interface:
+        logger.warning(f"No interface found for {fab_name}")
+        return {"Fab_Name": fab_name, "Interface_Residues": 0}
+
+    interface_residues = set()
+    for pair in interface:
+        interface_residues.add(pair[0]) # Add the Fab residue from the pair
+
+    # Analyze properties of interface residues
+    hydrophobic = ['ALA', 'VAL', 'ILE', 'LEU', 'MET', 'PHE', 'TYR', 'TRP']
+    num_hydrophobic = sum(1 for res in interface_residues if res.getResname() in hydrophobic)
+    
+    result = {
+        "Fab_Name": fab_name,
+        "Total_Interface_Residues": len(interface_residues),
+        "Hydrophobic_Ratio": num_hydrophobic / len(interface_residues) if interface_residues else 0,
+    }
+    return result
+
+def main():
+    # ... (main logic to find PDBs from experiment 11 and call the analysis function) ...
+```
+
+### Step 4: Update Documentation and Final Reports with Real Data
+
+This is the final, crucial step. After all scripts are fixed and the entire pipeline is re-run, the `README.md`, `report.md`, and `final_validation_report.md` must be updated to reflect the ground truth.
+
+**File to be Replaced:** `README.md`
+
+The new `README.md` will contain:
+-   **A revised Executive Summary:** The "Go/No-Go" decision will be re-evaluated based on the new, real data. It will likely be more nuanced.
+-   **Updated Results Section:** All tables and figures will be regenerated using the outputs from the fixed scripts.
+-   **Realistic Runtimes:** The "How to Run" section will state realistic execution times (e.g., "Full pipeline may take several hours depending on NeuroSnap queue times").
+-   **Methodology Correction:** Descriptions of experiments will be updated to reflect the actual NeuroSnap services used (e.g., "Complex modeling was performed using Boltz-2 (AlphaFold3)...").
+-   **Honest Limitations:** A new section will discuss the reliance on predictive models and the need for wet-lab validation.
+
+This comprehensive overhaul ensures the repository is not only functional but also scientifically valid and transparent, transforming it from a deceptive portfolio piece into a genuine and valuable computational tool.
+
+═══════════════════════════════════════════════════════════════════════════════
+🔬 NEUROSNAP API
+═══════════════════════════════════════════════════════════════════════════════
+
+**Key:** 9d51d402d242eab91b3d0c9fe90bc8db965259b9f0b5e9e8c756c7c426688cefba682290754b94647b2c2e1001d2fa651b1cc9e0494a85d642199a015c334d45
+
+**RULES:**
+- ❌ NO mocks/fakes
+- ✅ Real NeuroSnap only
+- ✅ Check existing jobs first
+
+PRODUCTION-READY when done.

@@ -1,24 +1,10 @@
+#!/usr/bin/env python3
 # scripts/inputs.py
 
 # Central file for all molecules and sequences in the TL1A PET Imaging Agent program
 
-import scripts.error_handling as eh
-
-# Validate inputs on import
-try:
-    eh.validate_smiles(NOTA_CHELATOR_SMILES, "NOTA_Chelator")
-    eh.validate_smiles(LINKER_CHELATOR_SMILES, "Linker_Chelator")
-
-    for name, seq in fab_sequences.items():
-        eh.validate_sequence(seq, f"Fab_{name}")
-
-    eh.validate_sequence(FC_SEQUENCE, "FC_Sequence")
-    eh.validate_sequence(FCRN_ALPHA_CHAIN_SEQUENCE, "FcRn_Alpha")
-    eh.validate_sequence(FCRN_BETA2M_SEQUENCE, "FcRn_Beta2M")
-
-except eh.ValidationError as e:
-    print(f"Input validation failed: {e}")
-    raise
+# Note: Validation should be performed within each experiment script where inputs
+# are actually consumed, not at import time.
 
 # Small Molecules
 NOTA_CHELATOR_SMILES = "OC(=O)CN1CCN(CCN(CC(=O)O)CC(=O)O)CC1"

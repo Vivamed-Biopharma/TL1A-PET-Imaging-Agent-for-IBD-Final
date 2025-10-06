@@ -8,10 +8,16 @@ In a real implementation, this would use Aggrescan3D or similar AI tools.
 
 import re
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
-from scripts.neurosnap_wrappers import predict_aggregation
+try:
+    from scripts.neurosnap_wrappers import predict_aggregation as ns_predict_aggregation
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_aggregation as ns_predict_aggregation
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -61,7 +67,7 @@ def scan_aggregation_hotspots(sequence, name):
 
     # AI-based prediction using Aggrescan3D
     try:
-        ai_results = predict_aggregation(sequence)
+        ai_results = ns_predict_aggregation(sequence)
         ai_score = ai_results.get("aggregation_score", 0)
         ai_hotspots = ai_results.get("hotspots", [])
         ai_confidence = ai_results.get("confidence", 0.0)

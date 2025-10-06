@@ -8,8 +8,12 @@ and calculating conformational entropy or flexibility metrics.
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdMolAlign as MolAlign
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
 import numpy as np
@@ -38,22 +42,32 @@ def analyze_flexibility(smiles, name, num_conformers=50):
     mol = Chem.AddHs(mol)
 
     # Generate conformers
-    params = AllChem.ETKDG()
+    try:
+        params = AllChem.ETKDGv3()
+    except AttributeError:
+        params = AllChem.ETKDG()
     params.randomSeed = 42  # For reproducibility
-    conformer_ids = AllChem.EmbedMultipleConfs(mol, numConformers=num_conformers, params=params)
+    # Use signature (mol, numConfs, params)
+    conformer_ids = AllChem.EmbedMultipleConfs(mol, num_conformers, params)
 
     if len(conformer_ids) == 0:
         logger.warning(f"No conformers generated for {name}")
         return {"Molecule": name, "Conformers": 0, "RMS_Matrix": None, "Flexibility_Score": 0}
 
     # Calculate RMS matrix
-    rms_matrix = AllChem.GetConformerRMSMatrix(mol, confIds=conformer_ids)
+    # RDKit API differences: some versions accept (mol, prealigned=False)
+    # We'll compute pairwise RMS via AlignMolConformers when needed.
+    def _pairwise_rms(i: int, j: int) -> float:
+        try:
+            return float(MolAlign.GetBestRMS(mol, mol, prbId=int(conformer_ids[i]), refId=int(conformer_ids[j])))
+        except Exception:
+            return 0.0
 
     # Calculate average RMS (measure of diversity)
     rms_values = []
     for i in range(len(conformer_ids)):
         for j in range(i+1, len(conformer_ids)):
-            rms_values.append(rms_matrix[i][j])
+            rms_values.append(_pairwise_rms(i, j))
 
     avg_rms = np.mean(rms_values) if rms_values else 0
     max_rms = np.max(rms_values) if rms_values else 0

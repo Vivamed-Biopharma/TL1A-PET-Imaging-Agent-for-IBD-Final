@@ -8,10 +8,16 @@ In a real implementation, this would use ThermoMPNN or similar AI tools.
 
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
-from scripts.neurosnap_wrappers import predict_thermostability
+try:
+    from scripts.neurosnap_wrappers import predict_thermostability as ns_predict_thermostability
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_thermostability as ns_predict_thermostability
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -47,9 +53,9 @@ def predict_thermostability(sequence, name):
 
         seq_tm_estimate = 50 + (seq_thermo_score_normalized * 20) + (analyzed_seq.instability_index() * -0.5)
 
-        # AI-based prediction using ThermoMPNN
+        # AI-based prediction using TemStaPro via NeuroSnap
         try:
-            ai_results = predict_thermostability(sequence, temperature=25.0)
+            ai_results = ns_predict_thermostability(sequence, temperature=25.0)
             ai_tm = ai_results.get("melting_temperature", 0)
             ai_confidence = ai_results.get("confidence", 0.0)
             ai_stability_score = ai_results.get("stability_score", 0)
@@ -113,13 +119,13 @@ def main():
         logger.info(f"Results saved to {output_path}")
 
         print("Thermostability Prediction:")
-        print(df[['Name', 'Thermo_Score', 'Thermo_Score_Normalized', 'Estimated_Tm']].to_string(index=False))
+        print(df[['Name', 'Seq_Thermo_Score', 'Seq_Thermo_Score_Normalized', 'Seq_Estimated_Tm']].to_string(index=False))
 
         # Validation
         for _, row in df.iterrows():
-            if row['Estimated_Tm'] < 40:
-                logger.warning(f"{row['Name']}: Low predicted Tm ({row['Estimated_Tm']:.1f}°C)")
-            if row['Thermo_Score_Normalized'] < 0:
+            if row['Seq_Estimated_Tm'] < 40:
+                logger.warning(f"{row['Name']}: Low predicted Tm ({row['Seq_Estimated_Tm']:.1f}°C)")
+            if row['Seq_Thermo_Score_Normalized'] < 0:
                 logger.warning(f"{row['Name']}: Negative thermostability score")
 
     except Exception as e:

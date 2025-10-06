@@ -9,7 +9,10 @@ to understand the impact of linker addition on properties.
 from rdkit import Chem
 from rdkit.Chem import Descriptors, Crippen, rdMolDescriptors
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
 

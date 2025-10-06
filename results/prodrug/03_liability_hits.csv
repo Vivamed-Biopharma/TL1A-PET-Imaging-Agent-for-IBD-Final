@@ -1,0 +1,3 @@
+Molecule,SMILES,Structural_Liabilities,AI_Toxic,AI_Confidence,AI_Details,All_Liabilities
+NOTA_Chelator,OC(=O)CN1CCN(CCN(CC(=O)O)CC(=O)O)CC1,None detected,,0.0,Prediction failed: 401 Client Error: Unauthorized for url: https://neurosnap.ai/api/job/submit/eTox?note=d47237204b6ea4256b38c7b6e1222b6aed666d530027eacb2f8d971ba1a7ee99,None detected
+Linker_Chelator,C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O,None detected,,0.0,Prediction failed: 401 Client Error: Unauthorized for url: https://neurosnap.ai/api/job/submit/eTox?note=ec38b16a3af6561cfb5903df40ae170ac39d26fbbcbf270a441cc6726ca9f4f1,None detected

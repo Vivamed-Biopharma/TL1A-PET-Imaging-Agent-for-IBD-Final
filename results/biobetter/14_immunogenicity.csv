@@ -1,0 +1,5 @@
+Fab_Name,Seq_Immunogenicity_Score,AI_Immunogenicity_Score,Combined_Immunogenicity_Score,Risk_Level,AI_Confidence,T_Cell_Motifs,Hydrophobic_Stretches,Predicted_Epitopes,Sequence_Length
+Fab06_VH,0.24000000000000002,0,0.24000000000000002,Medium,0.0,1,2,0,124
+Fab06_VL,0.26,0,0.26,Medium,0.0,1,3,0,105
+Fab11_VH,0.24000000000000002,0,0.24000000000000002,Medium,0.0,1,2,0,124
+Fab11_VL,0.26,0,0.26,Medium,0.0,1,3,0,105

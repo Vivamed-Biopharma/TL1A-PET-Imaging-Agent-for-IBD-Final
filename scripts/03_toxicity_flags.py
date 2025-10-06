@@ -7,10 +7,16 @@ This script scans molecules for known toxic or reactive chemical groups (PAINS, 
 
 from rdkit import Chem
 import pandas as pd
-import scripts.inputs as inputs
+try:
+    import scripts.inputs as inputs
+except ModuleNotFoundError:
+    import inputs as inputs
 import logging
 from pathlib import Path
-from scripts.neurosnap_wrappers import predict_toxicity
+try:
+    from scripts.neurosnap_wrappers import predict_toxicity as ns_predict_toxicity
+except ModuleNotFoundError:
+    from neurosnap_wrappers import predict_toxicity as ns_predict_toxicity
 
 # Setup logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -52,10 +58,14 @@ def scan_liabilities(smiles_dict):
 
         # AI-based toxicity prediction
         try:
-            ai_results = predict_toxicity(smiles)
-            ai_toxic = ai_results.get("toxic", False)
-            ai_confidence = ai_results.get("confidence", 0.0)
-            ai_details = ai_results.get("details", "No details")
+            ai_results = ns_predict_toxicity(smiles)
+            # Normalize returned schema from NeuroSnap output
+            prediction = ai_results.get("prediction")
+            ai_toxic = ai_results.get("toxic")
+            if ai_toxic is None and prediction is not None:
+                ai_toxic = str(prediction).upper() in {"TOXIC", "YES", "POSITIVE"}
+            ai_confidence = float(ai_results.get("probability", ai_results.get("confidence", 0.0)) or 0.0)
+            ai_details = ai_results.get("details", prediction or "No details")
         except Exception as e:
             logger.warning(f"AI toxicity prediction failed for {name}: {str(e)}")
             ai_toxic = None
@@ -107,7 +117,7 @@ def main():
 
         # Check for expected isothiocyanate
         linker_row = df[df['Molecule'] == 'Linker_Chelator']
-        if 'Isothiocyanate' in linker_row['Liabilities'].values[0]:
+        if not linker_row.empty and 'Isothiocyanate' in (linker_row['Structural_Liabilities'].values[0] or ''):
             logger.info("Expected isothiocyanate group detected in linker")
         else:
             logger.warning("Isothiocyanate not detected - check SMILES")
