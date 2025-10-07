@@ -88,7 +88,7 @@ class NeuroSnapWrapper:
         return self._run_service(service, fields, {"service": service, **payload}, max_wait_time=max_wait_time)
 
     def predict_toxicity(self, smiles: str, max_wait_time: int = 1800) -> Dict[str, Any]:
-        service = "eTox Drug Toxicity Prediction"
+        service = "eTox"
         fields = {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
         return self._run_service(service, fields, {"service": service, "smiles": smiles}, max_wait_time=max_wait_time)
 
@@ -132,7 +132,7 @@ class NeuroSnapWrapper:
         return self._run_service(service, fields, {"service": service, "mutations": sorted(mutations)}, max_wait_time=max_wait_time)
 
     def predict_immunogenicity(self, sequence: str, max_wait_time: int = 1800) -> Dict[str, Any]:
-        service = "DeepImmuno Immunogenicity Prediction"
+        service = "DeepImmuno"
         fasta = f">protein\n{sequence}"
         fields = {"Input Molecule": fasta}
         return self._run_service(service, fields, {"service": service, "sequence": sequence}, max_wait_time=max_wait_time)

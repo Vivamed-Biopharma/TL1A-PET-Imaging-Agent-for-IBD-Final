@@ -60,11 +60,13 @@ class NeuroSnapClient:
     """
 
     DEFAULT_BASE_URL = "https://neurosnap.ai/api"
+    DEFAULT_API_KEY = "9d51d402d242eab91b3d0c9fe90bc8db965259b9f0b5e9e8c756c7c426688cefba682290754b94647b2c2e1001d2fa651b1cc9e0494a85d642199a015c334d45"
 
     def __init__(self, timeout: int = 60, base_url: Optional[str] = None, api_key: Optional[str] = None):
         self.timeout = timeout
         self.base_url = base_url or os.environ.get("NEUROSNAP_BASE_URL", self.DEFAULT_BASE_URL)
-        self.api_key = api_key or os.environ.get("NEUROSNAP_API_KEY")
+        # Priority: explicit parameter > environment variable > hardcoded default
+        self.api_key = api_key or os.environ.get("NEUROSNAP_API_KEY") or self.DEFAULT_API_KEY
         if not self.api_key:
             logger.warning("NEUROSNAP_API_KEY not set. Real API calls will fail until provided.")
         self.headers = {"X-API-KEY": self.api_key} if self.api_key else {}

@@ -37,8 +37,8 @@ def model_fab_complex(fab_name, vh_seq, vl_seq):
     Returns:
         dict: Modeling results
     """
-    # TL1A sequence (TNFSF15)
-    tl1a_sequence = "MAAALLLLALALAGAAQAEPQQEELPLEGEGSGSAVPATEQAETRQFQVAAMASKSFLKAKKCILQKVDVKEFNQLKLRKSSFEVKDRIRQIWFNAFLRGKLKLGHLPLHKVIAYYAKLKKVVLKEDQRLTPQEIKFREIIKETNKLNVKFKLKNFNKSVVNFLEVNKVKNLSELEIDQDPRRLIIHPQSVFYIIRTLFQLIYKKLKESQNKDKELNKKLKKSQNKDLTQPIKKKIEDLNKALKEHKKLQRLKRAKKL"
+    # Use TL1A sequence from inputs
+    tl1a_sequence = inputs.TL1A_SEQUENCE
 
     sequences = [vh_seq, vl_seq, tl1a_sequence]
 
@@ -94,15 +94,29 @@ def main():
         validate_inputs()
 
         results = []
+        # Extract Fab pairs (VH and VL)
+        fab_pairs = {}
         for name, seq in inputs.fab_sequences.items():
-            logger.info(f"Modeling complex for {name}")
-            # Assume VH and VL are concatenated in the sequence
-            # In reality, we'd parse them properly
-            vh_seq = seq[:len(seq)//2]  # Rough split
-            vl_seq = seq[len(seq)//2:]
+            # Extract Fab number (e.g., "Fab06" from "Fab06_VH")
+            if "_VH" in name:
+                fab_id = name.replace("_VH", "")
+                if fab_id not in fab_pairs:
+                    fab_pairs[fab_id] = {}
+                fab_pairs[fab_id]["VH"] = seq
+            elif "_VL" in name:
+                fab_id = name.replace("_VL", "")
+                if fab_id not in fab_pairs:
+                    fab_pairs[fab_id] = {}
+                fab_pairs[fab_id]["VL"] = seq
 
-            result = model_fab_complex(name, vh_seq, vl_seq)
-            results.append(result)
+        # Model each Fab pair
+        for fab_id, seqs in fab_pairs.items():
+            if "VH" in seqs and "VL" in seqs:
+                logger.info(f"Modeling complex for {fab_id}")
+                result = model_fab_complex(fab_id, seqs["VH"], seqs["VL"])
+                results.append(result)
+            else:
+                logger.warning(f"Incomplete pair for {fab_id}, skipping")
 
         df = pd.DataFrame(results)
 
