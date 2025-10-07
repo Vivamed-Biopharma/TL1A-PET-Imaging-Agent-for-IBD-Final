@@ -1,0 +1,81 @@
+# NEUROSNAP ENDPOINT FIX & FINAL VALIDATION
+
+🚨 CRITICAL FIX: NeuroSnap API endpoint was wrong in previous instructions!
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 NEUROSNAP ENDPOINT CORRECTION
+═══════════════════════════════════════════════════════════════════════════════
+
+**WRONG (old documentation):**
+```python
+files_url = f"{base_url}/job/files/{job_id}/out"
+```
+
+**CORRECT (actual working endpoint):**
+```python
+files_url = f"{base_url}/job/data/{job_id}"
+```
+
+**ACTION REQUIRED:**
+1. Find all occurrences of `/job/files/` in your code
+2. Replace with `/job/data/`
+3. Test that file listing works
+
+**Example fix:**
+```python
+# OLD:
+response = requests.get(f"https://neurosnap.ai/api/job/files/{job_id}/out")
+
+# NEW:
+response = requests.get(f"https://neurosnap.ai/api/job/data/{job_id}")
+```
+
+═══════════════════════════════════════════════════════════════════════════════
+🧪 RUN ALL NEUROSNAP EXPERIMENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+**Check for existing jobs first (save credits):**
+```python
+response = requests.get("https://neurosnap.ai/api/jobs", 
+                       headers={"X-API-KEY": "f01ad42e66fd96d05b6b77efe301e00f5fab82621e3224ad5d023bc88a7d360b746819f541aa9424b4611d6fe2838f9127b2c1012f9ffce1720a2ebb557b50c4"})
+jobs = response.json()
+# Check if your experiment already ran
+```
+
+**If no existing job, run experiments:**
+- Execute all scripts that call NeuroSnap API
+- Wait for job completion (can take 5-30 minutes)
+- Download and save results to results/ directory
+- Verify outputs are >1KB
+
+═══════════════════════════════════════════════════════════════════════════════
+📊 UPDATE README WITH REAL RESULTS
+═══════════════════════════════════════════════════════════════════════════════
+
+**After experiments complete:**
+1. Parse actual result files
+2. Extract real metrics (no placeholders!)
+3. Update README with:
+   - Real file paths and sizes
+   - Actual computed values
+   - Honest Go/No-Go based on results
+   - NeuroSnap job IDs used
+
+**README must cite REAL files:**
+- ❌ "Binding affinity: -12.3 kcal/mol" (if not computed)
+- ✅ "Binding affinity: -12.3 kcal/mol (from results/prodigy_output.json line 45)"
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ FINAL CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+- [ ] Endpoint fixed: `/job/files` → `/job/data`
+- [ ] Checked for existing NeuroSnap jobs (reuse if available)
+- [ ] Ran experiments OR verified they already ran
+- [ ] Results downloaded to results/ directory
+- [ ] README updated with REAL file citations
+- [ ] All numbers trace to actual files
+
+**NeuroSnap API Key:** f01ad42e66fd96d05b6b77efe301e00f5fab82621e3224ad5d023bc88a7d360b746819f541aa9424b4611d6fe2838f9127b2c1012f9ffce1720a2ebb557b50c4
+
+Fix endpoint, run experiments (or verify already ran), update README with real results. PRODUCTION-READY.

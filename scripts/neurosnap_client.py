@@ -149,7 +149,7 @@ class NeuroSnapClient:
         return False
 
     def _get_out_files_manifest(self, job_id: str) -> Dict[str, Any]:
-        url = f"{self.base_url}/job/files/{job_id}/out"
+        url = f"{self.base_url}/job/data/{job_id}"
         resp = requests.get(url, headers=self.headers, timeout=self.timeout)
         resp.raise_for_status()
         return resp.json()
