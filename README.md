@@ -119,10 +119,10 @@ fab_sequences = {
 **Key Results**:
 | Property | NOTA Chelator | Linker-Chelator | Assessment |
 |----------|---------------|-----------------|------------|
-| MW (Da) | 318.3 | 521.6 | ✅ < 1000 Da |
-| LogP | -4.1 | -1.1 | ✅ Polar, water-soluble |
-| TPSA (Å²) | 112.8 | 170.2 | ✅ Good solubility |
-| Rotatable Bonds | 3 | 10 | ⚠️ Moderate flexibility |
+| MW (Da) | 303.3 | 450.5 | ✅ < 1000 Da |
+| LogP | -1.84 | 0.51 | ✅ Polar, water-soluble |
+| TPSA (Å²) | 121.6 | 134.0 | ✅ Good solubility |
+| Rotatable Bonds | 9 | 9 | ⚠️ Moderate flexibility |
 
 **Conclusion**: Linker-chelator exhibits excellent physicochemical properties for bioconjugation.
 
@@ -139,10 +139,10 @@ Outputs now sourced from real eTox. See `results/prodrug/03_liability_hits.csv` 
 
 | Clone | Instability Index | GRAVY | pI | Assessment |
 |-------|------------------|-------|----|------------|
-| Fab06_VH | 35.1 | -0.25 | 8.7 | ✅ Excellent |
-| Fab06_VL | 33.4 | -0.31 | 5.9 | ✅ Excellent |
-| Fab11_VH | 34.5 | -0.28 | 8.7 | ✅ Excellent |
-| Fab11_VL | 32.8 | -0.29 | 5.9 | ✅ Excellent |
+| Fab06_VH | 36.64 | -0.18 | 4.35 | ✅ Excellent |
+| Fab06_VL | 39.93 | -0.51 | 7.94 | ✅ Excellent |
+| Fab11_VH | 38.20 | -0.22 | 4.35 | ✅ Excellent |
+| Fab11_VL | 37.77 | -0.50 | 7.94 | ✅ Excellent |
 
 **Visualization**: GRAVY vs Instability Index scatter plot showing all clones in "developable" quadrant.
 
@@ -169,10 +169,10 @@ Uses `data/fab_model.pdb` (or `TL1A_FAB_PDB`) with StaB-ddG for ΔΔG prediction
 **Final Ranking**:
 | Candidate | Overall Score | Aggregation | Thermostability | Immunogenicity | Recommendation |
 |-----------|---------------|-------------|----------------|----------------|----------------|
-| **Fab06** | 3.2 | 2 hotspots | Tm = 67°C | Score = 0.15 | ✅ **ADVANCE** |
-| Fab11 | 4.1 | 3 hotspots | Tm = 65°C | Score = 0.18 | ⚠️ Backup |
+| **Fab06** | TBD | TBD | TBD | TBD | ⏸️ **RE-EVALUATE** |
+| Fab11 | TBD | TBD | TBD | TBD | ⏸️ **RE-EVALUATE** |
 
-**Go/No-Go Decision**: **GO** - Fab06 meets all preclinical criteria with validated imaging potential.
+**Go/No-Go Decision**: **⏸ RE-EVALUATE** - Pending completion of Boltz-2 structure prediction and validation with real NeuroSnap outputs. Scores above are placeholders until experiments 11-14 complete successfully.
 
 ---
 

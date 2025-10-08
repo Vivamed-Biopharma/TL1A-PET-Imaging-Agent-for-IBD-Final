@@ -60,7 +60,7 @@ class NeuroSnapClient:
     """
 
     DEFAULT_BASE_URL = "https://neurosnap.ai/api"
-    DEFAULT_API_KEY = "9d51d402d242eab91b3d0c9fe90bc8db965259b9f0b5e9e8c756c7c426688cefba682290754b94647b2c2e1001d2fa651b1cc9e0494a85d642199a015c334d45"
+    DEFAULT_API_KEY = "f01ad42e66fd96d05b6b77efe301e00f5fab82621e3224ad5d023bc88a7d360b746819f541aa9424b4611d6fe2838f9127b2c1012f9ffce1720a2ebb557b50c4"
 
     def __init__(self, timeout: int = 60, base_url: Optional[str] = None, api_key: Optional[str] = None):
         self.timeout = timeout
@@ -209,7 +209,7 @@ class NeuroSnapClient:
         return {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
 
     def _mk_fasta_fields(self, sequence: str) -> Dict[str, Any]:
-        return {"Input Molecule": f">protein\n{sequence}"}
+        return {"Input Sequences": f">protein\n{sequence}"}
 
     def submit_admet_job(self, smiles: str, properties: Optional[List[str]] = None) -> NeuroSnapJob:
         job_id = self.submit_job("ADMET-AI", self._mk_smiles_fields(smiles), note=f"admet:{smiles}")
@@ -222,12 +222,14 @@ class NeuroSnapClient:
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="etox", created_at=now, updated_at=now)
 
     def submit_aggrescan_job(self, sequence: str) -> NeuroSnapJob:
-        job_id = self.submit_job("Aggrescan3D", self._mk_fasta_fields(sequence), note=f"agg:{hash(sequence)}")
+        fields = {"Input Structure": f">protein\n{sequence}"}
+        job_id = self.submit_job("Aggrescan3D", fields, note=f"agg:{hash(sequence)}")
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="aggrescan3d", created_at=now, updated_at=now)
 
     def submit_thermompn_job(self, sequence: str, temperature: float = 25.0) -> NeuroSnapJob:
-        job_id = self.submit_job("TemStaPro", self._mk_fasta_fields(sequence), note=f"temstapro:{hash((sequence, temperature))}")
+        fields = {"Input PDB": f">protein\n{sequence}"}
+        job_id = self.submit_job("TemStaPro", fields, note=f"temstapro:{hash((sequence, temperature))}")
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="thermompn", created_at=now, updated_at=now)
 
