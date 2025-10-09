@@ -206,7 +206,7 @@ class NeuroSnapClient:
         return NeuroSnapJob(job_id=job_id, status=status, model_type="unknown", created_at=now, updated_at=now)
 
     def _mk_smiles_fields(self, smiles: str) -> Dict[str, Any]:
-        return {"Input Molecule": json.dumps([{"data": smiles, "type": "smiles"}])}
+        return {"Input Molecules": json.dumps([{"data": smiles, "type": "smiles"}])}
 
     def _mk_fasta_fields(self, sequence: str) -> Dict[str, Any]:
         return {"Input Sequences": f">protein\n{sequence}"}
@@ -228,14 +228,14 @@ class NeuroSnapClient:
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="aggrescan3d", created_at=now, updated_at=now)
 
     def submit_thermompn_job(self, sequence: str, temperature: float = 25.0) -> NeuroSnapJob:
-        fields = {"Input PDB": f">protein\n{sequence}"}
+        fields = {"Input Structure": f">protein\n{sequence}"}
         job_id = self.submit_job("TemStaPro", fields, note=f"temstapro:{hash((sequence, temperature))}")
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="thermompn", created_at=now, updated_at=now)
 
     def submit_boltz_job(self, sequences: List[str]) -> NeuroSnapJob:
         seq_map = {f"seq{i+1}": s for i, s in enumerate(sequences)}
-        fields = {"Input Sequences": json.dumps({"aa": seq_map}), "Number Recycles": "3", "Diffusion Samples": "1", "Diffusion Samples Affinity": "1"}
+        fields = {"Input Molecules": json.dumps({"aa": seq_map}), "Number Recycles": "3", "Diffusion Samples": "1", "Diffusion Samples Affinity": "1"}
         job_id = self.submit_job("Boltz-2 (AlphaFold3)", fields, note=f"boltz:{hash(tuple(sequences))}")
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="boltz2", created_at=now, updated_at=now)
@@ -243,7 +243,7 @@ class NeuroSnapClient:
     def submit_stab_ddg_job(self, pdb_path: str, mutations: List[str]) -> NeuroSnapJob:
         with open(pdb_path, "rb") as f:
             pdb_bytes = f.read()
-        fields = {"Input Molecule": (os.path.basename(pdb_path), pdb_bytes, "application/octet-stream"), "Mutations": "\n".join(mutations)}
+        fields = {"Input Structure": (os.path.basename(pdb_path), pdb_bytes, "application/octet-stream"), "Mutations": "\n".join(mutations)}
         job_id = self.submit_job("StaB-ddG", fields, note=f"stabddg:{hash(tuple(sorted(mutations)))}")
         now = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
         return NeuroSnapJob(job_id=job_id, status=JobStatus.PENDING, model_type="stab_ddg", created_at=now, updated_at=now)

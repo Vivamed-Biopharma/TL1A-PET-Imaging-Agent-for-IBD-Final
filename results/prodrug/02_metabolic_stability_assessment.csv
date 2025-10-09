@@ -1,0 +1,2 @@
+Molecule,Total_Metabolic_Sites,High_Risk_Sites,Medium_Risk_Sites,Low_Risk_Sites,Stability_Score,Has_Reactive_Isothiocyanate,Assessment,Recommendation
+Linker-Chelator (p-SCN-Bn-NOTA),4,0,4,0,40,False,Designed for bioconjugation - isothiocyanate is intentionally reactive,Monitor hydrolysis kinetics in aqueous buffer

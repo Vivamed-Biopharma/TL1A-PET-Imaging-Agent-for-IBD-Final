@@ -113,14 +113,16 @@ def calculate_decision_scores(experiment_results):
             thermo = experiment_results["thermostability"]
             fab_row = thermo[thermo["Name"] == fab]
             if len(fab_row) > 0:
-                scores["Thermo_Score"] = fab_row["Thermo_Score"].values[0]
+                scores["Combined_Stability_Score"] = fab_row["Combined_Stability_Score"].values[0]
+                scores["Combined_Estimated_Tm"] = fab_row["Combined_Estimated_Tm"].values[0]
 
         # Immunogenicity
         if "immunogenicity" in experiment_results:
             immuno = experiment_results["immunogenicity"]
             fab_row = immuno[immuno["Fab_Name"] == fab]
             if len(fab_row) > 0:
-                scores["Immunogenicity_Score"] = fab_row["Immunogenicity_Score"].values[0]
+                scores["Combined_Immunogenicity_Score"] = fab_row["Combined_Immunogenicity_Score"].values[0]
+                scores["Risk_Level"] = fab_row["Risk_Level"].values[0]
 
         # Calculate overall score (lower is better)
         overall_score = 0
@@ -130,8 +132,10 @@ def calculate_decision_scores(experiment_results):
             overall_score += max(0, scores["GRAVY"]) * 10  # Penalty for hydrophobicity
         if "Aggregation_Score" in scores:
             overall_score += scores["Aggregation_Score"] * 0.1
-        if "Immunogenicity_Score" in scores:
-            overall_score += scores["Immunogenicity_Score"] * 100
+        if "Combined_Immunogenicity_Score" in scores:
+            overall_score += scores["Combined_Immunogenicity_Score"] * 100
+        if "Combined_Stability_Score" in scores:
+            overall_score += abs(scores["Combined_Stability_Score"]) * 0.5  # Penalty for instability
 
         scores["Overall_Score"] = overall_score
 

@@ -28,34 +28,51 @@ def analyze_interface_fingerprint(fab_name: str, complex_pdb_path: str) -> Optio
     complex_structure = pr.parsePDB(complex_pdb_path)
 
     # Assumptions: chain A/B are Fab, chain C is antigen
-    fab_part = complex_structure.select('chain A B')
+    # If chain C doesn't exist, analyze all chains
     antigen_part = complex_structure.select('chain C')
 
-    if fab_part is None or antigen_part is None:
-        logger.error("Could not select Fab and Antigen chains (A/B vs C).")
-        return None
+    if antigen_part is None:
+        # No separate antigen chain - analyze intra-Fab interfaces (A-B)
+        logger.info(f"No chain C found. Analyzing A-B interface instead.")
+        fab_part_a = complex_structure.select('chain A')
+        fab_part_b = complex_structure.select('chain B')
+        if fab_part_a is None or fab_part_b is None:
+            logger.error("Could not select chains A and B")
+            return None
+        interface_analysis_1 = fab_part_a
+        interface_analysis_2 = fab_part_b
+    else:
+        # Standard Fab-antigen interface
+        fab_part = complex_structure.select('chain A B')
+        if fab_part is None:
+            logger.error("Could not select Fab chains (A/B)")
+            return None
+        interface_analysis_1 = fab_part
+        interface_analysis_2 = antigen_part
 
-    # Neighbor-based interface within 5 Å
-    # ProDy's findNeighbors signature is findNeighbors(atoms, radius, sel2=None)
-    neighbors = pr.findNeighbors(fab_part, 5.0, antigen_part)
-    if not neighbors:
-        logger.warning(f"No interface detected for {fab_name}")
-        return {"Fab_Name": fab_name, "Total_Interface_Residues": 0, "Hydrophobic_Ratio": 0.0}
-
+    # Find interface residues using distance criterion
     interface_residues = set()
-    # neighbors is a ProDy Neighbors instance; iterate over pairs via getPairs()
-    try:
-        pairs = neighbors.getPairs()
-    except Exception:
-        pairs = []
-    for atom_a, atom_b in pairs:
-        res = atom_a.getResidue()
-        if res is not None:
-            interface_residues.add(res)
+    interface_distance = 5.0  # Angstroms
+
+    # Get all atoms from both parts
+    for atom1 in interface_analysis_1.iterAtoms():
+        coords1 = atom1.getCoords()
+        for atom2 in interface_analysis_2.iterAtoms():
+            coords2 = atom2.getCoords()
+            distance = ((coords1[0]-coords2[0])**2 +
+                       (coords1[1]-coords2[1])**2 +
+                       (coords1[2]-coords2[2])**2)**0.5
+            if distance <= interface_distance:
+                # Use ProDy's attribute accessors
+                chid = atom1.getChid()
+                resnum = atom1.getResnum()
+                resname = atom1.getResname()
+                interface_residues.add((chid, resnum, resname))
+                break  # Found one close atom, residue is at interface
 
     hydrophobic = {'ALA', 'VAL', 'ILE', 'LEU', 'MET', 'PHE', 'TYR', 'TRP'}
     total = len(interface_residues)
-    num_hydrophobic = sum(1 for r in interface_residues if r.getResname() in hydrophobic)
+    num_hydrophobic = sum(1 for r in interface_residues if r[2] in hydrophobic)  # r[2] is resname
 
     return {
         "Fab_Name": fab_name,
