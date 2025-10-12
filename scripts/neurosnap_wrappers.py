@@ -66,13 +66,25 @@ class NeuroSnapWrapper:
     def _run_service(self, service_name: str, fields: Dict[str, Any], note_data: Any,
                      output_dir: Optional[str] = None, max_wait_time: int = 3600) -> Dict[str, Any]:
         note = _get_input_hash(note_data)
+        out_dir = output_dir or os.path.join("results", "neurosnap", service_name.replace(" ", "_"), note)
+
+        # Check if results already exist locally from previous runs
+        if os.path.exists(out_dir):
+            existing_files = []
+            for root, dirs, files in os.walk(out_dir):
+                for file in files:
+                    existing_files.append(os.path.join(root, file))
+            if existing_files:
+                logger.info(f"Using existing local results for {service_name} from {out_dir}")
+                return _parse_downloaded_files(existing_files)
+
+        # Try to find existing job in API or submit new one
         job_id = self.client.find_existing_job(service_name, note)
         if not job_id:
             job_id = self.client.submit_job(service_name, fields, note)
         completed = self.client.wait_for_job_completion(job_id, max_wait_time=max_wait_time)
         if not completed:
             raise RuntimeError(f"NeuroSnap job {job_id} for {service_name} did not complete successfully")
-        out_dir = output_dir or os.path.join("results", "neurosnap", service_name.replace(" ", "_"), note)
         files = self.client.download_job_files(job_id, out_dir)
         return _parse_downloaded_files(files)
 
