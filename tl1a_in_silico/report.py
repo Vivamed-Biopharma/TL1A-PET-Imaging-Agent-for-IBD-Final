@@ -38,6 +38,13 @@ try:
 except Exception:
     PANDAS = False
 
+# Config via environment (lightweight CLI)
+VARIANTS = int(os.environ.get("TL1A_VARIANTS", "120"))
+SEED = int(os.environ.get("TL1A_SEED", "1337"))
+STRICT = os.environ.get("TL1A_STRICT", "0") in {"1", "true", "True"}
+if os.environ.get("TL1A_NOPLOTS", "0") in {"1", "true", "True"}:
+    PLOTTING = False
+
 # Data
 FABS = {
  "Fab01":{"VH":"EVQLVESGGGLVQPGGSLRLSCAASGFTSGYSMHINWVRQAPGKGLEWVAVITYDGGDSNYNPGLKDKATLTVDTSSSTAYMQLSSLTSEDSAVYYCARGYGNGDWYFDYFDYWGQGTLVTVSS",
@@ -84,7 +91,7 @@ CDRS = {
 # ------------------------------------------------------------
 # Variant generation (synthetic enumeration)
 # ------------------------------------------------------------
-random.seed(1337)
+random.seed(SEED)
 
 def generate_variants(num_variants: int = 100):
     """Create additional Fab variants by conservative mutations within CDRs.
@@ -126,8 +133,8 @@ def generate_variants(num_variants: int = 100):
         new_cdrs[name] = new_c
     return new_fabs, new_cdrs
 
-# Synthesize 100 additional variants and merge
-EXTRA_FABS, EXTRA_CDRS = generate_variants(120)
+# Synthesize additional variants and merge
+EXTRA_FABS, EXTRA_CDRS = generate_variants(VARIANTS)
 FABS.update(EXTRA_FABS)
 CDRS.update(EXTRA_CDRS)
 
@@ -148,6 +155,7 @@ rows_manu=[]
 rows_immu=[]
 rows_paratope=[]
 rows_xreact=[]
+violations=[]  # validation issues
 
 for name,ch in sorted(FABS.items()):
     VH,VL=ch['VH'],ch['VL']
@@ -175,8 +183,13 @@ for name,ch in sorted(FABS.items()):
         key=(1 if ok else 0, obj)
         if best is None or key>best['key']:
             best={'Eq_best':eq,'P12':round(P12,3),'Pge4':round(P4,3),'EDAR':round(ED,2),'key':key}
-    rows_dar.append(dict(Clone=name,K_total=K_total,K_cdr=K_cdr,K_fr=K_fr,K_accessible=Kacc,
-                         Eq_best=best['Eq_best'],P_DAR_1_2=best['P12'],P_DAR_ge4=best['Pge4'],E_DAR=best['EDAR']))
+    dar_row = dict(Clone=name,
+                   K_total=K_total,K_cdr=K_cdr,K_fr=K_fr,K_accessible=Kacc,
+                   Eq_best=best['Eq_best'],P_DAR_1_2=best['P12'],P_DAR_ge4=best['Pge4'],E_DAR=best['EDAR'])
+    rows_dar.append(dar_row)
+    # Validation: high DAR tail probability
+    if dar_row['P_DAR_ge4'] > 0.10:
+        violations.append((name, 'P_DAR_ge4', dar_row['P_DAR_ge4']))
     # manu
     manu_vh=window_proxy(VH); manu_vl=window_proxy(VL)
     mot_vh=chem_motifs(VH); mot_vl=chem_motifs(VL)
@@ -361,7 +374,9 @@ with open(fasta_path, 'w') as f:
 
 # Render markdown
 out=[]
+from datetime import datetime
 out.append("# TL1A In-Silico Report\n")
+out.append(f"\n_Generated: {datetime.now().strftime('%Y-%m-%d %H:%M %Z')}_\n")
 out.append("\n> Program: TL1A PET imaging tracer — Fab anti‑TL1A conjugated to NOTA and labeled with Ga‑68 for 1–2 h PET/CT in IBD.\n")
 out.append(
     "\n## Context & Rationale\n"
@@ -392,6 +407,14 @@ if stats_lines:
 if outliers_lines:
     out.append("\n## Outliers (|z| > 2)\n")
     for c, col, z in outliers_lines: out.append(f"- {c} in {col}: z={z}\n")
+if violations:
+    out.append("\n## Validation\n")
+    out.append("The following clones exceeded guardrails (review or exclude):\n")
+    for name, col, val in violations:
+        out.append(f"- {name}: {col} = {val}\n")
+    if STRICT:
+        out.append("\nRun aborted due to STRICT validation.\n")
+        raise RuntimeError("Validation failures under TL1A_STRICT=1")
 
 # Developability table summary
 out.append("\n## Developability (pI, Hydrophobicity, Liabilities)\n")

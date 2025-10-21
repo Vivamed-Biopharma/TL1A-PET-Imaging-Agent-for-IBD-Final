@@ -1,5 +1,7 @@
 # TL1A In-Silico Report
 
+_Generated: 2025-10-21 11:13 _
+
 > Program: TL1A PET imaging tracer — Fab anti‑TL1A conjugated to NOTA and labeled with Ga‑68 for 1–2 h PET/CT in IBD.
 
 ## Context & Rationale
@@ -13,107 +15,79 @@ The tracer is a trial‑enabler (patient selection, dose confirmation) and poten
 QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 
 ## Statistical summaries
-- Hyd_VH %: mean 40.797, sd 0.859 (min 38.7, max 42.7)
-- Hyd_VL %: mean 33.698, sd 0.718 (min 32.4, max 36.2)
-- pI_VL: mean 7.309, sd 0.793 (min 6.303, max 7.961)
+- Hyd_VH %: mean 40.822, sd 0.867 (min 39.5, max 42.7)
+- Hyd_VL %: mean 33.634, sd 0.64 (min 32.4, max 35.2)
+- pI_VL: mean 7.285, sd 0.801 (min 6.303, max 7.961)
 - P_DAR_1_2: mean 0.637, sd 0.003
 - P_DAR_ge4: mean 0.052, sd 0.002
 
 ## Outliers (|z| > 2)
-- Fab125 in Hyd_VH: z=2.22
-- Fab126 in Hyd_VH: z=-2.44
-- Fab14 in Hyd_VH: z=2.22
-- Fab22 in Hyd_VH: z=2.22
-- Fab54 in Hyd_VH: z=2.22
-- Fab83 in Hyd_VH: z=2.22
-- Fab108 in Hyd_VL: z=2.09
-- Fab116 in Hyd_VL: z=3.49
-- Fab128 in Hyd_VL: z=2.09
-- Fab131 in Hyd_VL: z=3.49
-- Fab33 in Hyd_VL: z=2.09
-- Fab38 in Hyd_VL: z=2.09
-- Fab74 in Hyd_VL: z=2.09
-- Fab114 in P_DAR_1_2: z=-3.15
-- Fab13 in P_DAR_1_2: z=-3.15
-- Fab18 in P_DAR_1_2: z=-3.15
-- Fab29 in P_DAR_1_2: z=-3.15
-- Fab35 in P_DAR_1_2: z=-3.15
-- Fab38 in P_DAR_1_2: z=-3.15
-- Fab49 in P_DAR_1_2: z=-3.15
-- Fab53 in P_DAR_1_2: z=-3.15
-- Fab66 in P_DAR_1_2: z=-3.15
-- Fab71 in P_DAR_1_2: z=-3.15
-- Fab87 in P_DAR_1_2: z=-3.15
-- Fab92 in P_DAR_1_2: z=-3.15
-- Fab114 in P_DAR_ge4: z=3.15
-- Fab13 in P_DAR_ge4: z=3.15
-- Fab18 in P_DAR_ge4: z=3.15
-- Fab29 in P_DAR_ge4: z=3.15
-- Fab35 in P_DAR_ge4: z=3.15
-- Fab38 in P_DAR_ge4: z=3.15
-- Fab49 in P_DAR_ge4: z=3.15
-- Fab53 in P_DAR_ge4: z=3.15
-- Fab66 in P_DAR_ge4: z=3.15
-- Fab71 in P_DAR_ge4: z=3.15
-- Fab87 in P_DAR_ge4: z=3.15
-- Fab92 in P_DAR_ge4: z=3.15
-- Fab02 in AggProxyMax_VH: z=3.3
-- Fab102 in AggProxyMax_VH: z=-2.69
-- Fab120 in AggProxyMax_VH: z=2.62
-- Fab121 in AggProxyMax_VH: z=3.3
-- Fab14 in AggProxyMax_VH: z=2.62
-- Fab22 in AggProxyMax_VH: z=-2.69
-- Fab24 in AggProxyMax_VH: z=-2.5
-- Fab52 in AggProxyMax_VH: z=3.3
-- Fab62 in AggProxyMax_VH: z=3.3
-- Fab70 in AggProxyMax_VH: z=2.53
-- Fab73 in AggProxyMax_VH: z=3.3
-- Fab79 in AggProxyMax_VH: z=-2.69
-- Fab82 in AggProxyMax_VH: z=3.3
-- Fab91 in AggProxyMax_VH: z=3.3
-- Fab108 in AggProxyMax_VL: z=5.02
-- Fab124 in AggProxyMax_VL: z=5.02
-- Fab128 in AggProxyMax_VL: z=5.02
-- Fab29 in AggProxyMax_VL: z=5.02
-- Fab38 in AggProxyMax_VL: z=5.02
-- Fab07 in ImmBurden_VH: z=2.35
-- Fab10 in ImmBurden_VH: z=2.35
-- Fab102 in ImmBurden_VH: z=2.35
-- Fab103 in ImmBurden_VH: z=2.35
-- Fab104 in ImmBurden_VH: z=2.35
-- Fab125 in ImmBurden_VH: z=2.35
-- Fab129 in ImmBurden_VH: z=2.35
-- Fab13 in ImmBurden_VH: z=2.35
-- Fab130 in ImmBurden_VH: z=2.35
-- Fab14 in ImmBurden_VH: z=2.35
-- Fab22 in ImmBurden_VH: z=2.35
-- Fab23 in ImmBurden_VH: z=2.35
-- Fab24 in ImmBurden_VH: z=2.35
-- Fab30 in ImmBurden_VH: z=2.35
-- Fab53 in ImmBurden_VH: z=2.35
-- Fab54 in ImmBurden_VH: z=2.35
-- Fab60 in ImmBurden_VH: z=2.35
-- Fab83 in ImmBurden_VH: z=2.35
-- Fab89 in ImmBurden_VH: z=2.35
-- Fab95 in ImmBurden_VH: z=2.35
-- Fab13 in Paratope: z=-2.01
-- Fab17 in Paratope: z=2.12
-- Fab26 in Paratope: z=2.64
-- Fab44 in Paratope: z=2.17
-- Fab57 in Paratope: z=2.03
-- Fab72 in Paratope: z=2.12
-- Fab80 in Paratope: z=-2.17
-- Fab91 in Paratope: z=-2.73
-- Fab95 in Paratope: z=-2.17
-- Fab114 in DR3_adj: z=-2.61
-- Fab13 in DR3_adj: z=-2.61
-- Fab18 in DR3_adj: z=-2.61
-- Fab35 in DR3_adj: z=-2.61
-- Fab38 in DR3_adj: z=-3.4
-- Fab53 in DR3_adj: z=-2.61
-- Fab71 in DR3_adj: z=-2.61
-- Fab89 in DR3_adj: z=2.37
-- Fab92 in DR3_adj: z=-2.61
+- Fab14 in Hyd_VH: z=2.17
+- Fab22 in Hyd_VH: z=2.17
+- Fab54 in Hyd_VH: z=2.17
+- Fab83 in Hyd_VH: z=2.17
+- Fab33 in Hyd_VL: z=2.45
+- Fab38 in Hyd_VL: z=2.45
+- Fab74 in Hyd_VL: z=2.45
+- Fab13 in P_DAR_1_2: z=-2.7
+- Fab18 in P_DAR_1_2: z=-2.7
+- Fab29 in P_DAR_1_2: z=-2.7
+- Fab35 in P_DAR_1_2: z=-2.7
+- Fab38 in P_DAR_1_2: z=-2.7
+- Fab49 in P_DAR_1_2: z=-2.7
+- Fab53 in P_DAR_1_2: z=-2.7
+- Fab66 in P_DAR_1_2: z=-2.7
+- Fab71 in P_DAR_1_2: z=-2.7
+- Fab87 in P_DAR_1_2: z=-2.7
+- Fab92 in P_DAR_1_2: z=-2.7
+- Fab13 in P_DAR_ge4: z=2.7
+- Fab18 in P_DAR_ge4: z=2.7
+- Fab29 in P_DAR_ge4: z=2.7
+- Fab35 in P_DAR_ge4: z=2.7
+- Fab38 in P_DAR_ge4: z=2.7
+- Fab49 in P_DAR_ge4: z=2.7
+- Fab53 in P_DAR_ge4: z=2.7
+- Fab66 in P_DAR_ge4: z=2.7
+- Fab71 in P_DAR_ge4: z=2.7
+- Fab87 in P_DAR_ge4: z=2.7
+- Fab92 in P_DAR_ge4: z=2.7
+- Fab02 in AggProxyMax_VH: z=3.05
+- Fab14 in AggProxyMax_VH: z=2.42
+- Fab22 in AggProxyMax_VH: z=-2.55
+- Fab24 in AggProxyMax_VH: z=-2.37
+- Fab52 in AggProxyMax_VH: z=3.05
+- Fab62 in AggProxyMax_VH: z=3.05
+- Fab70 in AggProxyMax_VH: z=2.33
+- Fab73 in AggProxyMax_VH: z=3.05
+- Fab79 in AggProxyMax_VH: z=-2.55
+- Fab82 in AggProxyMax_VH: z=3.05
+- Fab91 in AggProxyMax_VH: z=3.05
+- Fab29 in AggProxyMax_VL: z=6.67
+- Fab38 in AggProxyMax_VL: z=6.67
+- Fab07 in ImmBurden_VH: z=2.44
+- Fab10 in ImmBurden_VH: z=2.44
+- Fab13 in ImmBurden_VH: z=2.44
+- Fab14 in ImmBurden_VH: z=2.44
+- Fab22 in ImmBurden_VH: z=2.44
+- Fab23 in ImmBurden_VH: z=2.44
+- Fab24 in ImmBurden_VH: z=2.44
+- Fab30 in ImmBurden_VH: z=2.44
+- Fab53 in ImmBurden_VH: z=2.44
+- Fab54 in ImmBurden_VH: z=2.44
+- Fab60 in ImmBurden_VH: z=2.44
+- Fab83 in ImmBurden_VH: z=2.44
+- Fab89 in ImmBurden_VH: z=2.44
+- Fab26 in Paratope: z=2.45
+- Fab44 in Paratope: z=2.01
+- Fab91 in Paratope: z=-2.5
+- Fab13 in DR3_adj: z=-2.42
+- Fab18 in DR3_adj: z=-2.42
+- Fab35 in DR3_adj: z=-2.42
+- Fab38 in DR3_adj: z=-3.16
+- Fab53 in DR3_adj: z=-2.42
+- Fab71 in DR3_adj: z=-2.42
+- Fab89 in DR3_adj: z=2.27
+- Fab92 in DR3_adj: z=-2.42
 
 ## Developability (pI, Hydrophobicity, Liabilities)
 | Clone | pI_VH | pI_VL | Hyd_VH | Hyd_VL | NG_VH | NG_VL | DG_VH | DG_VL | Met_VH | Met_VL | Trp_VH | Trp_VL | Lys_total |
@@ -128,42 +102,9 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab08 | 4.261 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
 | Fab09 | 4.352 | 6.31 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 1 | 2 | 4 | 2 | 8 |
 | Fab10 | 4.13 | 7.944 | 41.9 | 33.7 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
-| Fab100 | 4.261 | 7.944 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
-| Fab101 | 4.385 | 7.952 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 2 | 8 |
-| Fab102 | 4.16 | 7.952 | 41.1 | 33.7 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
-| Fab103 | 4.13 | 6.31 | 41.9 | 32.4 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 1 | 8 |
-| Fab104 | 4.16 | 6.31 | 41.9 | 32.4 | 0 | 0 | 1 | 0 | 2 | 1 | 6 | 1 | 8 |
-| Fab105 | 4.352 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab106 | 4.385 | 7.935 | 41.9 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 1 | 8 |
-| Fab107 | 4.258 | 7.881 | 41.1 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 5 | 3 | 8 |
-| Fab108 | 4.291 | 7.944 | 40.3 | 35.2 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 2 | 8 |
-| Fab109 | 4.261 | 7.952 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 1 | 1 | 4 | 2 | 8 |
 | Fab11 | 4.352 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab110 | 4.382 | 6.31 | 40.3 | 34.3 | 1 | 0 | 1 | 0 | 1 | 2 | 3 | 2 | 8 |
-| Fab111 | 4.352 | 6.336 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 1 | 3 | 2 | 8 |
-| Fab112 | 4.261 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 2 | 8 |
-| Fab113 | 4.291 | 7.952 | 41.1 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 6 | 2 | 8 |
-| Fab114 | 4.352 | 6.31 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 9 |
-| Fab115 | 4.352 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 3 | 1 | 7 | 2 | 8 |
-| Fab116 | 4.261 | 7.875 | 40.3 | 36.2 | 0 | 0 | 1 | 0 | 2 | 2 | 6 | 2 | 8 |
-| Fab117 | 4.385 | 7.944 | 39.5 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab118 | 4.382 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 2 | 7 |
-| Fab119 | 4.418 | 7.875 | 40.3 | 34.3 | 0 | 0 | 0 | 0 | 2 | 1 | 5 | 2 | 8 |
 | Fab12 | 4.261 | 7.944 | 41.1 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
-| Fab120 | 4.352 | 6.31 | 41.1 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab121 | 4.261 | 6.31 | 41.9 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
-| Fab122 | 4.385 | 6.311 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 1 | 2 | 5 | 2 | 8 |
-| Fab123 | 4.349 | 6.31 | 41.9 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 3 | 2 | 8 |
-| Fab124 | 4.385 | 7.944 | 40.3 | 34.3 | 1 | 0 | 0 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab125 | 4.16 | 7.935 | 42.7 | 33.7 | 0 | 0 | 1 | 0 | 2 | 1 | 4 | 1 | 8 |
-| Fab126 | 4.385 | 7.952 | 38.7 | 32.4 | 1 | 0 | 1 | 0 | 1 | 1 | 6 | 3 | 8 |
-| Fab127 | 4.385 | 6.336 | 39.5 | 34.3 | 1 | 0 | 1 | 0 | 2 | 2 | 3 | 1 | 8 |
-| Fab128 | 4.385 | 7.952 | 39.5 | 35.2 | 1 | 0 | 1 | 0 | 2 | 1 | 5 | 3 | 8 |
-| Fab129 | 4.13 | 7.875 | 41.9 | 34.6 | 0 | 0 | 1 | 0 | 2 | 2 | 4 | 2 | 8 |
 | Fab13 | 4.19 | 7.875 | 41.9 | 33.7 | 0 | 0 | 0 | 0 | 2 | 2 | 4 | 2 | 9 |
-| Fab130 | 4.19 | 7.875 | 41.1 | 33.7 | 0 | 0 | 1 | 0 | 2 | 2 | 3 | 2 | 8 |
-| Fab131 | 4.385 | 6.303 | 41.1 | 36.2 | 0 | 0 | 0 | 0 | 2 | 2 | 3 | 2 | 8 |
-| Fab132 | 4.352 | 7.944 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 6 | 2 | 8 |
 | Fab14 | 4.16 | 7.944 | 42.7 | 34.6 | 0 | 0 | 1 | 0 | 2 | 2 | 5 | 1 | 8 |
 | Fab15 | 4.258 | 7.952 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 3 | 1 | 5 | 3 | 7 |
 | Fab16 | 4.322 | 7.952 | 40.3 | 33.3 | 0 | 0 | 1 | 1 | 2 | 2 | 4 | 1 | 8 |
@@ -243,13 +184,6 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab90 | 4.261 | 7.875 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 2 | 8 |
 | Fab91 | 4.385 | 6.336 | 40.3 | 34.3 | 1 | 0 | 1 | 0 | 2 | 2 | 6 | 2 | 8 |
 | Fab92 | 4.261 | 6.31 | 41.9 | 33.3 | 0 | 0 | 1 | 0 | 3 | 2 | 4 | 1 | 9 |
-| Fab93 | 4.352 | 6.31 | 41.9 | 33.3 | 0 | 0 | 1 | 0 | 3 | 1 | 3 | 1 | 8 |
-| Fab94 | 4.385 | 7.944 | 41.1 | 33.3 | 0 | 0 | 0 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab95 | 4.22 | 7.952 | 41.9 | 33.7 | 0 | 0 | 1 | 0 | 2 | 2 | 5 | 2 | 8 |
-| Fab96 | 4.418 | 6.336 | 40.3 | 33.3 | 0 | 0 | 0 | 0 | 2 | 1 | 4 | 2 | 8 |
-| Fab97 | 4.352 | 7.944 | 41.1 | 33.3 | 0 | 0 | 1 | 0 | 2 | 1 | 5 | 1 | 8 |
-| Fab98 | 4.352 | 7.935 | 40.3 | 33.3 | 0 | 0 | 1 | 0 | 1 | 1 | 5 | 1 | 8 |
-| Fab99 | 4.352 | 6.31 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 3 | 1 | 8 |
 
 ## Conjugation (NOTA–Lys) — Eq_best & DAR stats
 | Clone | K_total | K_cdr | K_fr | K_accessible | Eq_best | P_DAR_1_2 | P_DAR_ge4 | E_DAR |
@@ -264,42 +198,9 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab08 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab09 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab10 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab100 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab101 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab102 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab103 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab104 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab105 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab106 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab107 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab108 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab109 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab11 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab110 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab111 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab112 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab113 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab114 | 9 | 2 | 7 | 8 | 4 | 0.628 | 0.058 | 1.61 |
-| Fab115 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab116 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab117 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab118 | 7 | 0 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab119 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab12 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab120 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab121 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab122 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab123 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab124 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab125 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab126 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab127 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab128 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab129 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab13 | 9 | 2 | 7 | 8 | 4 | 0.628 | 0.058 | 1.61 |
-| Fab130 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab131 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab132 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab14 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab15 | 7 | 0 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab16 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
@@ -379,13 +280,6 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab90 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab91 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 | Fab92 | 9 | 2 | 7 | 8 | 4 | 0.628 | 0.058 | 1.61 |
-| Fab93 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab94 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab95 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab96 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab97 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab98 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
-| Fab99 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 
 ## Detectability (TBR model)
 Fraction of grid with TBR_pre ≥ 1.5: 0.25
@@ -416,42 +310,9 @@ Interpretation: Enrichment of Y/S/D/N/R across CDRs is consistent with polar int
 | Fab08 | 0.519 | 0.471 |
 | Fab09 | 0.549 | 0.412 |
 | Fab10 | 0.5 | 0.471 |
-| Fab100 | 0.555 | 0.471 |
-| Fab101 | 0.483 | 0.353 |
-| Fab102 | 0.51 | 0.471 |
-| Fab103 | 0.533 | 0.471 |
-| Fab104 | 0.411 | 0.353 |
-| Fab105 | 0.45 | 0.471 |
-| Fab106 | 0.522 | 0.412 |
-| Fab107 | 0.501 | 0.471 |
-| Fab108 | 0.49 | 0.471 |
-| Fab109 | 0.541 | 0.529 |
 | Fab11 | 0.549 | 0.412 |
-| Fab110 | 0.494 | 0.471 |
-| Fab111 | 0.517 | 0.471 |
-| Fab112 | 0.477 | 0.412 |
-| Fab113 | 0.459 | 0.471 |
-| Fab114 | 0.519 | 0.212 |
-| Fab115 | 0.49 | 0.294 |
-| Fab116 | 0.512 | 0.471 |
-| Fab117 | 0.484 | 0.412 |
-| Fab118 | 0.465 | 0.412 |
-| Fab119 | 0.458 | 0.353 |
 | Fab12 | 0.519 | 0.471 |
-| Fab120 | 0.536 | 0.412 |
-| Fab121 | 0.506 | 0.412 |
-| Fab122 | 0.457 | 0.353 |
-| Fab123 | 0.507 | 0.471 |
-| Fab124 | 0.452 | 0.353 |
-| Fab125 | 0.477 | 0.471 |
-| Fab126 | 0.458 | 0.294 |
-| Fab127 | 0.507 | 0.412 |
-| Fab128 | 0.47 | 0.412 |
-| Fab129 | 0.484 | 0.412 |
 | Fab13 | 0.4 | 0.212 |
-| Fab130 | 0.459 | 0.471 |
-| Fab131 | 0.516 | 0.471 |
-| Fab132 | 0.507 | 0.353 |
 | Fab14 | 0.453 | 0.412 |
 | Fab15 | 0.47 | 0.412 |
 | Fab16 | 0.5 | 0.529 |
@@ -531,13 +392,6 @@ Interpretation: Enrichment of Y/S/D/N/R across CDRs is consistent with polar int
 | Fab90 | 0.448 | 0.353 |
 | Fab91 | 0.368 | 0.294 |
 | Fab92 | 0.435 | 0.212 |
-| Fab93 | 0.56 | 0.471 |
-| Fab94 | 0.501 | 0.412 |
-| Fab95 | 0.393 | 0.412 |
-| Fab96 | 0.494 | 0.412 |
-| Fab97 | 0.5 | 0.412 |
-| Fab98 | 0.509 | 0.353 |
-| Fab99 | 0.488 | 0.412 |
 
 ## Immunogenicity (expanded proxy)
 | Clone | ImmBurden_VH | ImmBurden_VL | Cys_VH | Cys_VL |
@@ -560,42 +414,9 @@ Interpretation: Windowed hydropathy+charge proxies indicate no high-risk aggrega
 | Fab08 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab09 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 | Fab10 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab100 | 1.44 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab101 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab102 | 1.17 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab103 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
-| Fab104 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
-| Fab105 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab106 | 1.4 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab107 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab108 | 1.43 | 0.97 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab109 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab11 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab110 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab111 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab112 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab113 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab114 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab115 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab116 | 1.43 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab117 | 1.44 | 0.93 | 0 | 2 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| Fab118 | 1.44 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab119 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab12 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab120 | 1.72 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab121 | 1.79 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab122 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab123 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab124 | 1.48 | 0.97 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab125 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab126 | 1.44 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab127 | 1.36 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab128 | 1.44 | 0.97 | 0 | 2 | 0 | 0 | 0 | 1 | 0 | 0 | 0 | 0 |
-| Fab129 | 1.43 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 | Fab13 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab130 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab131 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab132 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab14 | 1.72 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
 | Fab15 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab16 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
@@ -675,13 +496,6 @@ Interpretation: Windowed hydropathy+charge proxies indicate no high-risk aggrega
 | Fab90 | 1.36 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab91 | 1.79 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 | Fab92 | 1.5 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 2 | 0 | 0 | 0 |
-| Fab93 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab94 | 1.43 | 0.93 | 0 | 2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab95 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab96 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 1 | 0 | 0 | 0 |
-| Fab97 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab98 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Fab99 | 1.43 | 0.93 | 0 | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ## Immunogenicity proxy (disclosure-level)
 Interpretation: Disclosure-level burdens (anchors in 15-mers) are within typical humanized Fab ranges. For microdose imaging agents, this is generally acceptable; add panel MHC-II predictor runs during IND-enabling if desired.
@@ -697,42 +511,9 @@ Interpretation: Disclosure-level burdens (anchors in 15-mers) are within typical
 | Fab08 | 31 | 34 |
 | Fab09 | 31 | 34 |
 | Fab10 | 39 | 34 |
-| Fab100 | 31 | 34 |
-| Fab101 | 31 | 34 |
-| Fab102 | 39 | 34 |
-| Fab103 | 39 | 34 |
-| Fab104 | 39 | 34 |
-| Fab105 | 31 | 34 |
-| Fab106 | 30 | 34 |
-| Fab107 | 31 | 34 |
-| Fab108 | 31 | 34 |
-| Fab109 | 31 | 34 |
 | Fab11 | 31 | 34 |
-| Fab110 | 31 | 34 |
-| Fab111 | 31 | 34 |
-| Fab112 | 31 | 34 |
-| Fab113 | 31 | 34 |
-| Fab114 | 31 | 34 |
-| Fab115 | 31 | 34 |
-| Fab116 | 31 | 34 |
-| Fab117 | 31 | 34 |
-| Fab118 | 31 | 34 |
-| Fab119 | 31 | 34 |
 | Fab12 | 31 | 34 |
-| Fab120 | 31 | 34 |
-| Fab121 | 31 | 34 |
-| Fab122 | 31 | 34 |
-| Fab123 | 31 | 34 |
-| Fab124 | 31 | 34 |
-| Fab125 | 39 | 34 |
-| Fab126 | 31 | 34 |
-| Fab127 | 31 | 34 |
-| Fab128 | 31 | 34 |
-| Fab129 | 39 | 34 |
 | Fab13 | 39 | 34 |
-| Fab130 | 39 | 34 |
-| Fab131 | 31 | 34 |
-| Fab132 | 31 | 34 |
 | Fab14 | 39 | 34 |
 | Fab15 | 31 | 34 |
 | Fab16 | 31 | 34 |
@@ -812,13 +593,6 @@ Interpretation: Disclosure-level burdens (anchors in 15-mers) are within typical
 | Fab90 | 31 | 34 |
 | Fab91 | 31 | 34 |
 | Fab92 | 31 | 34 |
-| Fab93 | 31 | 34 |
-| Fab94 | 30 | 34 |
-| Fab95 | 39 | 34 |
-| Fab96 | 31 | 34 |
-| Fab97 | 30 | 34 |
-| Fab98 | 30 | 34 |
-| Fab99 | 31 | 34 |
 
 ## Cross-reactivity (6-mer overlap with TNFSF family)
 Interpretation: Zero paratope 6-mer overlap to canonical TNFSF sequences is expected given divergent folds and sequence features; local 12–15mer hotspot scanning (see notebook) adds a conservative check. Any ≥40% identity window is flagged Amber for the wet panel.
@@ -834,42 +608,9 @@ Interpretation: Zero paratope 6-mer overlap to canonical TNFSF sequences is expe
 | Fab08 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab09 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab10 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab100 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab101 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab102 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab103 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab104 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab105 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab106 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab107 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab108 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab109 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab11 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab110 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab111 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab112 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab113 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab114 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab115 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab116 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab117 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab118 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab119 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab12 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab120 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab121 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab122 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab123 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab124 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab125 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab126 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab127 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab128 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab129 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab13 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab130 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab131 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab132 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab14 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab15 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab16 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
@@ -949,25 +690,12 @@ Interpretation: Zero paratope 6-mer overlap to canonical TNFSF sequences is expe
 | Fab90 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab91 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 | Fab92 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab93 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab94 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab95 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab96 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab97 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab98 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
-| Fab99 | TNFSF15_TL1A:0, TNFSF10_TRAIL:0, TNFSF14_LIGHT:0 |
 
 ## Composite ranking
 Top clones by composite score:
-- Fab79: score 0.912
-- Fab96: score 0.899
-- Fab122: score 0.893
-
-## Figures
-![fig_dar_p12.png](fig_dar_p12.png)
-![fig_dar_ge4.png](fig_dar_ge4.png)
-![fig_dev_heatmap.png](fig_dev_heatmap.png)
-![fig_tbr_vs_kd.png](fig_tbr_vs_kd.png)
+- Fab79: score 0.916
+- Fab37: score 0.899
+- Fab90: score 0.873
 
 ## EXEC SUMMARY (paste to Syngene)
 * 12/12 sequences QC PASS; no NXS/T motifs; FASTA provided.
