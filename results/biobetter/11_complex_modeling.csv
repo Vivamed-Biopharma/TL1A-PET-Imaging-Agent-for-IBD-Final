@@ -1,0 +1,3 @@
+Fab_Name,Interface_Residues,Predicted_Binding_Energy,Confidence_Score,Interface_Composition,Total_Interface_AA,Structure_Predicted
+Fab06,,,0.0,"{'Tyr': 0, 'Trp': 0, 'Arg': 0, 'Asp': 0, 'Glu': 0, 'Ser': 0, 'Thr': 0, 'Asn': 0, 'Gln': 0}",0,True
+Fab11,,,0.0,"{'Tyr': 0, 'Trp': 0, 'Arg': 0, 'Asp': 0, 'Glu': 0, 'Ser': 0, 'Thr': 0, 'Asn': 0, 'Gln': 0}",0,True

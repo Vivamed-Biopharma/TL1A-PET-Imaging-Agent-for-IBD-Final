@@ -1,0 +1,5 @@
+Name,Pattern,Count,Positions
+Fab06_VH,Hydrophobic_Patch,2,94-96; 106-108
+Fab06_VL,Hydrophobic_Patch,3,2-4; 34-36; 46-48
+Fab11_VH,Hydrophobic_Patch,2,94-96; 106-108
+Fab11_VL,Hydrophobic_Patch,3,2-4; 34-36; 46-48

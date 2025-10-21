@@ -1,0 +1,350 @@
+2025-10-07 20:14:06,951 - INFO - Starting TL1A PET Imaging Agent experiment suite
+2025-10-07 20:14:06,951 - INFO - Total experiments to run: 15
+2025-10-07 20:14:06,951 - INFO - Starting experiment: Foundational Physicochemical Profiling
+2025-10-07 20:14:06,951 - INFO - Running script: scripts/01_physchem.py
+2025-10-07 20:14:07,384 - INFO - ✅ Experiment 01_physchem completed successfully
+2025-10-07 20:14:07,385 - INFO - Progress: 1/15 experiments completed (1 successful)
+2025-10-07 20:14:07,385 - INFO - Starting experiment: Activation & Metabolism Prediction
+2025-10-07 20:14:07,385 - INFO - Running script: scripts/02_metabolism.py
+2025-10-07 20:14:07,654 - ERROR - Script failed with return code 1
+Stderr: Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/02_metabolism.py", line 11, in <module>
+    import scripts.inputs as inputs
+ModuleNotFoundError: No module named 'scripts'
+
+2025-10-07 20:14:07,654 - INFO - Progress: 2/15 experiments completed (1 successful)
+2025-10-07 20:14:07,654 - INFO - Starting experiment: In-Silico Toxicity & Liability Flagging
+2025-10-07 20:14:07,654 - INFO - Running script: scripts/03_toxicity_flags.py
+2025-10-07 20:14:09,497 - INFO - ✅ Experiment 03_toxicity_flags completed successfully
+2025-10-07 20:14:09,497 - INFO - Progress: 3/15 experiments completed (2 successful)
+2025-10-07 20:14:09,497 - INFO - Starting experiment: Linker Flexibility Analysis
+2025-10-07 20:14:09,497 - INFO - Running script: scripts/04_linker_flex.py
+2025-10-07 20:14:18,660 - INFO - ✅ Experiment 04_linker_flex completed successfully
+2025-10-07 20:14:18,660 - INFO - Progress: 4/15 experiments completed (3 successful)
+2025-10-07 20:14:18,660 - INFO - Starting experiment: MMP Analysis
+2025-10-07 20:14:18,660 - INFO - Running script: scripts/05_mmp_analysis.py
+2025-10-07 20:14:19,222 - INFO - ✅ Experiment 05_mmp_analysis completed successfully
+2025-10-07 20:14:19,223 - INFO - Progress: 5/15 experiments completed (4 successful)
+2025-10-07 20:14:19,223 - INFO - Starting experiment: Sequence-Based Developability Scoring
+2025-10-07 20:14:19,223 - INFO - Running script: scripts/06_sequence_dev.py
+2025-10-07 20:14:19,675 - INFO - ✅ Experiment 06_sequence_dev completed successfully
+2025-10-07 20:14:19,675 - INFO - Progress: 6/15 experiments completed (5 successful)
+2025-10-07 20:14:19,675 - INFO - Starting experiment: Aggregation Hotspot Prediction
+2025-10-07 20:14:19,675 - INFO - Running script: scripts/07_agg_hotspots.py
+2025-10-07 20:14:25,233 - INFO - ✅ Experiment 07_agg_hotspots completed successfully
+2025-10-07 20:14:25,233 - INFO - Progress: 7/15 experiments completed (6 successful)
+2025-10-07 20:14:25,233 - INFO - Starting experiment: Charge Distribution & pI Analysis
+2025-10-07 20:14:25,233 - INFO - Running script: scripts/08_charge_pI.py
+2025-10-07 20:14:25,537 - INFO - ✅ Experiment 08_charge_pI completed successfully
+2025-10-07 20:14:25,538 - INFO - Progress: 8/15 experiments completed (7 successful)
+2025-10-07 20:14:25,538 - INFO - Starting experiment: Local Flexibility Analysis with ANM
+2025-10-07 20:14:25,538 - INFO - Running script: scripts/09_flexibility_anm.py
+2025-10-07 20:14:27,163 - INFO - ✅ Experiment 09_flexibility_anm completed successfully
+2025-10-07 20:14:27,163 - INFO - Progress: 9/15 experiments completed (8 successful)
+2025-10-07 20:14:27,163 - INFO - Starting experiment: Thermostability Prediction
+2025-10-07 20:14:27,163 - INFO - Running script: scripts/10_thermostability.py
+2025-10-07 20:14:30,831 - INFO - ✅ Experiment 10_thermostability completed successfully
+2025-10-07 20:14:30,831 - INFO - Progress: 10/15 experiments completed (9 successful)
+2025-10-07 20:14:30,831 - INFO - Starting experiment: Complex Modeling
+2025-10-07 20:14:30,831 - INFO - Running script: scripts/11_complex_model.py
+2025-10-07 20:23:07,091 - INFO - ✅ Experiment 11_complex_model completed successfully
+2025-10-07 20:23:07,091 - INFO - Progress: 11/15 experiments completed (10 successful)
+2025-10-07 20:23:07,091 - INFO - Starting experiment: Interface Fingerprinting
+2025-10-07 20:23:07,092 - INFO - Running script: scripts/12_interface_fingerprint.py
+2025-10-07 20:23:08,294 - INFO - ✅ Experiment 12_interface_fingerprint completed successfully
+2025-10-07 20:23:08,294 - INFO - Progress: 12/15 experiments completed (11 successful)
+2025-10-07 20:23:08,294 - INFO - Starting experiment: Alanine Scanning
+2025-10-07 20:23:08,294 - INFO - Running script: scripts/13_ala_scanning.py
+2025-10-07 20:23:10,224 - ERROR - Script failed with return code 1
+Stderr: 2025-10-07 20:23:08,568 - INFO - Performing alanine scanning for Fab06_VH
+2025-10-07 20:23:08,568 - INFO - Searching for existing job for 'StaB-ddG' note 'f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257'
+2025-10-07 20:23:08,979 - INFO - Submitting job: StaB-ddG note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+2025-10-07 20:23:10,150 - ERROR - StaB-ddG prediction failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+2025-10-07 20:23:10,150 - ERROR - Error in Experiment 13: Alanine scanning failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 67, in perform_alanine_scanning
+    stab_results = ns_predict_stability_change(pdb_path, all_mutations, max_wait_time=1800)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 166, in predict_stability_change
+    return NeuroSnapWrapper().predict_stability_change(pdb_path, mutations, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 132, in predict_stability_change
+    return self._run_service(service, fields, {"service": service, "mutations": sorted(mutations)}, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 71, in _run_service
+    job_id = self.client.submit_job(service_name, fields, note)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_client.py", line 125, in submit_job
+    resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 154, in <module>
+    main()
+    ~~~~^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 117, in main
+    results = perform_alanine_scanning(name, seq)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 99, in perform_alanine_scanning
+    raise RuntimeError(f"Alanine scanning failed for {fab_name}: {str(e)}")
+RuntimeError: Alanine scanning failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+
+2025-10-07 20:23:10,224 - INFO - Progress: 13/15 experiments completed (11 successful)
+2025-10-07 20:23:10,224 - INFO - Starting experiment: Immunogenicity Prediction
+2025-10-07 20:23:10,224 - INFO - Running script: scripts/14_immunogenicity.py
+2025-10-07 20:23:13,686 - INFO - ✅ Experiment 14_immunogenicity completed successfully
+2025-10-07 20:23:13,686 - INFO - Progress: 14/15 experiments completed (12 successful)
+2025-10-07 20:23:13,686 - INFO - Starting experiment: Integrated Decision Scorecard
+2025-10-07 20:23:13,686 - INFO - Running script: scripts/15_decision_scorecard.py
+2025-10-07 20:23:14,071 - ERROR - Script failed with return code 1
+Stderr: 2025-10-07 20:23:13,954 - INFO - Generating integrated decision scorecard
+2025-10-07 20:23:13,957 - INFO - Loaded physchem results: 2 rows
+2025-10-07 20:23:13,957 - WARNING - Missing results file: results/prodrug/02_biotransformer_metabolites.csv
+2025-10-07 20:23:13,958 - INFO - Loaded toxicity results: 2 rows
+2025-10-07 20:23:13,959 - INFO - Loaded flexibility results: 2 rows
+2025-10-07 20:23:13,959 - INFO - Loaded mmp results: 1 rows
+2025-10-07 20:23:13,960 - INFO - Loaded developability results: 4 rows
+2025-10-07 20:23:13,960 - INFO - Loaded aggregation results: 4 rows
+2025-10-07 20:23:13,960 - INFO - Loaded charge results: 4 rows
+2025-10-07 20:23:13,961 - INFO - Loaded anm_flex results: 1 rows
+2025-10-07 20:23:13,961 - INFO - Loaded thermostability results: 4 rows
+2025-10-07 20:23:13,961 - INFO - Loaded complex results: 2 rows
+2025-10-07 20:23:13,961 - INFO - Loaded interface results: 1 rows
+2025-10-07 20:23:13,961 - WARNING - Missing results file: results/biobetter/13_scanning_summary.csv
+2025-10-07 20:23:13,962 - INFO - Loaded immunogenicity results: 4 rows
+2025-10-07 20:23:13,963 - ERROR - Error in Experiment 15: 'Thermo_Score'
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Thermo_Score'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/15_decision_scorecard.py", line 217, in <module>
+    main()
+    ~~~~^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/15_decision_scorecard.py", line 193, in main
+    scorecard_df = calculate_decision_scores(experiment_results)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/15_decision_scorecard.py", line 116, in calculate_decision_scores
+    scores["Thermo_Score"] = fab_row["Thermo_Score"].values[0]
+                             ~~~~~~~^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pandas/core/frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Thermo_Score'
+
+2025-10-07 20:23:14,071 - INFO - Progress: 15/15 experiments completed (12 successful)
+2025-10-07 20:23:14,071 - INFO - Creating summary report: experiment_summary_report.md
+2025-10-07 20:23:14,071 - INFO - Summary report saved to experiment_summary_report.md
+2025-10-07 20:23:14,071 - ERROR - ❌ 3 experiment(s) failed
+2025-10-10 17:12:19,815 - INFO - Starting TL1A PET Imaging Agent experiment suite
+2025-10-10 17:12:19,816 - INFO - Total experiments to run: 15
+2025-10-10 17:12:19,816 - INFO - Starting experiment: Foundational Physicochemical Profiling
+2025-10-10 17:12:19,817 - INFO - Running script: scripts/01_physchem.py
+2025-10-10 17:12:21,447 - INFO - ✅ Experiment 01_physchem completed successfully
+2025-10-10 17:12:21,447 - INFO - Progress: 1/15 experiments completed (1 successful)
+2025-10-10 17:12:21,447 - INFO - Starting experiment: Activation & Metabolism Prediction
+2025-10-10 17:12:21,447 - INFO - Running script: scripts/02_metabolism.py
+2025-10-10 17:12:22,539 - INFO - ✅ Experiment 02_metabolism completed successfully
+2025-10-10 17:12:22,540 - INFO - Progress: 2/15 experiments completed (2 successful)
+2025-10-10 17:12:22,540 - INFO - Starting experiment: In-Silico Toxicity & Liability Flagging
+2025-10-10 17:12:22,540 - INFO - Running script: scripts/03_toxicity_flags.py
+2025-10-10 17:12:24,020 - INFO - ✅ Experiment 03_toxicity_flags completed successfully
+2025-10-10 17:12:24,021 - INFO - Progress: 3/15 experiments completed (3 successful)
+2025-10-10 17:12:24,021 - INFO - Starting experiment: Linker Flexibility Analysis
+2025-10-10 17:12:24,021 - INFO - Running script: scripts/04_linker_flex.py
+2025-10-10 17:12:51,903 - INFO - ✅ Experiment 04_linker_flex completed successfully
+2025-10-10 17:12:51,904 - INFO - Progress: 4/15 experiments completed (4 successful)
+2025-10-10 17:12:51,904 - INFO - Starting experiment: MMP Analysis
+2025-10-10 17:12:51,904 - INFO - Running script: scripts/05_mmp_analysis.py
+2025-10-10 17:12:53,778 - INFO - ✅ Experiment 05_mmp_analysis completed successfully
+2025-10-10 17:12:53,778 - INFO - Progress: 5/15 experiments completed (5 successful)
+2025-10-10 17:12:53,779 - INFO - Starting experiment: Sequence-Based Developability Scoring
+2025-10-10 17:12:53,779 - INFO - Running script: scripts/06_sequence_dev.py
+2025-10-10 17:12:55,352 - INFO - ✅ Experiment 06_sequence_dev completed successfully
+2025-10-10 17:12:55,353 - INFO - Progress: 6/15 experiments completed (6 successful)
+2025-10-10 17:12:55,353 - INFO - Starting experiment: Aggregation Hotspot Prediction
+2025-10-10 17:12:55,353 - INFO - Running script: scripts/07_agg_hotspots.py
+2025-10-10 17:12:57,372 - INFO - ✅ Experiment 07_agg_hotspots completed successfully
+2025-10-10 17:12:57,372 - INFO - Progress: 7/15 experiments completed (7 successful)
+2025-10-10 17:12:57,372 - INFO - Starting experiment: Charge Distribution & pI Analysis
+2025-10-10 17:12:57,372 - INFO - Running script: scripts/08_charge_pI.py
+2025-10-10 17:12:58,441 - INFO - ✅ Experiment 08_charge_pI completed successfully
+2025-10-10 17:12:58,441 - INFO - Progress: 8/15 experiments completed (8 successful)
+2025-10-10 17:12:58,442 - INFO - Starting experiment: Local Flexibility Analysis with ANM
+2025-10-10 17:12:58,442 - INFO - Running script: scripts/09_flexibility_anm.py
+2025-10-10 17:13:09,380 - INFO - ✅ Experiment 09_flexibility_anm completed successfully
+2025-10-10 17:13:09,383 - INFO - Progress: 9/15 experiments completed (9 successful)
+2025-10-10 17:13:09,383 - INFO - Starting experiment: Thermostability Prediction
+2025-10-10 17:13:09,383 - INFO - Running script: scripts/10_thermostability.py
+2025-10-10 17:13:13,155 - INFO - ✅ Experiment 10_thermostability completed successfully
+2025-10-10 17:13:13,159 - INFO - Progress: 10/15 experiments completed (10 successful)
+2025-10-10 17:13:13,160 - INFO - Starting experiment: Complex Modeling
+2025-10-10 17:13:13,161 - INFO - Running script: scripts/11_complex_model.py
+2025-10-10 17:13:16,428 - ERROR - Script failed with return code 1
+Stderr: 2025-10-10 17:13:15,855 - INFO - Modeling complex for Fab06
+2025-10-10 17:13:15,856 - INFO - Searching for existing job for 'Boltz-2 (AlphaFold3)' note 'bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4'
+2025-10-10 17:13:16,159 - ERROR - Failed to list jobs: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/jobs
+2025-10-10 17:13:16,161 - INFO - Submitting job: Boltz-2 (AlphaFold3) note=bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4
+2025-10-10 17:13:16,206 - ERROR - Boltz-2 prediction failed for Fab06: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/Boltz-2%20(AlphaFold3)?note=bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4
+2025-10-10 17:13:16,207 - ERROR - Error in Experiment 11: Complex modeling failed for Fab06: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/Boltz-2%20(AlphaFold3)?note=bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/11_complex_model.py", line 47, in model_fab_complex
+    results = predict_structure(sequences, max_wait_time=3600)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 162, in predict_structure
+    return NeuroSnapWrapper().predict_structure(sequences, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 120, in predict_structure
+    return self._run_service(service, fields, {"service": service, "sequences": seq_map}, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 71, in _run_service
+    job_id = self.client.submit_job(service_name, fields, note)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_client.py", line 125, in submit_job
+    resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/lib/python3.13/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/Boltz-2%20(AlphaFold3)?note=bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/11_complex_model.py", line 143, in <module>
+    main()
+    ~~~~^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/11_complex_model.py", line 116, in main
+    result = model_fab_complex(fab_id, seqs["VH"], seqs["VL"])
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/11_complex_model.py", line 85, in model_fab_complex
+    raise RuntimeError(f"Complex modeling failed for {fab_name}: {str(e)}")
+RuntimeError: Complex modeling failed for Fab06: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/Boltz-2%20(AlphaFold3)?note=bc75f94d0209bcf7b4cbeeb185426527ed53a27b437887679cf6f182ec63dbb4
+
+2025-10-10 17:13:16,429 - INFO - Progress: 11/15 experiments completed (10 successful)
+2025-10-10 17:13:16,430 - INFO - Starting experiment: Interface Fingerprinting
+2025-10-10 17:13:16,430 - INFO - Running script: scripts/12_interface_fingerprint.py
+2025-10-10 17:13:29,812 - INFO - ✅ Experiment 12_interface_fingerprint completed successfully
+2025-10-10 17:13:29,813 - INFO - Progress: 12/15 experiments completed (11 successful)
+2025-10-10 17:13:29,813 - INFO - Starting experiment: Alanine Scanning
+2025-10-10 17:13:29,813 - INFO - Running script: scripts/13_ala_scanning.py
+2025-10-10 17:13:30,592 - ERROR - Script failed with return code 1
+Stderr: 2025-10-10 17:13:30,340 - INFO - Performing alanine scanning for Fab06_VH
+2025-10-10 17:13:30,341 - INFO - Searching for existing job for 'StaB-ddG' note 'f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257'
+2025-10-10 17:13:30,383 - ERROR - Failed to list jobs: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/jobs
+2025-10-10 17:13:30,383 - INFO - Submitting job: StaB-ddG note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+2025-10-10 17:13:30,487 - ERROR - StaB-ddG prediction failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+2025-10-10 17:13:30,487 - ERROR - Error in Experiment 13: Alanine scanning failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 67, in perform_alanine_scanning
+    stab_results = ns_predict_stability_change(pdb_path, all_mutations, max_wait_time=1800)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 166, in predict_stability_change
+    return NeuroSnapWrapper().predict_stability_change(pdb_path, mutations, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 132, in predict_stability_change
+    return self._run_service(service, fields, {"service": service, "mutations": sorted(mutations)}, max_wait_time=max_wait_time)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_wrappers.py", line 71, in _run_service
+    job_id = self.client.submit_job(service_name, fields, note)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/neurosnap_client.py", line 125, in submit_job
+    resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/homebrew/lib/python3.13/site-packages/requests/models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 154, in <module>
+    main()
+    ~~~~^^
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 117, in main
+    results = perform_alanine_scanning(name, seq)
+  File "/Users/nicholasharris/Documents/Vivamed in silico/v25_clones/TL1A-PET-Imaging-Agent-for-IBD-1.455-v4/scripts/13_ala_scanning.py", line 99, in perform_alanine_scanning
+    raise RuntimeError(f"Alanine scanning failed for {fab_name}: {str(e)}")
+RuntimeError: Alanine scanning failed for Fab06_VH: 400 Client Error: Bad Request for url: https://neurosnap.ai/api/job/submit/StaB-ddG?note=f2a3f3a5580c825aeb75d915fc0946395d74ae640c5385efc2a4642e2ea2b257
+
+2025-10-10 17:13:30,593 - INFO - Progress: 13/15 experiments completed (11 successful)
+2025-10-10 17:13:30,593 - INFO - Starting experiment: Immunogenicity Prediction
+2025-10-10 17:13:30,593 - INFO - Running script: scripts/14_immunogenicity.py
+2025-10-10 17:13:31,959 - INFO - ✅ Experiment 14_immunogenicity completed successfully
+2025-10-10 17:13:31,959 - INFO - Progress: 14/15 experiments completed (12 successful)
+2025-10-10 17:13:31,959 - INFO - Starting experiment: Integrated Decision Scorecard
+2025-10-10 17:13:31,959 - INFO - Running script: scripts/15_decision_scorecard.py
+2025-10-10 17:13:32,403 - INFO - ✅ Experiment 15_decision_scorecard completed successfully
+2025-10-10 17:13:32,403 - INFO - Progress: 15/15 experiments completed (13 successful)
+2025-10-10 17:13:32,403 - INFO - Creating summary report: experiment_summary_report.md
+2025-10-10 17:13:32,404 - INFO - Summary report saved to experiment_summary_report.md
+2025-10-10 17:13:32,404 - ERROR - ❌ 2 experiment(s) failed
+2025-10-10 17:15:24,717 - INFO - Starting TL1A PET Imaging Agent experiment suite
+2025-10-10 17:15:24,718 - INFO - Total experiments to run: 15
+2025-10-10 17:15:24,718 - INFO - Starting experiment: Foundational Physicochemical Profiling
+2025-10-10 17:15:24,718 - INFO - Running script: scripts/01_physchem.py
+2025-10-10 17:15:26,674 - INFO - ✅ Experiment 01_physchem completed successfully
+2025-10-10 17:15:26,675 - INFO - Progress: 1/15 experiments completed (1 successful)
+2025-10-10 17:15:26,675 - INFO - Starting experiment: Activation & Metabolism Prediction
+2025-10-10 17:15:26,675 - INFO - Running script: scripts/02_metabolism.py
+2025-10-10 17:15:28,485 - INFO - ✅ Experiment 02_metabolism completed successfully
+2025-10-10 17:15:28,486 - INFO - Progress: 2/15 experiments completed (2 successful)
+2025-10-10 17:15:28,487 - INFO - Starting experiment: In-Silico Toxicity & Liability Flagging
+2025-10-10 17:15:28,487 - INFO - Running script: scripts/03_toxicity_flags.py
+2025-10-10 17:15:30,343 - INFO - ✅ Experiment 03_toxicity_flags completed successfully
+2025-10-10 17:15:30,344 - INFO - Progress: 3/15 experiments completed (3 successful)
+2025-10-10 17:15:30,345 - INFO - Starting experiment: Linker Flexibility Analysis
+2025-10-10 17:15:30,345 - INFO - Running script: scripts/04_linker_flex.py
+2025-10-10 17:15:46,933 - INFO - ✅ Experiment 04_linker_flex completed successfully
+2025-10-10 17:15:46,934 - INFO - Progress: 4/15 experiments completed (4 successful)
+2025-10-10 17:15:46,934 - INFO - Starting experiment: MMP Analysis
+2025-10-10 17:15:46,934 - INFO - Running script: scripts/05_mmp_analysis.py
+2025-10-10 17:15:48,368 - INFO - ✅ Experiment 05_mmp_analysis completed successfully
+2025-10-10 17:15:48,369 - INFO - Progress: 5/15 experiments completed (5 successful)
+2025-10-10 17:15:48,370 - INFO - Starting experiment: Sequence-Based Developability Scoring
+2025-10-10 17:15:48,370 - INFO - Running script: scripts/06_sequence_dev.py
+2025-10-10 17:15:49,529 - INFO - ✅ Experiment 06_sequence_dev completed successfully
+2025-10-10 17:15:49,530 - INFO - Progress: 6/15 experiments completed (6 successful)
+2025-10-10 17:15:49,531 - INFO - Starting experiment: Aggregation Hotspot Prediction
+2025-10-10 17:15:49,531 - INFO - Running script: scripts/07_agg_hotspots.py
+2025-10-10 17:15:51,666 - INFO - ✅ Experiment 07_agg_hotspots completed successfully
+2025-10-10 17:15:51,667 - INFO - Progress: 7/15 experiments completed (7 successful)
+2025-10-10 17:15:51,667 - INFO - Starting experiment: Charge Distribution & pI Analysis
+2025-10-10 17:15:51,667 - INFO - Running script: scripts/08_charge_pI.py
+2025-10-10 17:15:52,476 - INFO - ✅ Experiment 08_charge_pI completed successfully
+2025-10-10 17:15:52,477 - INFO - Progress: 8/15 experiments completed (8 successful)
+2025-10-10 17:15:52,477 - INFO - Starting experiment: Local Flexibility Analysis with ANM
+2025-10-10 17:15:52,477 - INFO - Running script: scripts/09_flexibility_anm.py
+2025-10-10 17:15:55,430 - INFO - ✅ Experiment 09_flexibility_anm completed successfully
+2025-10-10 17:15:55,430 - INFO - Progress: 9/15 experiments completed (9 successful)
+2025-10-10 17:15:55,431 - INFO - Starting experiment: Thermostability Prediction
+2025-10-10 17:15:55,431 - INFO - Running script: scripts/10_thermostability.py
+2025-10-10 17:15:57,271 - INFO - ✅ Experiment 10_thermostability completed successfully
+2025-10-10 17:15:57,271 - INFO - Progress: 10/15 experiments completed (10 successful)
+2025-10-10 17:15:57,271 - INFO - Starting experiment: Complex Modeling
+2025-10-10 17:15:57,271 - INFO - Running script: scripts/11_complex_model.py
+2025-10-10 17:15:57,966 - INFO - ✅ Experiment 11_complex_model completed successfully
+2025-10-10 17:15:57,966 - INFO - Progress: 11/15 experiments completed (11 successful)
+2025-10-10 17:15:57,966 - INFO - Starting experiment: Interface Fingerprinting
+2025-10-10 17:15:57,966 - INFO - Running script: scripts/12_interface_fingerprint.py
+2025-10-10 17:16:10,006 - INFO - ✅ Experiment 12_interface_fingerprint completed successfully
+2025-10-10 17:16:10,007 - INFO - Progress: 12/15 experiments completed (12 successful)
+2025-10-10 17:16:10,007 - INFO - Starting experiment: Alanine Scanning
+2025-10-10 17:16:10,007 - INFO - Running script: scripts/13_ala_scanning.py
+2025-10-10 17:16:11,228 - INFO - ✅ Experiment 13_ala_scanning completed successfully
+2025-10-10 17:16:11,228 - INFO - Progress: 13/15 experiments completed (13 successful)
+2025-10-10 17:16:11,228 - INFO - Starting experiment: Immunogenicity Prediction
+2025-10-10 17:16:11,228 - INFO - Running script: scripts/14_immunogenicity.py
+2025-10-10 17:16:12,490 - INFO - ✅ Experiment 14_immunogenicity completed successfully
+2025-10-10 17:16:12,490 - INFO - Progress: 14/15 experiments completed (14 successful)
+2025-10-10 17:16:12,490 - INFO - Starting experiment: Integrated Decision Scorecard
+2025-10-10 17:16:12,490 - INFO - Running script: scripts/15_decision_scorecard.py
+2025-10-10 17:16:12,886 - INFO - ✅ Experiment 15_decision_scorecard completed successfully
+2025-10-10 17:16:12,886 - INFO - Progress: 15/15 experiments completed (15 successful)
+2025-10-10 17:16:12,886 - INFO - Creating summary report: experiment_summary_report.md
+2025-10-10 17:16:12,886 - INFO - Summary report saved to experiment_summary_report.md
+2025-10-10 17:16:12,886 - INFO - 🎉 All experiments completed successfully!

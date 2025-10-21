@@ -1,0 +1,5 @@
+Reaction,Description,Enzymes,Likelihood,Site,Atom_Indices,Match_Count
+Carboxylic_Acid_Conjugation,Glucuronidation of carboxylic acids,UGT (UDP-glucuronosyltransferase),Medium,Carboxylic acid groups,"(10, 11, 12)",3
+Carboxylic_Acid_Conjugation,Glucuronidation of carboxylic acids,UGT (UDP-glucuronosyltransferase),Medium,Carboxylic acid groups,"(14, 15, 16)",3
+Carboxylic_Acid_Conjugation,Glucuronidation of carboxylic acids,UGT (UDP-glucuronosyltransferase),Medium,Carboxylic acid groups,"(28, 29, 30)",3
+Benzyl_Hydroxylation,Aromatic hydroxylation,CYP (Cytochrome P450),Medium,Benzyl linker,"(18, 17)",1

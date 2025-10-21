@@ -1,0 +1,19 @@
+{
+  "row_num": 61,
+  "step_name": "Final Testing",
+  "attempt": 1,
+  "cmd": "/Users/nicholasharris/.local/bin/cursor-agent --resume f74ea5a5-261d-479c-9e5e-8cd33ec4c1f6 -p Run the complete pipeline:\n- Test everything end-to-end\n- Fix any remaining issues\n- Verify NeuroSnap integrations produce real results\n- Generate actual outputs and data\nNEUROSNAP API KEY: bd0e1ed66ab2b0e73dfa1d2eba2ddf5d5aaa39d90d7d751547f81d616ddcdc30565d092bc4021535b504e6c30df5eb09a84bffc02ddafc6fb1c7abb53f123c1b\n\nCreate a to do list for these 10 items:\n1. Execute complete pipeline from start to finish\n2. Test all major functionality with real input data\n3. Verify NeuroSnap integrations produce actual results\n4. Generate and validate all expected output files\n5. Test error handling with invalid inputs\n6. Verify performance meets acceptable benchmarks\n7. Test edge cases and boundary conditions\n8. Validate data integrity throughout the pipeline\n9. Check memory usage and resource consumption\n10. Create final validation report with test results --output-format stream-json --model grok",
+  "cwd": "/Users/nicholasharris/Documents/Vivamed in silico/runs/row_0061_TL1A-PET-Imaging-Agent-for-IBD-1.455",
+  "model_env": "grok",
+  "chat_id_present": true,
+  "cursor_agent_path": "/Users/nicholasharris/.local/bin/cursor-agent",
+  "cursor_legacy_path": null,
+  "prompt_file": "prompt_Final_Testing.txt",
+  "pid": 87867,
+  "rc": 0,
+  "duration_sec": 52.02,
+  "stdout_len": 151826,
+  "stdout_preview_head": "{\"type\":\"system\",\"subtype\":\"init\",\"apiKeySource\":\"env\",\"cwd\":\"/Users/nicholasharris/Documents/Vivamed in silico/runs/row_0061_TL1A-PET-Imaging-Agent-for-IBD-1.455\",\"session_id\":\"f74ea5a5-261d-479c-9e5e-8cd33ec4c1f6\",\"model\":\"Grok\",\"permissionMode\":\"default\"}\n{\"type\":\"user\",\"message\":{\"role\":\"user\",\"content\":[{\"type\":\"text\",\"text\":\"Run the complete pipeline:\\n- Test everything end-to-end\\n- Fix any remaining issues\\n- Verify NeuroSnap integrations produce real results\\n- Generate actual outputs a",
+  "stderr_len": 0,
+  "timestamp": "2025-09-24T02:18:36.315281"
+}

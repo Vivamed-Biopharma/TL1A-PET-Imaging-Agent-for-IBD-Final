@@ -1,0 +1,5 @@
+SMILES,Reaction,Enzymes,Description,Likelihood,Site
+C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O,Carboxylic_Acid_Conjugation,UGT (UDP-glucuronosyltransferase),Glucuronidation of carboxylic acids,Medium,Carboxylic acid groups
+C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O,Carboxylic_Acid_Conjugation,UGT (UDP-glucuronosyltransferase),Glucuronidation of carboxylic acids,Medium,Carboxylic acid groups
+C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O,Carboxylic_Acid_Conjugation,UGT (UDP-glucuronosyltransferase),Glucuronidation of carboxylic acids,Medium,Carboxylic acid groups
+C1CN(CC(N(CCN1CC(=O)O)CC(=O)O)CC2=CC=C(C=C2)N=C=S)CC(=O)O,Benzyl_Hydroxylation,CYP (Cytochrome P450),Aromatic hydroxylation,Medium,Benzyl linker
