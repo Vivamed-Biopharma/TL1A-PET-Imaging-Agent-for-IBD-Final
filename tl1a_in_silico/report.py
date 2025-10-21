@@ -1,5 +1,27 @@
-import math, re, statistics, os
-from math import comb, exp
+import os
+import random
+import statistics
+
+from tl1a import (
+    TBR,
+    avoid_glyco,
+    calc_pI,
+    chem_motifs,
+    dar_stats,
+    dr3_adj,
+    free_fraction,
+    immu_proxy,
+    kmer_set,
+    liabilities,
+    mutate_cdr_sequence,
+    paratope_concat,
+    paratope_score,
+    qc,
+    read_fasta,
+    rebuild_chain,
+    window_proxy,
+    hydrophobic_pct,
+)
 
 # Optional plotting deps
 try:
@@ -62,64 +84,7 @@ CDRS = {
 # ------------------------------------------------------------
 # Variant generation (synthetic enumeration)
 # ------------------------------------------------------------
-import random
 random.seed(1337)
-
-def _avoid_glyco(seq: str) -> bool:
-    import re
-    return re.search(r"N[^P][ST]", seq) is None
-
-AA_GROUPS = {
-    'aromatic': list("FWY"),
-    'polar': list("STNQ"),
-    'acidic': list("DE"),
-    'basic': list("KRH"),
-    'aliphatic': list("AVILM"),
-    'small': list("AGST"),
-    'special': list("CP")
-}
-
-AA_TO_GROUP = {a:g for g,aa in AA_GROUPS.items() for a in aa}
-
-def conservative_mutation(res: str) -> str:
-    group = AA_TO_GROUP.get(res)
-    if not group:
-        return res
-    choices = [a for a in AA_GROUPS[group] if a != res]
-    if not choices:
-        return res
-    return random.choice(choices)
-
-def mutate_seq(seq: str, n_mut: int) -> str:
-    if n_mut <= 0:
-        return seq
-    idxs = list(range(len(seq)))
-    random.shuffle(idxs)
-    seq_list = list(seq)
-    changed = 0
-    for i in idxs:
-        orig = seq_list[i]
-        new = conservative_mutation(orig)
-        if new != orig:
-            seq_list[i] = new
-            if _avoid_glyco(''.join(seq_list)):
-                changed += 1
-            else:
-                seq_list[i] = orig
-        if changed >= n_mut:
-            break
-    return ''.join(seq_list)
-
-def rebuild_chain(full_seq: str, cdr_map: dict, new_cdrs: dict, order: list) -> str:
-    s = full_seq
-    for key in order:
-        old = cdr_map[key]
-        new = new_cdrs[key]
-        # replace first occurrence only
-        pos = s.find(old)
-        if pos >= 0:
-            s = s[:pos] + new + s[pos+len(old):]
-    return s
 
 def generate_variants(num_variants: int = 100):
     """Create additional Fab variants by conservative mutations within CDRs.
@@ -142,18 +107,18 @@ def generate_variants(num_variants: int = 100):
         nL2 = random.choice([0,1])
         nL3 = random.choice([0,1,2])
         new_c = {
-            'H1': mutate_seq(cdrb['H1'], nH1),
-            'H2': mutate_seq(cdrb['H2'], nH2),
-            'H3': mutate_seq(cdrb['H3'], nH3),
-            'L1': mutate_seq(cdrb['L1'], nL1),
-            'L2': mutate_seq(cdrb['L2'], nL2),
-            'L3': mutate_seq(cdrb['L3'], nL3),
+            'H1': mutate_cdr_sequence(cdrb['H1'], nH1),
+            'H2': mutate_cdr_sequence(cdrb['H2'], nH2),
+            'H3': mutate_cdr_sequence(cdrb['H3'], nH3),
+            'L1': mutate_cdr_sequence(cdrb['L1'], nL1),
+            'L2': mutate_cdr_sequence(cdrb['L2'], nL2),
+            'L3': mutate_cdr_sequence(cdrb['L3'], nL3),
         }
         # rebuild VH/VL by replacing original CDR substrings
         vh_new = rebuild_chain(vh_base, {k:cdrb[k] for k in ['H1','H2','H3']}, new_c, ['H1','H2','H3'])
         vl_new = rebuild_chain(vl_base, {k:cdrb[k] for k in ['L1','L2','L3']}, new_c, ['L1','L2','L3'])
         # final glyco safety check
-        if not (_avoid_glyco(vh_new) and _avoid_glyco(vl_new)):
+        if not (avoid_glyco(vh_new) and avoid_glyco(vl_new)):
             continue
         name = f"Fab{counter:02d}"
         counter += 1
@@ -174,123 +139,6 @@ TNFSF_FAMILY = {
   "TNFSF2_TNF": "MSTESMIRDVELAEEALPKKTGGPQGSRRCLFLSLFSFLIVAGATTLFCLLHFGVIGPQREEFPRDLSLISPLAQAVRSSSRTPSDKPVAHVVANPQAEGQLQWLNRRANALLANGVELRDNQLVVPSEGLYLIYSQVLFKGQGCPSTHVLLTHTISRIAVSYQTKVNLLSAIKSPCQRETPEGAEAKPWYEPIYLGGVFQLEKGDRLSAEINRPDYLDFAESGQVYFGIIAL",
   "TNFSF1_LTA": "MTPPERLFLPRVCGTTLHLLLLGLLLVLLPGAQGLPGVGLTPSAAQTARQHPKMHLAHSTLKPAAHLIGDPSKQNSLLWRANTDRAFLQDGFSLSNNSLLVPTSGIYFVYSQVVFSGKAYSPKATSSPLYLAHEVQLFSSQYPFHVPLLSSQKMVYPGLQEPWLHSMYHGAAFQLTQGDQLSTHTDGIPHLVLSPSTVFFGAFAL"
 }
-
-# QC
-def qc(seq):
-    AA = set("ACDEFGHIKLMNPQRSTVWY")
-    issues=[]
-    if any(ch not in AA for ch in seq): issues.append("non-AA")
-    if re.search(r"\\s", seq): issues.append("whitespace")
-    if re.search(r"N[^P][ST]", seq): issues.append("NXS/T glyco motif")
-    return issues
-
-# Developability
-BJL={"Cterm":3.55,"Nterm":7.50,"C":9.0,"D":4.05,"E":4.45,"H":5.98,"K":10.0,"R":12.0,"Y":10.0}
-
-def net_charge(seq, ph):
-    n=1/(1+10**(ph-BJL["Nterm"])); c=-1/(1+10**(BJL["Cterm"]-ph)); q=n+c
-    for a in seq:
-        if a in "KRH": q+=1/(1+10**(ph-BJL[a]))
-        if a in "DECY": q+=-1/(1+10**(BJL[a]-ph))
-    return q
-
-def calc_pI(seq, lo=2, hi=12.5):
-    a,b=lo,hi
-    for _ in range(60):
-        m=(a+b)/2
-        fm=net_charge(seq,m)
-        if abs(fm)<1e-4: return round(m,3)
-        fa,fb=net_charge(seq,a),net_charge(seq,b)
-        (a,b)=(m,b) if fa*fm>0 else (a,m)
-    return round((a+b)/2,3)
-
-def hydrophobic_pct(seq): return round(100*sum(a in "AFILMVWY" for a in seq)/len(seq),1)
-
-def liabilities(seq):
-    return dict(NG=seq.count("NG"), DG=seq.count("DG"), Met=seq.count("M"), Trp=seq.count("W"))
-
-# DAR model
-def dar_stats(Kacc, eq, eff=0.45):
-    p=1-exp(-eff*eq/max(1,Kacc))
-    P=lambda k: comb(Kacc,k)*(p**k)*((1-p)**(Kacc-k))
-    P12=sum(P(k) for k in (1,2))
-    Pge4=sum(P(k) for k in range(4,Kacc+1))
-    EDAR=sum(k*P(k) for k in range(Kacc+1))
-    return P12,Pge4,EDAR
-
-# Detectability (nM-scale)
-
-def TBR(Bmax_nM, Kd_nM, alpha=0.4):
-    BP = Bmax_nM/max(1e-12, Kd_nM)
-    return 1 + alpha*BP
-
-# Manufacturability proxy
-KD_scale={'I':4.5,'V':4.2,'L':3.8,'F':2.8,'C':2.5,'M':1.9,'A':1.8,'G':-0.4,'T':-0.7,'S':-0.8,
-          'W':-0.9,'Y':-1.3,'P':-1.6,'H':-3.2,'E':-3.5,'Q':-3.5,'D':-3.5,'N':-3.5,'K':-3.9,'R':-4.5}
-
-def window_proxy(seq, w=9):
-    best=-1e9
-    for i in range(len(seq)-w+1):
-        win=seq[i:i+w]
-        hyd=sum(KD_scale[a] for a in win)/w
-        pos=sum(a in "KRH" for a in win)/w
-        score=hyd+0.5*pos
-        if score>best: best=score
-    return round(best,2)
-
-def chem_motifs(seq):
-    return dict(NS=seq.count("NS"), DS=seq.count("DS"), DP=seq.count("DP"), PR=seq.count("PR"), KK=seq.count("KK"))
-
-# Immunogenicity proxy
-
-def immu_proxy(seq, w=15):
-    anchors="FYW"; score=0
-    for i in range(len(seq)-w+1):
-        score += (sum(a in anchors for a in seq[i:i+w])>=3)
-    return score
-
-# Paratope plausibility (sequence-only heuristic)
-def _enrich(s):
-    return sum(c in "YSDNR" for c in s)/max(1,len(s))
-
-def paratope_score(H1,H2,H3,L1,L3):
-    return round(0.5*_enrich(H3)+0.2*_enrich(H2)+0.15*_enrich(L3)+0.1*_enrich(H1)+0.05*_enrich(L1),3)
-
-def dr3_adj(H3):
-    acid = sum(c in "DEY" for c in H3)/max(1,len(H3))
-    pen  = 0.2*(H3.count("K")>0)
-    return round(max(0.0, min(1.0, acid - pen)),3)
-
-# Cross-reactivity (optional) — read TNFSF FASTA from assets/tnfsf_family.fasta if present
-def read_fasta(path):
-    if not os.path.exists(path):
-        return {}
-    seqs={}
-    name=None; buf=[]
-    with open(path) as f:
-        for line in f:
-            line=line.strip()
-            if not line: continue
-            if line.startswith('>'):
-                if name is not None:
-                    seqs[name]=''.join(buf)
-                name=line[1:].split()[0]; buf=[]
-            else:
-                buf.append(line)
-    if name is not None:
-        seqs[name]=''.join(buf)
-    return seqs
-
-def kmer_set(seq,k=6):
-    return {seq[i:i+k] for i in range(len(seq)-k+1)}
-
-def paratope_concat(Hs, Ls):
-    return Hs["H3"]+Hs["H2"]+Ls["L3"]+Hs["H1"]+Ls["L1"]
-
-# Soluble sink
-
-def free_fraction(Kd_nM, s_nM):
-    return 1.0 - (s_nM/(Kd_nM + s_nM))
 
 # Compute
 qc_fail=[]
@@ -698,13 +546,13 @@ out.append("* Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible B
 out.append("* Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).\n")
 
 # Enhance interpretations
-out.append("Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.\n")
-out.append("Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.\n")
-out.append("Interpretation: Calibrated grid shows ~25% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.\n")
-out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.\n")
-out.append("Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.\n")
-out.append("Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.\n")
-out.append("Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.\n")
+out.append("\n### Interpretation gates\n")
+out.append("- Developability: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2 per chain.\n")
+out.append("- Conjugation: Eq=4 optimal; P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.\n")
+out.append("- Detectability: ~25% of grid hits TBR_pre ≥1.5 with negative blocked ΔTBR; favors KD ≤ 3 nM when Bmax ≥ 1 nM.\n")
+out.append("- Soluble sink: f_free ≥0.5 for s ≤ Kd; target ≥0.7 under typical sTL1A burdens.\n")
+out.append("- Paratope: Scores >0.5 and DR3_adj >0.4 align with TL1A surface chemistry.\n")
+out.append("- Cross-reactivity: Keep top non-TL1A 6-mer overlaps ≤5; flag ≥10 for ELISA follow-up.\n")
 
 # Next steps (actionable)
 out.append("\n## Next steps (actionable)\n")

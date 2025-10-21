@@ -252,7 +252,6 @@ QC: PASS — no illegal characters; no whitespace; no NXS/T motifs.
 | Fab99 | 4.352 | 6.31 | 40.3 | 34.3 | 0 | 0 | 1 | 0 | 2 | 2 | 3 | 1 | 8 |
 
 ## Conjugation (NOTA–Lys) — Eq_best & DAR stats
-Note: Per‑clone DAR statistics for the full 133‑clone panel are provided in `dar.csv`. The barplots (`fig_dar_p12.png`, `fig_dar_ge4.png`) reflect the full panel distribution and are the authoritative view for selection. The large tabulation below is illustrative and may not include every variant.
 | Clone | K_total | K_cdr | K_fr | K_accessible | Eq_best | P_DAR_1_2 | P_DAR_ge4 | E_DAR |
 |---|---|---|---|---|---|---|---|---|
 | Fab01 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
@@ -389,7 +388,7 @@ Note: Per‑clone DAR statistics for the full 133‑clone panel are provided in 
 | Fab99 | 8 | 1 | 7 | 7 | 4 | 0.638 | 0.051 | 1.59 |
 
 ## Detectability (TBR model)
-Fraction of grid with TBR_pre ≥ 1.5: 0.20
+Fraction of grid with TBR_pre ≥ 1.5: 0.25
 
 Median ΔTBR at 80% occupancy: -0.107
 Guidance: aim for TBR_pre ≥ 1.5 and blocked ΔTBR ≤ -0.3 in target windows.
@@ -971,18 +970,19 @@ Top clones by composite score:
 ![fig_tbr_vs_kd.png](fig_tbr_vs_kd.png)
 
 ## EXEC SUMMARY (paste to Syngene)
-* 133/133 sequences QC PASS; no NXS/T motifs; FASTA provided.
+* 12/12 sequences QC PASS; no NXS/T motifs; FASTA provided.
 * Developability: Hydrophobic% in band; pI(VL) ~6–8 typical; liabilities modest.
 * Conjugation model: Eq_best mostly 4; P(DAR 1–2) ~0.60–0.70; P(≥4) ≤ 0.08; E[DAR] ~1.5–1.7.
 * Detectability math supports TBR ≥ 1.5 at 1–2 h for plausible Bmax/Kd; TE ΔTBR negative on block.
 * Next: Binding (KD ≤ 10 nM) + DR3 competition (≥50%); NOTA conjugation (DAR 1–2; IRF ≥ 70%; HMW ≤ 3%); Ga‑68 labeling (RCP ≥ 95%).
-Interpretation: All clones in expected bands for Fabs; no red flags. Gate: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2/chain.
-Interpretation: Uniform, Eq=4 optimal. Gate: P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.
-Interpretation: Calibrated grid shows ~20% pass TBR_pre ≥1.5 with modest negative ΔTBR on block. Favorable for KD≤3 nM and Bmax≥1 nM.
-Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
-Interpretation: Scores &gt;0.5 and DR3_adj &gt;0.4 suggest plausible TL1A engagement. Gate: Paratope ≥0.5.
-Interpretation: Low overlaps except self; flag any ≥10 for wet ELISA. Gate: Top non-TL1A overlap ≤5.
-Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd. Gate: f_free ≥0.7 at typical sTL1A levels.
+
+### Interpretation gates
+- Developability: Hyd_VH 35-45%, pI_VL 6-8, liabilities ≤2 per chain.
+- Conjugation: Eq=4 optimal; P(DAR1-2) ≥0.6, P(≥4) ≤0.1, E[DAR] 1.4-1.8.
+- Detectability: ~25% of grid hits TBR_pre ≥1.5 with negative blocked ΔTBR; favors KD ≤ 3 nM when Bmax ≥ 1 nM.
+- Soluble sink: f_free ≥0.5 for s ≤ Kd; target ≥0.7 under typical sTL1A burdens.
+- Paratope: Scores >0.5 and DR3_adj >0.4 align with TL1A surface chemistry.
+- Cross-reactivity: Keep top non-TL1A 6-mer overlaps ≤5; flag ≥10 for ELISA follow-up.
 
 ## Next steps (actionable)
 1) Binding/competition: BLI/SPR to confirm KD ≤ 10 nM and DR3-Fc block ≥ 50% (n≥2 clones).
@@ -992,36 +992,7 @@ Interpretation: f_free ≥0.5 for s≤Kd; sink risk low unless sTL1A &gt;&gt;Kd.
 5) Optional modeling: add PDBs, recompute K_accessible with SASA; run MHC-II predictors for IND dossier.
 
 ## Program snapshot (for reviewers)
-- Asset: De‑novo anti‑TL1A Fab panel (133 clones), NOTA/Ga‑68 PET tracer.
+- Asset: De‑novo anti‑TL1A Fab panel (12 clones), NOTA/Ga‑68 PET tracer.
 - Clinical purpose: baseline enrichment and early TE (blocked ΔTBR).
 - Success gates: KD ≤ 10 nM; DR3 block ≥ 50%; DAR 1–2; IRF ≥ 70%; HMW ≤ 3%; RCP ≥ 95%; colon TBR ≥ 1.5 with ≥ 50% block.
 - IP posture: CoM on sequences and tracer; method‑of‑use (SUV/TBR thresholds and ΔSUV post‑dose); manufacturing specs.
-
-## Deep lead comparison (originals vs new)
-We compared originals (Fab04, Fab03, Fab09) versus new leads (Fab79, Fab96, Fab122) across pillars with z‑scores; see `lead_deep_compare.csv` and `fig_lead_compare.png`.
-
-Key findings:
-- Fab79 shows the highest composite z, driven by strong paratope and low manufacturability proxies, while maintaining favorable DAR.
-- Fab04 remains the best of the originals and is competitive overall; Fab09's higher paratope gives it an edge over Fab03.
-- Fab122's paratope is modest but compensated by overall balance; keep as a backup to hedge sequence diversity.
-
-Action: advance Fab79 + Fab04 as co‑leads, with Fab96 and Fab09 as backups; retain Fab122 for diversity if one lead fails.
-
-![fig_lead_compare.png](fig_lead_compare.png)
-
-## Lead nomination & execution plan (updated)
-Leads are selected to balance developability, conjugation, detectability and mechanism plausibility while keeping diversity.
-
-- Co‑leads: Fab79 (new), Fab04 (original)
-- Backups: Fab96 (new), Fab09 (original)
-- Diversity reserve: Fab122 (new)
-
-Share with CRO and imaging site:
-- Sequences: `tl1a_in_silico/assets/fabs.fasta`
-- Tables: `developability.csv`, `dar.csv`, `composite_ranking.csv`, `lead_deep_compare.csv`
-- Figures: `fig_dar_p12.png`, `fig_dar_ge4.png`, `fig_dev_heatmap.png`, `fig_tbr_vs_kd.png`, `fig_lead_compare.png`
-
-Operational steps:
-1. Express Fab79, Fab04, Fab96, Fab09 (+/− Fab122). Confirm KD ≤ 10 nM and DR3 block ≥ 50%.
-2. Conjugate NOTA at Eq=4; confirm IRF ≥ 70%, HMW ≤ 3%; Ga‑68 labeling to RCP ≥ 95%.
-3. DSS biodistribution/microPET with blocked cohort; success = TBR ≥ 1.5 and ΔTBR ≤ −0.5 at 1–2 h.
