@@ -52,73 +52,29 @@
 
 ---
 
-## Repository Structure
+## 📁 **REPOSITORY STRUCTURE**
 
-### Core Files
-- `report.py` - Main analysis pipeline (generates all outputs)
-- `REPORT.md` - Comprehensive 1,500+ line analysis report
+### **Core Files**
 - `README.md` - This file (project overview)
+- `tl1a/` - Core computational modules
+- `00_env/` - Environment setup and utilities
 
-### Data Outputs
-- `composite_ranking.csv` - Ranked Fab variants by composite score
-- `developability.csv` - Developability metrics (213 variants)
-- `dar.csv` - Drug-to-antibody ratio analysis
-- `immunogenicity.csv` - Immunogenicity risk assessment
-- `manufacturability.csv` - Manufacturing feasibility scores
-- `master_table.csv` - Consolidated results table
+### **Organized Directories**
+- **`notebooks/`** - 16 Jupyter notebooks (01-16) for step-by-step analysis
+- **`scripts/`** - Main analysis scripts (`report.py`, `make_all.sh`)
+- **`results/`** - All generated outputs organized by type:
+  - **`results/data/`** - CSV files (composite_ranking, developability, dar, etc.)
+  - **`results/figures/`** - PNG figures (heatmaps, distributions, comparisons)
+  - **`results/reports/`** - Detailed analysis report (REPORT.md)
 
-### Figures
-- `fig_dev_heatmap.png` - Developability heatmap
-- `fig_dar_p12.png` - DAR probability distributions
-- `fig_tbr_vs_kd.png` - Target-to-background ratio analysis
-- `fig_lead_compare.png` - Lead candidate comparison
-
-### Notebooks (01-16)
-- `01_qc_sequences.ipynb` - Sequence quality control
-- `02_imgt_numbering.ipynb` - IMGT numbering
-- `03_developability.ipynb` - Developability analysis
-- `04_conjugation_DAR.ipynb` - Conjugation planning
-- `05_detectability_TE.ipynb` - Target engagement
-- `06_sTL1A_sink.ipynb` - Soluble TL1A sink analysis
-- `07_crossreactivity.ipynb` - Cross-reactivity assessment
-- `08_manufacturability.ipynb` - Manufacturing analysis
-- `09_immunogenicity_proxy.ipynb` - Immunogenicity screening
-- `10_pk_window.ipynb` - Pharmacokinetic window
-- `11_rdkit_chelator.ipynb` - Chelator chemistry
-- `12_visualization_py3Dmol.ipynb` - 3D structure visualization
-- `13_sensitivity_SALib.ipynb` - Sensitivity analysis
-- `14_structure_modeling.ipynb` - Structure modeling
-- `15_immunogenicity_mhcii.ipynb` - MHC-II binding
-- `16_aggregation_stability.ipynb` - Aggregation analysis
-
----
-
-## Quick Start
-
-### Environment Setup
+### **Quick Start**
 ```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Or use conda
-conda env create -f environment.yml
-conda activate tl1a-pet-imaging
-```
-
-### Run Analysis
-```bash
-# Generate all outputs
-python report.py
+# Run complete analysis
+python scripts/report.py
 
 # View results
-open REPORT.md
+open results/reports/REPORT.md
 ```
-
-### Environment Variables
-- `TL1A_VARIANTS` (default: 120) - Number of CDR variants to generate
-- `TL1A_SEED` (default: 1337) - Random seed for reproducibility
-- `TL1A_NOPLOTS` (1 to disable) - Skip figure generation
-- `TL1A_STRICT` (1 to enforce) - Fail on validation errors
 
 ---
 
@@ -160,16 +116,6 @@ open REPORT.md
 
 ---
 
-## Next Steps for Wet Lab
-
-1. **Lead Selection:** Synthesize Fab169 VH+VL sequences
-2. **Conjugation:** p-SCN-Bn-NOTA conjugation (DAR 1-2 target)
-3. **Labeling:** Ga-68 radiolabeling (RCP ≥95%)
-4. **Binding Assays:** SPR/BLI to confirm KD ≤10 nM
-5. **In Vivo Testing:** DSS colitis model (TBR ≥1.5, ≥50% blockade)
-
----
-
 ## 🎯 **SCIENTIFIC ACHIEVEMENTS & INTERPRETATIONS**
 
 ### **🏆 COMPUTATIONAL PLATFORM ACHIEVEMENTS**
@@ -200,11 +146,21 @@ open REPORT.md
 
 ---
 
+## Next Steps for Wet Lab
+
+1. **Lead Selection:** Synthesize Fab169 VH+VL sequences
+2. **Conjugation:** p-SCN-Bn-NOTA conjugation (DAR 1-2 target)
+3. **Labeling:** Ga-68 radiolabeling (RCP ≥95%)
+4. **Binding Assays:** SPR/BLI to confirm KD ≤10 nM
+5. **In Vivo Testing:** DSS colitis model (TBR ≥1.5, ≥50% blockade)
+
+---
+
 ## Contact & Support
 
 For questions about the analysis or to request specific data exports:
-- Review `REPORT.md` for detailed methodology
-- Check individual CSV files for specific metrics
-- Run `python report.py` to regenerate all outputs
+- Review `results/reports/REPORT.md` for detailed methodology
+- Check individual CSV files in `results/data/` for specific metrics
+- Run `python scripts/report.py` to regenerate all outputs
 
 **Repository:** https://github.com/Vivamed-Biopharma/TL1A-PET-Imaging-Agent-for-IBD-Final
